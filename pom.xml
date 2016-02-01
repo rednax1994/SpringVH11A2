@@ -409,8 +409,6 @@
   </dependencies>
 
   <build>
-    <finalName>hh</finalName>
-
     <plugins>
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
