@@ -1,8 +1,8 @@
 package edu.avans.hartigehap.service.impl;
 
-import edu.avans.hartigehap.domain.*;
-import edu.avans.hartigehap.repository.*;
-import edu.avans.hartigehap.service.RestaurantPopulatorService;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +10,17 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import edu.avans.hartigehap.domain.Customer;
+import edu.avans.hartigehap.domain.DiningTable;
+import edu.avans.hartigehap.domain.Drink;
+import edu.avans.hartigehap.domain.FoodCategory;
+import edu.avans.hartigehap.domain.Meal;
+import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.repository.CustomerRepository;
+import edu.avans.hartigehap.repository.FoodCategoryRepository;
+import edu.avans.hartigehap.repository.MenuItemRepository;
+import edu.avans.hartigehap.repository.RestaurantRepository;
+import edu.avans.hartigehap.service.RestaurantPopulatorService;
 
 @Service("restaurantPopulatorService")
 @Repository
@@ -41,38 +49,39 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
      */
     private void createCommonEntities() {
         // create FoodCategories
-        createFoodCategory("low fat");
-        createFoodCategory("high energy");
-        createFoodCategory("vegatarian");
-        createFoodCategory("italian");
-        createFoodCategory("asian");
-        createFoodCategory("alcoholic drinks");
-        createFoodCategory("energizing drinks");
+        createFoodCategory("Low fat");
+        createFoodCategory("High energy");
+        createFoodCategory("Vegatarian");
+        createFoodCategory("Italian");
+        createFoodCategory("Asian");
+        createFoodCategory("Alcoholic drinks");
+        createFoodCategory("Energizing drinks");
 
         // create Meals
-        createMeal("spaghetti", "spaghetti.jpg", 8, "easy",
-                Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
-        createMeal("macaroni", "macaroni.jpg", 8, "easy",
-                Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
-        createMeal("canneloni", "canneloni.jpg", 9, "easy",
-                Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
-        createMeal("pizza", "pizza.jpg", 9, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
-        createMeal("carpaccio", "carpaccio.jpg", 7, "easy",
-                Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(0)));
-        createMeal("ravioli", "ravioli.jpg", 8, "easy",
-                Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1), foodCats.get(2)));
+        createMeal("Spaghetti", "spaghetti.jpg", 8, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
+        createMeal("Macaroni", "macaroni.jpg", 8, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
+        createMeal("Canneloni", "canneloni.jpg", 9, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
+        createMeal("Pizza", "pizza.jpg", 9, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
+        createMeal("Carpaccio", "carpaccio.jpg", 7, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(0)));
+        createMeal("Ravioli", "ravioli.jpg", 8, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1), foodCats.get(2)));
 
         // create Drinks
         createDrink("beer", "beer.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(5)));
+        createDrink("beer", "beer.jpg", 1, Drink.Size.MEDIUM, Arrays.<FoodCategory> asList(foodCats.get(5)));
+        createDrink("beer", "beer.jpg", 1, Drink.Size.SMALL, Arrays.<FoodCategory> asList(foodCats.get(5)));
+        createDrink("Red Bull", "redbull.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(6)));
+        createDrink("Red Bull", "redbull.jpg", 1, Drink.Size.SMALL, Arrays.<FoodCategory> asList(foodCats.get(6)));
+        createDrink("coffee", "coffee.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(6)));
         createDrink("coffee", "coffee.jpg", 1, Drink.Size.MEDIUM, Arrays.<FoodCategory> asList(foodCats.get(6)));
+        createDrink("coffee", "coffee.jpg", 1, Drink.Size.SMALL, Arrays.<FoodCategory> asList(foodCats.get(6)));
 
         // create Customers
         byte[] photo = new byte[] { 127, -128, 0 };
-        createCustomer("peter", "limonade", new DateTime(), 1, "description", photo);
-        createCustomer("barry", "batsbak", new DateTime(), 1, "description", photo);
-        createCustomer("piet", "bakker", new DateTime(), 1, "description", photo);
-        createCustomer("piet", "bakker", new DateTime(), 1, "description", photo);
-        createCustomer("piet", "bakker", new DateTime(), 1, "description", photo);
+        createCustomer("Peter", "Limonade", new DateTime(), 1, "description", photo);
+        createCustomer("Barry", "Batsbak", new DateTime(), 1, "description", photo);
+        createCustomer("Piet", "Bakker", new DateTime(), 1, "description", photo);
+        createCustomer("Piet", "Bakker", new DateTime(), 1, "description", photo);
+        createCustomer("Piet", "Bakker", new DateTime(), 1, "description", photo);
     }
 
     private void createFoodCategory(String tag) {
