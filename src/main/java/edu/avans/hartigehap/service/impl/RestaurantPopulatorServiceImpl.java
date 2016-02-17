@@ -67,13 +67,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
 
         // create Drinks
         createDrink("beer", "beer.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(5)));
-        createDrink("beer", "beer.jpg", 1, Drink.Size.MEDIUM, Arrays.<FoodCategory> asList(foodCats.get(5)));
-        createDrink("beer", "beer.jpg", 1, Drink.Size.SMALL, Arrays.<FoodCategory> asList(foodCats.get(5)));
-        createDrink("Red Bull", "redbull.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(6)));
-        createDrink("Red Bull", "redbull.jpg", 1, Drink.Size.SMALL, Arrays.<FoodCategory> asList(foodCats.get(6)));
-        createDrink("coffee", "coffee.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(6)));
         createDrink("coffee", "coffee.jpg", 1, Drink.Size.MEDIUM, Arrays.<FoodCategory> asList(foodCats.get(6)));
-        createDrink("coffee", "coffee.jpg", 1, Drink.Size.SMALL, Arrays.<FoodCategory> asList(foodCats.get(6)));
 
         // create Customers
         byte[] photo = new byte[] { 127, -128, 0 };
