@@ -97,7 +97,7 @@ public class Order extends DomainObject {
             }
         }
         if (!found) {
-            OrderItem orderItem = new OrderItem(menuItem, 1);
+            OrderItem orderItem = new ConcreteOrderItem(menuItem, 1);
             orderItems.add(orderItem);
         }
     }

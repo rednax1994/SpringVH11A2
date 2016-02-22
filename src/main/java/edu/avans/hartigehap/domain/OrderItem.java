@@ -18,21 +18,21 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  * @author Erco
  */
 @Entity
-@Table(name = "ORDERITEMS")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @Getter
 @Setter
 @ToString(callSuper = true, includeFieldNames = true, of = { "menuItem", "quantity" })
 @NoArgsConstructor
-public class OrderItem extends DomainObject {
+public abstract class OrderItem extends DomainObject {
     private static final long serialVersionUID = 1L;
 
     // unidirectional many-to-one; deliberately no cascade
     @ManyToOne
     private MenuItem menuItem;
 
-    private int quantity = 0;
-
+    private int quantity;
+    
+    
     public OrderItem(MenuItem menuItem, int quantity) {
         this.menuItem = menuItem;
         this.quantity = quantity;
@@ -52,5 +52,9 @@ public class OrderItem extends DomainObject {
     @Transient
     public int getPrice() {
         return menuItem.getPrice() * quantity;
+    }
+    
+    public String description(){
+    	return menuItem.toString();
     }
 }
