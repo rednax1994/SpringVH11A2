@@ -55,6 +55,6 @@ public abstract class OrderItem extends DomainObject {
     }
     
     public String description(){
-    	return menuItem.toString();
+    	return menuItem.getId() + "(" + getQuantity() + ")";
     }
 }
