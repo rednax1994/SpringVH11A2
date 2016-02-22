@@ -3,6 +3,7 @@ package edu.avans.hartigehap.service.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -22,11 +23,8 @@ import edu.avans.hartigehap.service.RestaurantService;
 @Transactional
 public class OwnerServiceImpl implements OwnerService {
 
-	@Autowired
-	private OwnerRepository ownerRepository;
-	
-	@Autowired
-	private RestaurantService restaurantService;
+	@Autowired private OwnerRepository ownerRepository;
+	@Autowired private RestaurantService restaurantService;
 
 	@Override
 	@Transactional(readOnly = true)
