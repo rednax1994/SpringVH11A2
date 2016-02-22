@@ -83,7 +83,7 @@
 						<tbody>
 							<c:forEach items="${diningTable.currentBill.currentOrder.orderItems}" var="orderItem">
 								<tr>
-									<td class="capitalise">${orderItem.menuItem.id}</td>
+									<td class="capitalise">${orderItem.description()}</td>
 									<td>${orderItem.quantity}</td>
 								</tr>
 							</c:forEach>

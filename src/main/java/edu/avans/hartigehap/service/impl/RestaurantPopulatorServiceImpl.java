@@ -2,6 +2,8 @@ package edu.avans.hartigehap.service.impl;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import org.joda.time.DateTime;
@@ -10,21 +12,26 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.avans.hartigehap.domain.ConcreteOrderItem;
 import edu.avans.hartigehap.domain.Customer;
 import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.Drink;
 import edu.avans.hartigehap.domain.FoodCategory;
 import edu.avans.hartigehap.domain.Meal;
+import edu.avans.hartigehap.domain.OrderOption;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
+import edu.avans.hartigehap.repository.OrderItemRepository;
 import edu.avans.hartigehap.repository.RestaurantRepository;
 import edu.avans.hartigehap.service.RestaurantPopulatorService;
+import lombok.extern.slf4j.Slf4j;
 
 @Service("restaurantPopulatorService")
 @Repository
 @Transactional
+@Slf4j
 public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorService {
 
     @Autowired
@@ -35,8 +42,11 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private MenuItemRepository menuItemRepository;
     @Autowired
     private CustomerRepository customerRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     private List<Meal> meals = new ArrayList<>();
+    private List<Meal> mealOptions = new ArrayList<>();
     private List<FoodCategory> foodCats = new ArrayList<>();
     private List<Drink> drinks = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
@@ -65,6 +75,9 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createMeal("Carpaccio", "carpaccio.jpg", 7, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(0)));
         createMeal("Ravioli", "ravioli.jpg", 8, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1), foodCats.get(2)));
 
+        createMealOption("bell pepper", "pizza.jpg", 2, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(2)));
+        createMealOption("mushrooms", "pizza.jpg", 3, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(2)));
+        
         // create Drinks
         createDrink("Large beer", "beer.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(5)));
         createDrink("Medium beer", "beer.jpg", 1, Drink.Size.MEDIUM, Arrays.<FoodCategory> asList(foodCats.get(5)));
@@ -83,6 +96,14 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createCustomer("Piet", "Bakker", new DateTime(), 1, "description", photo);
     }
 
+    private void createMealOption(String name, String image, int price, String recipe, List<FoodCategory> foodCats) {
+    	Meal meal = new Meal(name, image, price, recipe);
+    	meal.addFoodCategories(foodCats);
+    	meal = menuItemRepository.save(meal);
+    	mealOptions.add(meal);
+    }
+
+    
     private void createFoodCategory(String tag) {
         FoodCategory foodCategory = new FoodCategory(tag);
         foodCategory = foodCategoryRepository.save(foodCategory);
@@ -165,7 +186,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     public void createRestaurantsWithInventory() {
 
         createCommonEntities();
-
+        
         Restaurant restaurant = new Restaurant(HARTIGEHAP_RESTAURANT_NAME, "deHartigeHap.jpg");
         restaurant = populateRestaurant(restaurant);
 
@@ -174,5 +195,29 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
 
         restaurant = new Restaurant(HMMMBURGER_RESTAURANT_NAME, "deHmmmBurger.jpg");
         restaurant = populateRestaurant(restaurant);
+        
+        ConcreteOrderItem orderItem = new ConcreteOrderItem(meals.get(3), 1); // pizza
+        orderItemRepository.save(orderItem);
+        OrderOption orderOption = new OrderOption(orderItem, mealOptions.get(1), 1); // mushrooms
+        orderItemRepository.save(orderOption);
+        OrderOption orderOption2 = new OrderOption(orderOption, mealOptions.get(1), 1); // mushrooms
+        orderItemRepository.save(orderOption2);
+        OrderOption orderOption3 = new OrderOption(orderOption2, mealOptions.get(0), 1); // bell pepper
+        orderItemRepository.save(orderOption3);
+
+        log.info("***************************** description: " + orderOption3.description());
+        log.info("***************************** price: " + orderOption3.getPrice());
+
+
+        // add the decorated pizza to the current order to table 1 of the hmmm burger (to show it in the GUI)
+        Collection<DiningTable> diningTables = restaurant.getDiningTables(); // dining tables of the hmmm burger
+        DiningTable t = null;
+        Iterator<DiningTable> it = diningTables.iterator();
+        if(it.hasNext()) {
+        t = it.next(); // this is dining table 1
+        }
+
+        t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption3);
+
     }
 }
