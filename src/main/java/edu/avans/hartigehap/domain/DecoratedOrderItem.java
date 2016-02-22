@@ -2,6 +2,7 @@ package edu.avans.hartigehap.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -19,7 +20,9 @@ import lombok.ToString;
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
 public abstract class DecoratedOrderItem extends OrderItem{
-	private static final long serialVersionUID = 1L;	
+	private static final long serialVersionUID = 1L;
+	
+	@OneToOne
 	private OrderItem orderitem;
     
     public DecoratedOrderItem(OrderItem orderitem, MenuItem menuItem, int quantity) {
