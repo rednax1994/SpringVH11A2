@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import edu.avans.hartigehap.domain.*;
 import edu.avans.hartigehap.service.*;
+import edu.avans.hartigehap.service.impl.CommandAddMenuItem;
+import edu.avans.hartigehap.service.impl.CommandRemoveMenuItem;
 import edu.avans.hartigehap.web.form.Message;
 import org.springframework.web.servlet.mvc.support.*;
 
@@ -36,23 +38,19 @@ public class DiningTableController {
     @RequestMapping(value = "/diningTables/{diningTableId}/menuItems", method = RequestMethod.POST)
     public String addMenuItem(@PathVariable("diningTableId") String diningTableId, @RequestParam String menuItemName,
             Model uiModel) {
-
-        DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
-        uiModel.addAttribute("diningTable", diningTable);
-
-        diningTableService.addOrderItem(diningTable, menuItemName);
-
+    	
+    	DiningTableCommand command = new CommandAddMenuItem(diningTableService);
+    	command.execute(diningTableId, menuItemName, uiModel);
+    	
         return "redirect:/diningTables/" + diningTableId;
     }
 
     @RequestMapping(value = "/diningTables/{diningTableId}/menuItems/{menuItemName}", method = RequestMethod.DELETE)
     public String deleteMenuItem(@PathVariable("diningTableId") String diningTableId,
-            @PathVariable("menuItemName") String menuItemName, Model uiModel) {
-
-        DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
-        uiModel.addAttribute("diningTable", diningTable);
-
-        diningTableService.deleteOrderItem(diningTable, menuItemName);
+    		@PathVariable("menuItemName") String menuItemName, Model uiModel) {
+    	
+    	DiningTableCommand command = new CommandRemoveMenuItem(diningTableService);
+    	command.execute(diningTableId, menuItemName, uiModel);
 
         return "redirect:/diningTables/" + diningTableId;
     }
