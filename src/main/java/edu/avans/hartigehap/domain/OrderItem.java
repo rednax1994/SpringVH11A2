@@ -2,7 +2,6 @@ package edu.avans.hartigehap.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import lombok.Getter;
