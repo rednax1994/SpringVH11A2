@@ -18,8 +18,6 @@ import edu.avans.hartigehap.domain.*;
 public class BillServiceImpl implements BillService {
 
     @Autowired
-    private OrderRepository orderRepository;
-    @Autowired
     private BillRepository billRepository;
 
     @Transactional(readOnly = true)
