@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -34,8 +35,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 // to prevent collision with MySql reserved keyword
 @Table(name = "ORDERS")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@Getter
-@Setter
+@Getter @Setter
+@Slf4j
 @ToString(callSuper = true, includeFieldNames = true, of = { "orderStatus", "orderItems" })
 public class Order extends DomainObject {
     private static final long serialVersionUID = 1L;
@@ -90,6 +91,7 @@ public class Order extends DomainObject {
         boolean found = false;
         while (orderItemIterator.hasNext()) {
             OrderItem orderItem = orderItemIterator.next();
+            //log.info(orderItem.toString());
             if (orderItem.getMenuItem().equals(menuItem)) {
                 orderItem.incrementQuantity();
                 found = true;
@@ -101,7 +103,7 @@ public class Order extends DomainObject {
             orderItems.add(orderItem);
         }
     }
-
+    
     public void deleteOrderItem(MenuItem menuItem) {
         Iterator<OrderItem> orderItemIterator = orderItems.iterator();
         boolean found = false;

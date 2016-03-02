@@ -77,6 +77,7 @@
 						<thead>
 							<tr>
 								<th>${tableItem}</th>
+								<th>${tableActions}</th>
 								<th>${tableQuantity}</th>
 							</tr>
 						</thead>
@@ -84,6 +85,19 @@
 							<c:forEach items="${diningTable.currentBill.currentOrder.orderItems}" var="orderItem">
 								<tr>
 									<td class="capitalise">${orderItem.description()}</td>
+									<td>
+										<form:select path="restaurant.menu.foodCategories">
+										<c:set var="addons" scope="session" value="Extra options"/>
+											<form:option value="NONE" label="---Select---"></form:option>
+											<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">
+												<c:forEach items="${foodCategory.menuItems}" var="menuItem">
+													<c:if test="${foodCategory.tag == addons}">
+														<form:option value="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
+													</c:if>
+												</c:forEach>
+											</c:forEach>
+										</form:select>
+									</td>
 									<td>${orderItem.quantity}</td>
 								</tr>
 							</c:forEach>
@@ -142,9 +156,12 @@
 				<span class="pull-right">
 					<ul class="nav panel-tabs">
 						<li class="active"><a href="#tab1" data-toggle="tab" class="capitalise">${labelCategorie}</a></li>
+						<c:set var="addons" scope="session" value="Extra options"/>
 						<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">
 							<c:if test="${not empty foodCategory.menuItems}">
-								<li><a href="#tabs-${foodCategory.id}" class="capitalise" data-toggle="tab">${foodCategory.tag}</a></li>
+								<c:if test="${foodCategory.tag != addons}">
+									<li><a href="#tabs-${foodCategory.id}" class="capitalise" data-toggle="tab">${foodCategory.tag}</a></li>
+								</c:if>
 							</c:if>
 						</c:forEach>
 					</ul>

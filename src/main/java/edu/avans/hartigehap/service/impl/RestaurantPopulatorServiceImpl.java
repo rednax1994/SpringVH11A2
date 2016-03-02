@@ -66,6 +66,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createFoodCategory("Asian");
         createFoodCategory("Alcoholic drinks");
         createFoodCategory("Energizing drinks");
+        createFoodCategory("Extra options");
 
         // create Meals
         createMeal("Spaghetti", "spaghetti.jpg", 8, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
@@ -75,8 +76,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createMeal("Carpaccio", "carpaccio.jpg", 7, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(0)));
         createMeal("Ravioli", "ravioli.jpg", 8, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1), foodCats.get(2)));
 
-        createMealOption("bell pepper", "pizza.jpg", 2, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(2)));
-        createMealOption("mushrooms", "pizza.jpg", 3, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(2)));
+        createMealOption("bell pepper", "pizza.jpg", 2, "easy", Arrays.<FoodCategory> asList(foodCats.get(7)));
+        createMealOption("mushrooms", "pizza.jpg", 3, "easy", Arrays.<FoodCategory> asList(foodCats.get(7)));
         
         // create Drinks
         createDrink("Large beer", "beer.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(5)));

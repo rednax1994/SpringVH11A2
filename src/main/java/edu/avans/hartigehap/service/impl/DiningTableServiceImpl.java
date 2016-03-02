@@ -66,6 +66,7 @@ public class DiningTableServiceImpl implements DiningTableService {
     }
 
     public void addOrderItem(DiningTable diningTable, String menuItemName) {
+    	log.info("addOrderItem started " + diningTable.getTableNr() + " - menuItemName: " + menuItemName);
         MenuItem menuItem = menuItemRepository.findOne(menuItemName);
         diningTable.getCurrentBill().getCurrentOrder().addOrderItem(menuItem);
     }
