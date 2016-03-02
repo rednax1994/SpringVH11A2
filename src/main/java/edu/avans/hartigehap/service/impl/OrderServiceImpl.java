@@ -10,13 +10,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import edu.avans.hartigehap.service.*;
 import edu.avans.hartigehap.domain.*;
+import edu.avans.hartigehap.repository.Container;
+import edu.avans.hartigehap.repository.Iterator;
 import edu.avans.hartigehap.repository.OrderRepository;
 
 @Service("orderService")
 @Repository
 @Transactional(rollbackFor = StateException.class)
 @Slf4j
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService, Container{
 
     @Autowired
     private OrderRepository orderRepository;
@@ -41,7 +43,8 @@ public class OrderServiceImpl implements OrderService {
         List<Order> submittedOrdersList = orderRepository.findSubmittedOrdersForRestaurant(restaurant);
 
         log.info("findSubmittedOrdersForRestaurant using named query");
-        ListIterator<Order> it = submittedOrdersList.listIterator();
+        Iterator it = getIterator(submittedOrdersList);
+        
         while (it.hasNext()) {
             Order order = it.next();
             log.info("submittedOrder = " + order.getId() + ", for table = " + order.getBill().getDiningTable().getId()
@@ -87,5 +90,38 @@ public class OrderServiceImpl implements OrderService {
 
     public void orderServed(Order order) throws StateException {
         order.served();
+    }
+
+    @Override
+    public Iterator getIterator(List<Order> submittedOrdersList) {
+       return new OrderIterator(submittedOrdersList);
+    }
+
+    private class OrderIterator implements Iterator {
+
+       int index;
+       List<Order> list;
+
+       public OrderIterator(List<Order> list) {
+		this.list = list;
+	}
+
+	@Override
+       public boolean hasNext() {
+       
+          if(index < list.size()){
+             return true;
+          }
+          return false;
+       }
+
+       @Override
+       public Order next() {
+       
+          if(this.hasNext()){
+             return list.get(index++);
+          }
+          return null;
+       }		
     }
 }
