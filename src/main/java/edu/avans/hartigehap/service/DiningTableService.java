@@ -24,6 +24,8 @@ public interface DiningTableService {
     void addOrderOption(DiningTable diningTable, String menuItemName, Long orderItemName);
 
     void deleteOrderItem(DiningTable diningTable, String menuItemName);
+    
+    void removeOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId);
 
     void submitOrder(DiningTable diningTable) throws StateException;
 

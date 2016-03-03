@@ -121,6 +121,11 @@ public class Order extends DomainObject {
     	}
     }
     
+    public void removeOrderOption(MenuItem menuItem, OrderItem orderItem){
+    	log.info("started addOrderOption with menuItem: " + menuItem.getId() + " - and orderItem: " + orderItem.getId());
+    	
+    }
+    
     
     public void deleteOrderItem(MenuItem menuItem) {
         Iterator<OrderItem> orderItemIterator = orderItems.iterator();

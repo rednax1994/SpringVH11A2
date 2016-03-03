@@ -78,6 +78,7 @@
 							<tr>
 								<th>${tableItem}</th>
 								<th>${tableActions}</th>
+								<th>${tableActions}</th>
 								<th>${tableQuantity}</th>
 							</tr>
 						</thead>
@@ -87,9 +88,29 @@
 									<td class="capitalise">${orderItem.description()}</td>
 									<td>
 										<!-- Start form for adding extras to items -->
-										
 										<spring:url var="addOrderOptionURL"	value="/diningTables/${diningTable.id}/orderItems" /> 
 										<form:form name="addOrderOption" commandName="restaurant" action="${addOrderOptionURL}" method="post">
+											<form:select path="menu.foodCategories" multiple="false" name="orderOptionName">
+												<form:option value="NONE" label="---Select---"></form:option>
+												<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">
+													<c:forEach items="${foodCategory.menuItems}" var="menuItem">
+														<c:if test="${foodCategory.tag == addons}">
+															<form:option value="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
+														</c:if>
+													</c:forEach>
+												</c:forEach>
+											</form:select>
+											<input type="hidden" name="orderItemId" value="${orderItem.id}" />											
+											<button type="submit" class="btn btn-success btn-float-left-margin-right"
+												value="${labelAddButton}"><span class="glyphicon glyphicon-plus-sign glyphicon-padding-right"><jsp:text /></span>
+													${labelAddButton}
+											</button>
+										</form:form>
+									</td>
+									<td>
+										<!-- Start form for adding extras to items -->
+										<spring:url var="removeOrderOptionURL"	value="/diningTables/${diningTable.id}/removeOrderItems" /> 
+										<form:form name="removeOrderOption" commandName="restaurant" action="${removeOrderOptionURL}" method="delete">
 											<form:select path="menu.foodCategories" multiple="false" name="orderOptionName">
 												<form:option value="NONE" label="---Select---"></form:option>
 												<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">

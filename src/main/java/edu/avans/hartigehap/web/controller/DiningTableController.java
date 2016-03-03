@@ -48,6 +48,15 @@ public class DiningTableController {
     	
     	return "redirect:/diningTables/" + diningTableId;
     }
+    
+    @RequestMapping(value = "/diningTables/{diningTableId}/removeOrderItems", method = RequestMethod.DELETE)
+    public String removeOrderOption(@PathVariable("diningTableId") String diningTableId, @RequestParam String orderItemId, @RequestParam(value="menu.foodCategories") String menuItemName,
+            Model uiModel)	{
+    	
+    	log.info("diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId + ", selected menu item: " + menuItemName);
+    	
+    	return "redirect:/diningTables/" + diningTableId;
+    }
 
     @RequestMapping(value = "/diningTables/{diningTableId}/menuItems", method = RequestMethod.POST)
     public String addMenuItem(@PathVariable("diningTableId") String diningTableId, @RequestParam String menuItemName,

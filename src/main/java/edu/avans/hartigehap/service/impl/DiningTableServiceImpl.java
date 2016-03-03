@@ -85,6 +85,13 @@ public class DiningTableServiceImpl implements DiningTableService {
         diningTable.getCurrentBill().getCurrentOrder().deleteOrderItem(menuItem);
     }
 
+    public void removeOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId){
+    	log.info("enter addOrderOption " + diningTable.getTableNr() + " - menuItemName: " + menuItemName + "- orderItemId: " + orderItemId);
+    	OrderItem orderItem = orderItemRepository.findOne(orderItemId);
+    	MenuItem menuItem = menuItemRepository.findOne(menuItemName);
+    	diningTable.getCurrentBill().getCurrentOrder().addOrderOption(menuItem, orderItem);
+    }
+    
     public void submitOrder(DiningTable diningTable) throws StateException {
         diningTable.getCurrentBill().submitOrder();
 
