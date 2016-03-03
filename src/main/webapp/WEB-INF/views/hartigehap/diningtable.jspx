@@ -86,17 +86,23 @@
 								<tr>
 									<td class="capitalise">${orderItem.description()}</td>
 									<td>
-										<form:select path="restaurant.menu.foodCategories">
-										<c:set var="addons" scope="session" value="Extra options"/>
-											<form:option value="NONE" label="---Select---"></form:option>
-											<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">
-												<c:forEach items="${foodCategory.menuItems}" var="menuItem">
-													<c:if test="${foodCategory.tag == addons}">
-														<form:option value="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
-													</c:if>
+										<!-- Start form for adding extras to items -->
+										<form:select path="restaurant.menu.foodCategories" multiple="false">
+											<c:set var="addons" scope="session" value="Extra options"/>
+												<form:option value="NONE" label="---Select---"></form:option>
+												<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">
+													<c:forEach items="${foodCategory.menuItems}" var="menuItem">
+														<c:if test="${foodCategory.tag == addons}">
+															<form:option value="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
+														</c:if>	
+													</c:forEach>
 												</c:forEach>
-											</c:forEach>
-										</form:select>
+											</form:select>
+										<spring:url var="addOrderOptionURL" value="/diningTables/${diningTable.id}/orderItems" />
+										<form:form name="addOrderOption" action="${addOrderOptionURL}" method="post">
+											<input type="hidden" name="orderItemName" value="${orderItem.id}" />
+											<button type="submit" class="btn btn-success btn-float-left-margin-right" value="${labelAddButton}"><span class="glyphicon glyphicon-plus-sign glyphicon-padding-right"><jsp:text /></span> ${labelAddButton}</button>
+										</form:form>
 									</td>
 									<td>${orderItem.quantity}</td>
 								</tr>

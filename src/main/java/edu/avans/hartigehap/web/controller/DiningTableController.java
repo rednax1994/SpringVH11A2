@@ -34,6 +34,15 @@ public class DiningTableController {
 
         return "hartigehap/diningtable";
     }
+    
+    @RequestMapping(value = "/diningTables/{diningTableId}/orderItems", method = RequestMethod.POST)
+    public String addOrderOption(@PathVariable("diningTableId") String diningTableId, @RequestParam String orderItemName,
+            Model uiModel){
+    	
+    	log.info(diningTableId + ", " + orderItemName);
+    	
+    	return "redirect:/diningTables/" + diningTableId;
+    }
 
     @RequestMapping(value = "/diningTables/{diningTableId}/menuItems", method = RequestMethod.POST)
     public String addMenuItem(@PathVariable("diningTableId") String diningTableId, @RequestParam String menuItemName,
