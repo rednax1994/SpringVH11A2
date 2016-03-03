@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -104,10 +103,24 @@ public class Order extends DomainObject {
         }
     }
     
+    //Only works on the last added item
     public void addOrderOption(MenuItem menuItem, OrderItem orderItem){
     	log.info("started addOrderOption with menuItem: " + menuItem.getId() + " - and orderItem: " + orderItem.getId());
-    	
+    	OrderOption orderOption = new OrderOption(orderItem, menuItem, 1); 
+    	if(orderItem.getMenuItem().equals(menuItem)){
+	    	for(OrderItem var : orderItems){
+	    		if(menuItem.getId() == var.getMenuItem().getId()){
+	    			orderItems.remove(orderItem);
+	    			var.incrementQuantity();
+	    			orderItems.add(var);
+	    		}
+	    	}
+    	}else {
+    		orderItems.remove(orderItem);
+    		orderItems.add(orderOption);
+    	}
     }
+    
     
     public void deleteOrderItem(MenuItem menuItem) {
         Iterator<OrderItem> orderItemIterator = orderItems.iterator();

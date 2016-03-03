@@ -201,13 +201,13 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         orderItemRepository.save(orderItem);
         OrderOption orderOption = new OrderOption(orderItem, mealOptions.get(1), 1); // mushrooms
         orderItemRepository.save(orderOption);
-        OrderOption orderOption2 = new OrderOption(orderOption, mealOptions.get(1), 1); // mushrooms
+        OrderOption orderOption2 = new OrderOption(orderOption, mealOptions.get(0), 1); // mushrooms
         orderItemRepository.save(orderOption2);
-        OrderOption orderOption3 = new OrderOption(orderOption2, mealOptions.get(0), 1); // bell pepper
-        orderItemRepository.save(orderOption3);
+//        OrderOption orderOption3 = new OrderOption(orderOption2, mealOptions.get(0), 1); // bell pepper
+//        orderItemRepository.save(orderOption3);
 
-        log.info("***************************** description: " + orderOption3.description());
-        log.info("***************************** price: " + orderOption3.getPrice());
+        log.info("***************************** description: " + orderOption2.description());
+        log.info("***************************** price: " + orderOption2.getPrice());
 
 
         // add the decorated pizza to the current order to table 1 of the hmmm burger (to show it in the GUI)
@@ -218,7 +218,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         t = it.next(); // this is dining table 1
         }
 
-        t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption3);
+        t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption2);
 
     }
 }

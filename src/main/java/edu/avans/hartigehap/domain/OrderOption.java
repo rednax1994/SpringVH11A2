@@ -20,6 +20,5 @@ public class OrderOption extends DecoratedOrderItem{
 	
 	public OrderOption(OrderItem orderitem, MenuItem menuItem, int quantity) {
 		super(orderitem, menuItem, quantity);
-    }
-	
+    }	
 }
