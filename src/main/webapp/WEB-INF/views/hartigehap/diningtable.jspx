@@ -87,21 +87,24 @@
 									<td class="capitalise">${orderItem.description()}</td>
 									<td>
 										<!-- Start form for adding extras to items -->
-										<form:select path="restaurant.menu.foodCategories" multiple="false">
-											<c:set var="addons" scope="session" value="Extra options"/>
+										
+										<spring:url var="addOrderOptionURL"	value="/diningTables/${diningTable.id}/orderItems" /> 
+										<form:form name="addOrderOption" commandName="restaurant" action="${addOrderOptionURL}" method="post">
+											<form:select path="menu.foodCategories" multiple="false" name="orderOptionName">
 												<form:option value="NONE" label="---Select---"></form:option>
 												<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">
 													<c:forEach items="${foodCategory.menuItems}" var="menuItem">
 														<c:if test="${foodCategory.tag == addons}">
 															<form:option value="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
-														</c:if>	
+														</c:if>
 													</c:forEach>
 												</c:forEach>
 											</form:select>
-										<spring:url var="addOrderOptionURL" value="/diningTables/${diningTable.id}/orderItems" />
-										<form:form name="addOrderOption" action="${addOrderOptionURL}" method="post">
-											<input type="hidden" name="orderItemName" value="${orderItem.id}" />
-											<button type="submit" class="btn btn-success btn-float-left-margin-right" value="${labelAddButton}"><span class="glyphicon glyphicon-plus-sign glyphicon-padding-right"><jsp:text /></span> ${labelAddButton}</button>
+											<input type="hidden" name="orderItemId" value="${orderItem.id}" />											
+											<button type="submit" class="btn btn-success btn-float-left-margin-right"
+												value="${labelAddButton}"><span class="glyphicon glyphicon-plus-sign glyphicon-padding-right"><jsp:text /></span>
+													${labelAddButton}
+											</button>
 										</form:form>
 									</td>
 									<td>${orderItem.quantity}</td>

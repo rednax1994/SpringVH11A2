@@ -20,6 +20,8 @@ public interface DiningTableService {
     DiningTable fetchWarmedUp(Long diningTableId);
 
     void addOrderItem(DiningTable diningTable, String menuItemName);
+    
+    void addOrderOption(DiningTable diningTable, String menuItemName, Long orderItemName);
 
     void deleteOrderItem(DiningTable diningTable, String menuItemName);
 

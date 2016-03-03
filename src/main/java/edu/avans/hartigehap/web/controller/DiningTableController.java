@@ -36,10 +36,15 @@ public class DiningTableController {
     }
     
     @RequestMapping(value = "/diningTables/{diningTableId}/orderItems", method = RequestMethod.POST)
-    public String addOrderOption(@PathVariable("diningTableId") String diningTableId, @RequestParam String orderItemName,
-            Model uiModel){
+    public String addOrderOption(@PathVariable("diningTableId") String diningTableId, @RequestParam String orderItemId, @RequestParam(value="menu.foodCategories") String menuItemName,
+            Model uiModel)	{
     	
-    	log.info(diningTableId + ", " + orderItemName);
+    	log.info("diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId + ", selected menu item: " + menuItemName);
+    	
+    	DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
+    	
+    	log.info("diningTable fetched, start addOrderOption");
+    	diningTableService.addOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
     	
     	return "redirect:/diningTables/" + diningTableId;
     }
@@ -48,7 +53,7 @@ public class DiningTableController {
     public String addMenuItem(@PathVariable("diningTableId") String diningTableId, @RequestParam String menuItemName,
             Model uiModel) {
     	
-    	DiningTableCommand command = new CommandAddMenuItem(diningTableService);
+    	CommandDiningTable command = new CommandAddMenuItem(diningTableService);
     	command.execute(diningTableId, menuItemName, uiModel);
     	
         return "redirect:/diningTables/" + diningTableId;
@@ -58,7 +63,7 @@ public class DiningTableController {
     public String deleteMenuItem(@PathVariable("diningTableId") String diningTableId,
     		@PathVariable("menuItemName") String menuItemName, Model uiModel) {
     	
-    	DiningTableCommand command = new CommandRemoveMenuItem(diningTableService);
+    	CommandDiningTable command = new CommandRemoveMenuItem(diningTableService);
     	command.execute(diningTableId, menuItemName, uiModel);
 
         return "redirect:/diningTables/" + diningTableId;

@@ -23,6 +23,8 @@ public class DiningTableServiceImpl implements DiningTableService {
     private DiningTableRepository diningTableRepository;
     @Autowired
     private MenuItemRepository menuItemRepository;
+    @Autowired
+    private OrderItemRepository orderItemRepository;
 
     @Transactional(readOnly = true)
     public List<DiningTable> findAll() {
@@ -69,6 +71,13 @@ public class DiningTableServiceImpl implements DiningTableService {
     	log.info("addOrderItem started " + diningTable.getTableNr() + " - menuItemName: " + menuItemName);
         MenuItem menuItem = menuItemRepository.findOne(menuItemName);
         diningTable.getCurrentBill().getCurrentOrder().addOrderItem(menuItem);
+    }
+    
+    public void addOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId){
+    	log.info("enter addOrderOption " + diningTable.getTableNr() + " - menuItemName: " + menuItemName + "- orderItemId: " + orderItemId);
+    	OrderItem orderItem = orderItemRepository.findOne(orderItemId);
+    	MenuItem menuItem = menuItemRepository.findOne(menuItemName);
+    	diningTable.getCurrentBill().getCurrentOrder().addOrderOption(menuItem, orderItem);
     }
 
     public void deleteOrderItem(DiningTable diningTable, String menuItemName) {
