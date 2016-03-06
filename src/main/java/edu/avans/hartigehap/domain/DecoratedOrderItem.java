@@ -22,21 +22,19 @@ public abstract class DecoratedOrderItem extends OrderItem{
 	private static final long serialVersionUID = 1L;
 	
 	@OneToOne
-	private OrderItem orderitem;
+	private OrderItem orderItem;
     
-    public DecoratedOrderItem(OrderItem orderitem, MenuItem menuItem, int quantity) {
+    public DecoratedOrderItem(OrderItem orderItem, MenuItem menuItem, int quantity) {
         super(menuItem, quantity);
-        this.orderitem = orderitem;
+        this.orderItem = orderItem;
     }
 	
 	public String description(){
-		return getMenuItem().getId() + "(" + getQuantity() + ")" + " " + orderitem.description();
+		return  orderItem.description() + " " + getMenuItem().getId() + "(" + getQuantity() + ")";
 	}
 	
 	@Transient
 	public int getPrice(){
-		return getMenuItem().getPrice() * getQuantity() + orderitem.getPrice();
-		
+		return orderItem.getPrice() + getMenuItem().getPrice() * getQuantity();
 	}
-	
 }
