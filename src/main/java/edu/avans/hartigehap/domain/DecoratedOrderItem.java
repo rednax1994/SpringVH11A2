@@ -30,11 +30,11 @@ public abstract class DecoratedOrderItem extends OrderItem{
     }
 	
 	public String description(){
-		return  orderItem.description() + " " + getMenuItem().getId() + "(" + getQuantity() + ")";
+		return  orderItem.description() + " + extra " + super.description();
 	}
 	
 	@Transient
 	public int getPrice(){
-		return orderItem.getPrice() + getMenuItem().getPrice() * getQuantity();
+		return orderItem.getPrice() +  getMenuItem().getPrice() * getQuantity();
 	}
 }

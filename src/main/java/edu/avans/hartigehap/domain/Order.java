@@ -107,23 +107,49 @@ public class Order extends DomainObject {
 	// Only works on the last added item
 	public void addOrderOption(MenuItem menuItem, OrderItem orderItem) {
 		log.info("started addOrderOption with menuItem: " + menuItem.getId() + " - and orderItem: " + orderItem.getId());
-		OrderOption orderOption = new OrderOption(orderItem, menuItem, 1);
-		DecoratedOrderItem item = (DecoratedOrderItem) orderItem;
-		if (orderItem.getMenuItem().equals(menuItem)) {
-			orderItem.incrementQuantity();
-		} else if(item.getOrderItem() != null){
-			addOrderOption(menuItem,item.getOrderItem());
-		} else {
+		OrderItem orderItemCursor = orderItem;
+		boolean added = false;
+		while(orderItemCursor instanceof DecoratedOrderItem && !added) {
+			if (orderItemCursor.getMenuItem().equals(menuItem)) {
+				orderItemCursor.incrementQuantity();
+				added = true;
+			}
+			orderItemCursor = ((DecoratedOrderItem)orderItemCursor).getOrderItem();
+		}
+		if(!added) {
+			OrderOption orderOption = new OrderOption(orderItem, menuItem, 1);
 			orderItems.remove(orderItem);
 			orderItems.add(orderOption);
 		}
-		
 	}
 
 	public void removeOrderOption(MenuItem menuItem, OrderItem orderItem) {
 		log.info(
 				"started addOrderOption with menuItem: " + menuItem.getId() + " - and orderItem: " + orderItem.getId());
-
+		OrderItem orderItemCursor = orderItem;
+		DecoratedOrderItem previousOrderItemCursor = null;
+		boolean removed = false;
+		boolean first = true;
+		while(orderItemCursor instanceof DecoratedOrderItem && !removed) {
+			if (orderItemCursor.getMenuItem().equals(menuItem)) {
+				if(orderItemCursor.getQuantity() > 1) {
+					orderItemCursor.decrementQuantity();
+				}
+				else { // quantity == 1 so order option must be removed
+					if(first) {
+						orderItems.remove(orderItemCursor);
+						orderItems.add(((DecoratedOrderItem)orderItemCursor).getOrderItem());
+					}
+					else {
+						previousOrderItemCursor.setOrderItem(((DecoratedOrderItem)orderItemCursor).getOrderItem());
+					}
+				}
+				removed = true;
+			}
+			previousOrderItemCursor = (DecoratedOrderItem) orderItemCursor;
+			orderItemCursor = ((DecoratedOrderItem)orderItemCursor).getOrderItem();
+			first = false;
+		}
 	}
 
 	public void deleteOrderItem(MenuItem menuItem) {

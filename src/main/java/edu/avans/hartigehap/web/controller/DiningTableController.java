@@ -39,7 +39,7 @@ public class DiningTableController {
     public String addOrderOption(@PathVariable("diningTableId") String diningTableId, @RequestParam String orderItemId, @RequestParam(value="menu.foodCategories") String menuItemName,
             Model uiModel)	{
     	
-    	log.info("diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId + ", selected menu item: " + menuItemName);
+    	log.info("addOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId + ", selected menu item: " + menuItemName);
     	
     	DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
     	
@@ -53,7 +53,12 @@ public class DiningTableController {
     public String removeOrderOption(@PathVariable("diningTableId") String diningTableId, @RequestParam String orderItemId, @RequestParam(value="menu.foodCategories") String menuItemName,
             Model uiModel)	{
     	
-    	log.info("diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId + ", selected menu item: " + menuItemName);
+    	log.info("removeOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId + ", selected menu item: " + menuItemName);
+    	
+    	DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
+    	
+    	log.info("diningTable fetched, start removeOrderOption");
+    	diningTableService.removeOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
     	
     	return "redirect:/diningTables/" + diningTableId;
     }

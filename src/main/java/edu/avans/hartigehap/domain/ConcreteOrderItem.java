@@ -21,5 +21,4 @@ public class ConcreteOrderItem extends OrderItem{
 	public ConcreteOrderItem(MenuItem menuItem, int quantity) {
         super(menuItem, quantity);
     }
-	
 }
