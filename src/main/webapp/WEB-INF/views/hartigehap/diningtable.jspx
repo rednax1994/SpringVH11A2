@@ -81,10 +81,9 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>${tableItem}</th>
+								<th>${tableItem} / ${tableQuantity}</th>
 								<th>${tableActions}</th>
 								<th>${tableActions}</th>
-								<th>${tableQuantity}</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -151,8 +150,6 @@
 											</button>
 										</form:form>
 									</td>
-									
-									<td>${orderItem.quantity}</td>
 								</tr>
 							</c:forEach>
 						</tbody>
