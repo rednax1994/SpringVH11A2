@@ -36,7 +36,7 @@ public class OrderItemRepositoryImpl implements Container {
         @Override
         public Order next() {
 
-            if(this.hasNext()){
+            if(hasNext()){
                 return list.get(index++);
             }
             return null;
