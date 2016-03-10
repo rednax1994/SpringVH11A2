@@ -13,9 +13,8 @@ import org.springframework.stereotype.Component;
 public class MyExecutionTimeAspect {
     private static final Logger LOGGER = LoggerFactory.getLogger(MyExecutionTimeAspect.class);
     
-    @Pointcut("@annotation(edu.avans.hartigehap.aop.MyExecutionTime) && execution(* edu.avans.hartigehap..*(..))") // the
-                                                                                                                   // pointcut
-                                                                                                                   // expression
+    // the pointcut expression
+    @Pointcut("@annotation(edu.avans.hartigehap.aop.MyExecutionTime) && execution(* edu.avans.hartigehap..*(..))")
     public void myExecutionTimeAnnotation() {
         // the pointcut signature
     }
