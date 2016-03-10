@@ -24,35 +24,35 @@ import lombok.ToString;
 @NoArgsConstructor
 public abstract class OrderItem extends DomainObject {
     private static final long serialVersionUID = 1L;
-
+    
     // unidirectional many-to-one; deliberately no cascade
     @ManyToOne
     private MenuItem menuItem;
-
+    
     private int quantity;
-
+    
     public OrderItem(MenuItem menuItem, int quantity) {
         this.menuItem = menuItem;
         this.quantity = quantity;
     }
-
+    
     /* business logic */
-
+    
     public void incrementQuantity() {
         this.quantity++;
     }
-
+    
     public void decrementQuantity() {
         assert quantity > 0 : "quantity cannot be below 0";
         this.quantity--;
     }
-
+    
     @Transient
     public int getPrice() {
         return menuItem.getPrice() * quantity;
     }
-
-    public String description(){
+    
+    public String description() {
         return menuItem.getId() + "(" + getQuantity() + "x)";
     }
 }

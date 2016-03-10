@@ -1,45 +1,43 @@
 package edu.avans.hartigehap.service.impl;
+
 import java.util.List;
 
 import edu.avans.hartigehap.domain.Order;
 import edu.avans.hartigehap.repository.Container;
 import edu.avans.hartigehap.repository.Iterator;
 
-
 public class OrderItemRepositoryImpl implements Container {
-
-
+    
     @Override
     public Iterator getIterator(List<Order> list) {
         return new NameIterator(list);
     }
-
+    
     private class NameIterator implements Iterator {
-
+        
         int index;
         List<Order> list;
-
-        public NameIterator(List<Order> list){
+        
+        public NameIterator(List<Order> list) {
             this.list = list;
         }
-
-
+        
         @Override
         public boolean hasNext() {
-
-            if(index < list.size()){
+            
+            if (index < list.size()) {
                 return true;
             }
             return false;
         }
-
+        
         @Override
         public Order next() {
-
-            if(hasNext()){
+            
+            if (hasNext()) {
                 return list.get(index++);
             }
             return null;
-        }		
+        }
     }
 }

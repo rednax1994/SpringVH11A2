@@ -18,14 +18,15 @@ import lombok.ToString;
 // optional
 @Table(name = "OWNERS")
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@Getter @Setter
+@Getter
+@Setter
 @ToString(callSuper = true, includeFieldNames = true, of = { "name" })
 public class Owner extends DomainObject {
     private static final long serialVersionUID = 1L;
-
+    
     private String name;
-
+    
     @ManyToMany
     private Collection<Restaurant> restaurants = new ArrayList<Restaurant>();
-
+    
 }

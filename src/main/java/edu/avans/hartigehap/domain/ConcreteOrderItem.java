@@ -16,9 +16,9 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
-public class ConcreteOrderItem extends OrderItem{  
+public class ConcreteOrderItem extends OrderItem {
     private static final long serialVersionUID = 1L;
-
+    
     public ConcreteOrderItem(MenuItem menuItem, int quantity) {
         super(menuItem, quantity);
     }

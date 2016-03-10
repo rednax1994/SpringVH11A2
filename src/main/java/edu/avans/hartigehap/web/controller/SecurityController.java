@@ -14,10 +14,10 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class SecurityController {
-
+    
     @Autowired
     private MessageSource messageSource;
-
+    
     @RequestMapping("/loginfail")
     public String loginFail(Model uiModel, Locale locale) {
         log.info("Login failed detected");
@@ -25,5 +25,5 @@ public class SecurityController {
                 new Message("error", messageSource.getMessage("message_login_fail", new Object[] {}, locale)));
         return "hartigehap/listrestaurants";
     }
-
+    
 }

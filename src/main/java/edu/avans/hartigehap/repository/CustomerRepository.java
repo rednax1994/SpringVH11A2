@@ -12,10 +12,10 @@ import edu.avans.hartigehap.domain.Customer;
 import edu.avans.hartigehap.domain.Restaurant;
 
 public interface CustomerRepository extends PagingAndSortingRepository<Customer, Long> {
-
+    
     List<Customer> findByFirstNameAndLastName(String firstName, String lastName);
-
+    
     List<Customer> findByRestaurants(Collection<Restaurant> restaurants, Sort sort);
-
+    
     Page<Customer> findByRestaurants(Collection<Restaurant> restaurants, Pageable pageable);
 }

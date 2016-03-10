@@ -21,10 +21,10 @@ import edu.avans.hartigehap.service.RestaurantService;
 @Repository
 @Transactional
 public class RestaurantServiceImpl implements RestaurantService {
-
+    
     @Autowired
     private RestaurantRepository restaurantRepository;
-
+    
     @Transactional(readOnly = true)
     public List<Restaurant> findAll() {
         // MySQL and H2 return the restaurants of findAll() in different order
@@ -32,25 +32,25 @@ public class RestaurantServiceImpl implements RestaurantService {
         Sort sort = new Sort(Sort.Direction.ASC, "id");
         return Lists.newArrayList(restaurantRepository.findAll(sort));
     }
-
+    
     @Transactional(readOnly = true)
     public Restaurant findById(String restaurant) {
         return restaurantRepository.findOne(restaurant);
     }
-
+    
     public Restaurant save(Restaurant restaurant) {
         return restaurantRepository.save(restaurant);
     }
-
+    
     public void delete(String restaurant) {
         restaurantRepository.delete(restaurant);
     }
-
+    
     @Transactional(readOnly = true)
     public Page<Restaurant> findAllByPage(Pageable pageable) {
         return restaurantRepository.findAll(pageable);
     }
-
+    
     /**
      * to be able to follow associations outside the context of a transaction,
      * prefetch the associated entities by traversing the associations
@@ -60,8 +60,8 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant fetchWarmedUp(String restaurantName) {
         Restaurant restaurant = restaurantRepository.findOne(restaurantName);
         restaurant.warmup();
-
+        
         return restaurant;
     }
-
+    
 }

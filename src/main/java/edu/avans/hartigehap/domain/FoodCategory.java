@@ -28,15 +28,15 @@ import lombok.ToString;
 @NoArgsConstructor
 public class FoodCategory extends DomainObject {
     private static final long serialVersionUID = 1L;
-
+    
     private String tag;
-
+    
     // no cascade
     @ManyToMany(mappedBy = "foodCategories")
     private Collection<MenuItem> menuItems = new ArrayList<MenuItem>();
-
+    
     public FoodCategory(String tag) {
         this.tag = tag;
     }
-
+    
 }

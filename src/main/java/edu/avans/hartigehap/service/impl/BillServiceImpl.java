@@ -18,23 +18,23 @@ import edu.avans.hartigehap.service.BillService;
 @Repository
 @Transactional(rollbackFor = StateException.class)
 public class BillServiceImpl implements BillService {
-
+    
     @Autowired
     private BillRepository billRepository;
-
+    
     @Transactional(readOnly = true)
     public Bill findById(Long billId) {
         return billRepository.findOne(billId);
     }
-
+    
     public void billHasBeenPaid(Bill bill) throws StateException {
         bill.paid();
     }
-
+    
     @Transactional(readOnly = true)
     public List<Bill> findSubmittedBillsForRestaurant(Restaurant restaurant) {
         // a query created using a repository method name
-        return billRepository.findByBillStatusAndDiningTableRestaurant(
-                Bill.BillStatus.SUBMITTED, restaurant, new Sort(Sort.Direction.ASC, "submittedTime"));
+        return billRepository.findByBillStatusAndDiningTableRestaurant(Bill.BillStatus.SUBMITTED, restaurant,
+                new Sort(Sort.Direction.ASC, "submittedTime"));
     }
 }

@@ -11,11 +11,11 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class UrlUtil {
-
+    
     private UrlUtil() {
-
+        
     }
-
+    
     public static String encodeUrlPathSegment(String pathSegment, HttpServletRequest httpServletRequest) {
         String enc = httpServletRequest.getCharacterEncoding();
         if (enc == null) {
@@ -28,5 +28,5 @@ public class UrlUtil {
         }
         return pathSegment;
     }
-
+    
 }

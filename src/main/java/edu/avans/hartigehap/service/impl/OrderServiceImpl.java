@@ -22,16 +22,16 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Transactional(rollbackFor = StateException.class)
 @Slf4j
-public class OrderServiceImpl implements OrderService, Container{
-
+public class OrderServiceImpl implements OrderService, Container {
+    
     @Autowired
     private OrderRepository orderRepository;
-
+    
     @Transactional(readOnly = true)
     public Order findById(Long orderId) {
         return orderRepository.findOne(orderId);
     }
-
+    
     // find all submitted orders (so for complete restaurant), ordered by submit
     // time
     // this method serves as an example of:
@@ -40,25 +40,25 @@ public class OrderServiceImpl implements OrderService, Container{
     // * a repository with a custom method implementation
     @Transactional(readOnly = true)
     public List<Order> findSubmittedOrdersForRestaurant(Restaurant restaurant) {
-
+        
         // a repository with a custom method implementation
         // the custom method implementation uses a named query which is
         // invoked using an entityManager
         List<Order> submittedOrdersList = orderRepository.findSubmittedOrdersForRestaurant(restaurant);
-
+        
         log.info("findSubmittedOrdersForRestaurant using named query");
         Iterator it = getIterator(submittedOrdersList);
-
+        
         while (it.hasNext()) {
             Order order = it.next();
             log.info("submittedOrder = " + order.getId() + ", for table = " + order.getBill().getDiningTable().getId()
                     + ", submitted time = " + order.getSubmittedTime());
         }
-
+        
         // a query created using a repository method name
         List<Order> submittedOrdersListAlternative = orderRepository.findByOrderStatusAndBillDiningTableRestaurant(
                 Order.OrderStatus.SUBMITTED, restaurant, new Sort(Sort.Direction.ASC, "submittedTime"));
-
+        
         log.info("findSubmittedOrdersForRestaurant using query created using repository method name");
         ListIterator<Order> italt = submittedOrdersListAlternative.listIterator();
         while (italt.hasNext()) {
@@ -66,66 +66,66 @@ public class OrderServiceImpl implements OrderService, Container{
             log.info("submittedOrder = " + order.getId() + ", for table = " + order.getBill().getDiningTable().getId()
                     + ", submitted time = " + order.getSubmittedTime());
         }
-
+        
         return submittedOrdersList;
     }
-
+    
     @Transactional(readOnly = true)
     public List<Order> findPlannedOrdersForRestaurant(Restaurant restaurant) {
         // a query created using a repository method name
-        return orderRepository.findByOrderStatusAndBillDiningTableRestaurant(
-                Order.OrderStatus.PLANNED, restaurant, new Sort(Sort.Direction.ASC, "plannedTime"));
+        return orderRepository.findByOrderStatusAndBillDiningTableRestaurant(Order.OrderStatus.PLANNED, restaurant,
+                new Sort(Sort.Direction.ASC, "plannedTime"));
     }
-
+    
     @Transactional(readOnly = true)
     public List<Order> findPreparedOrdersForRestaurant(Restaurant restaurant) {
         // a query created using a repository method name
-        return orderRepository.findByOrderStatusAndBillDiningTableRestaurant(
-                Order.OrderStatus.PREPARED, restaurant, new Sort(Sort.Direction.ASC, "preparedTime"));
+        return orderRepository.findByOrderStatusAndBillDiningTableRestaurant(Order.OrderStatus.PREPARED, restaurant,
+                new Sort(Sort.Direction.ASC, "preparedTime"));
     }
-
+    
     public void planOrder(Order order) throws StateException {
         order.plan();
     }
-
+    
     public void orderPrepared(Order order) throws StateException {
         order.prepared();
     }
-
+    
     public void orderServed(Order order) throws StateException {
         order.served();
     }
-
+    
     @Override
     public Iterator getIterator(List<Order> submittedOrdersList) {
         return new OrderIterator(submittedOrdersList);
     }
-
+    
     private class OrderIterator implements Iterator {
-
+        
         int index;
         List<Order> list;
-
+        
         public OrderIterator(List<Order> list) {
             this.list = list;
         }
-
+        
         @Override
         public boolean hasNext() {
-
-            if(index < list.size()){
+            
+            if (index < list.size()) {
                 return true;
             }
             return false;
         }
-
+        
         @Override
         public Order next() {
-
-            if(this.hasNext()){
+            
+            if (this.hasNext()) {
                 return list.get(index++);
             }
             return null;
-        }		
+        }
     }
 }

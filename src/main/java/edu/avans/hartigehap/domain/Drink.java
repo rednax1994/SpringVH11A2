@@ -18,18 +18,18 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Drink extends MenuItem {
     private static final long serialVersionUID = 1L;
-
+    
     private Size size;
-
+    
     public enum Size {
         SMALL, MEDIUM, LARGE
     }
-
+    
     public Drink(String id, String imageFileName, int price, Size size) {
         super(id, imageFileName, price);
         this.size = size;
-
+        
     }
-
+    
     // business logic
 }

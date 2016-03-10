@@ -11,7 +11,7 @@ import edu.avans.hartigehap.domain.Restaurant;
 
 public interface OwnerRepository extends PagingAndSortingRepository<Owner, Long> {
     List<Owner> findByRestaurants(Collection<Restaurant> restaurants, Sort sort);
-
+    
     List<Owner> findByName(String name);
-
+    
 }

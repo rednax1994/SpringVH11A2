@@ -28,7 +28,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 /**
  * 
  * @author Erco
@@ -42,15 +41,15 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Customer extends DomainObject {
     private static final long serialVersionUID = 1L;
-
+    
     @NotEmpty(message = "{validation.firstname.NotEmpty.message}")
     @Size(min = 3, max = 60, message = "{validation.firstname.Size.message}")
     private String firstName;
-
+    
     @NotEmpty(message = "{validation.lastname.NotEmpty.message}")
     @Size(min = 1, max = 40, message = "{validation.lastname.Size.message}")
     private String lastName;
-
+    
     // works with hibernate 3.x
     // @Type(type="org.joda.time.contrib.hibernate.PersistentDateTime")
     // to allow using Joda's DateTime with hibernate 4.x use:
@@ -58,26 +57,26 @@ public class Customer extends DomainObject {
     // needed to allow changing a date in the GUI
     @DateTimeFormat(iso = ISO.DATE)
     private DateTime birthDate;
-
+    
     private int partySize;
-
+    
     private String description;
-
+    
     @Basic(fetch = FetchType.LAZY)
     @Lob
     @Column(name = "PHOTO")
     private byte[] photo;
-
+    
     // no cascading
     @ManyToMany
     private Collection<Restaurant> restaurants = new ArrayList<Restaurant>();
-
+    
     // no cascading
     // bidirectional one-to-many; mapping on the database happens at the many
     // side
     @OneToMany(mappedBy = "customer")
     private Collection<Bill> bills = new ArrayList<Bill>();
-
+    
     public Customer(String firstName, String lastName, DateTime birthDate, int partySize, String description,
             byte[] photo) {
         this.firstName = firstName;
@@ -87,7 +86,7 @@ public class Customer extends DomainObject {
         this.description = description;
         this.photo = photo.clone();
     }
-
+    
     // This method only updates user-editable fields
     // id, version, restaurants, bills are considered not user-editable
     public void updateEditableFields(Customer customer) {
@@ -98,17 +97,20 @@ public class Customer extends DomainObject {
         // hack
         // the "if" is a hack
         // when you change a customer without changing the photo, the customer
-        // object passed to the server by editcustomer has the non-changed fields
+        // object passed to the server by editcustomer has the non-changed
+        // fields
         // filled in, except for the photo.
-        // result is that changing only one field of a customer effectively deletes the photo
+        // result is that changing only one field of a customer effectively
+        // deletes the photo
         // hack: only update the photo when a new photo is passed
-        // downside of this hack: it is not possible any more to delete the photo
-        if(customer.photo.length != 0) {
+        // downside of this hack: it is not possible any more to delete the
+        // photo
+        if (customer.photo.length != 0) {
             photo = customer.photo;
         }
         partySize = customer.partySize;
     }
-
+    
     // example of a "derived property". This property can be be easily derived
     // from the property "birthDate", so no need to persist it.
     @Transient
@@ -119,7 +121,7 @@ public class Customer extends DomainObject {
         }
         return birthDateString;
     }
-
+    
     // business logic
-
+    
 }

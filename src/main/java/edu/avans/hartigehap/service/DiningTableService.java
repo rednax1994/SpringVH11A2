@@ -10,28 +10,28 @@ import edu.avans.hartigehap.domain.EmptyBillException;
 import edu.avans.hartigehap.domain.StateException;
 
 public interface DiningTableService {
-
+    
     List<DiningTable> findAll();
-
+    
     DiningTable findById(Long id);
-
+    
     DiningTable save(DiningTable diningTable);
-
+    
     void delete(Long id);
-
+    
     Page<DiningTable> findAllByPage(Pageable pageable);
-
+    
     DiningTable fetchWarmedUp(Long diningTableId);
-
+    
     void addOrderItem(DiningTable diningTable, String menuItemName);
-
+    
     void addOrderOption(DiningTable diningTable, String menuItemName, Long orderItemName);
-
+    
     void deleteOrderItem(DiningTable diningTable, String menuItemName);
-
+    
     void removeOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId);
-
+    
     void submitOrder(DiningTable diningTable) throws StateException;
-
+    
     void submitBill(DiningTable diningTable) throws StateException, EmptyBillException;
 }
