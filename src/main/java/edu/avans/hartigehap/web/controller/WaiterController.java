@@ -108,17 +108,13 @@ public class WaiterController {
             Model uiModel) {
         
         Order order = warmupRestaurantByOrder(orderId, uiModel);
-        
-        switch (event) {
-            case "orderHasBeenServed":
-                orderHasBeenServed(order);
-                break;
-            
-            default:
-                log.error("Internal error: event " + event + " not recognized");
-                break;
+        if(event == "orderHasBeenServed"){
+            orderHasBeenServed(order);
         }
-        
+        else{
+            log.error("Internal error: event " + event + " not recognized");
+        }
+     
         return "redirect:/restaurants/" + order.getBill().getDiningTable().getRestaurant().getId() + "/waiter";
     }
     
@@ -135,16 +131,12 @@ public class WaiterController {
     public String receiveBillEvent(@PathVariable("billId") String billId, @RequestParam String event, Model uiModel) {
         
         Bill bill = warmupRestaurant(billId, uiModel);
-        
-        switch (event) {
-            case "billHasBeenPaid":
-                billHasBeenPaid(bill);
-                break;
-            
-            default:
-                log.error("Internal error: event " + event + " not recognized");
-                break;
+        if(event == "billHasBeenPaid"){
+            billHasBeenPaid(bill);
         }
+        else{
+            log.error("Internal error: event " + event + " not recognized");
+        }       
         
         return "redirect:/restaurants/" + bill.getDiningTable().getRestaurant().getId() + "/waiter";
     }
