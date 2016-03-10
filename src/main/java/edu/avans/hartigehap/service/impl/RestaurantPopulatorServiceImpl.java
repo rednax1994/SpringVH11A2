@@ -34,6 +34,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorService {
     
+    public static final String HARTIGEHAP_RESTAURANT_NAME = "HartigeHap";
+    public static final String PITTIGEPANNEKOEK_RESTAURANT_NAME = "PittigePannekoek";
+    public static final String HMMMBURGER_RESTAURANT_NAME = "HmmmBurger";
+    
     @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired

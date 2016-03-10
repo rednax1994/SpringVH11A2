@@ -20,10 +20,7 @@ public class MyExecutionTimeAspect {
     }
     
     @Around("myExecutionTimeAnnotation()")
-    public Object myExecutionTimeAdvice(
-            ProceedingJoinPoint joinPoint /*
-                                           * , MyExecutionTime annotation
-                                           */) throws Throwable {
+    public Object myExecutionTimeAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
         long startMillis = System.currentTimeMillis();
         LOGGER.info("(AOP-myExecTime) Starting timing method " + joinPoint.getSignature());
         Object retVal = joinPoint.proceed();
