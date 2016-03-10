@@ -16,6 +16,7 @@ import com.google.common.collect.Lists;
 
 import edu.avans.hartigehap.domain.Owner;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.exception.MyException;
 import edu.avans.hartigehap.repository.OwnerRepository;
 import edu.avans.hartigehap.service.OwnerService;
 import edu.avans.hartigehap.service.RestaurantService;
@@ -92,7 +93,11 @@ public class OwnerServiceImpl implements OwnerService {
     public Owner removeRestaurantFromOwner(Long ownerId, String restaurantId) {
         Restaurant restaurant = restaurantService.findById(restaurantId);
         if (restaurant == null) {
-            throw new RuntimeException("restaurant not found " + restaurantId);
+            try {
+                throw new MyException("restaurant not found " + restaurantId);
+            } catch (MyException e) {
+                e.printStackTrace();
+            }
         }
         Owner owner = ownerRepository.findOne(ownerId);
         if (owner == null) {

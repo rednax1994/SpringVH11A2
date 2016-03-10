@@ -10,6 +10,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import edu.avans.hartigehap.exception.MyException;
+
 @Component
 @Aspect
 public class MyLoggingAspect {
@@ -27,10 +29,15 @@ public class MyLoggingAspect {
     }
     
     @Around("anyHartigeHapMethod()")
-    public Object loggingAroundAdvice(ProceedingJoinPoint pjp) throws Throwable {
+    public Object loggingAroundAdvice(ProceedingJoinPoint pjp) throws MyException {
         LOGGER.info("(AOP-myLogger) Before execution: " + pjp.getSignature().getDeclaringTypeName() + "."
                 + pjp.getSignature().getName());
-        Object retVal = pjp.proceed();
+        Object retVal = null;
+        try {
+            retVal = pjp.proceed();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         LOGGER.info("(AOP-myLogger) After execution: " + pjp.getSignature().getDeclaringTypeName() + "."
                 + pjp.getSignature().getName());
         return retVal;

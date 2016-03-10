@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
+import edu.avans.hartigehap.exception.MyException;
+
 @Component
 @Aspect
 public class MyExecutionTimeAspect {
@@ -20,10 +22,15 @@ public class MyExecutionTimeAspect {
     }
     
     @Around("myExecutionTimeAnnotation()")
-    public Object myExecutionTimeAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object myExecutionTimeAdvice(ProceedingJoinPoint joinPoint) throws MyException {
         long startMillis = System.currentTimeMillis();
         LOGGER.info("(AOP-myExecTime) Starting timing method " + joinPoint.getSignature());
-        Object retVal = joinPoint.proceed();
+        Object retVal = null;
+        try {
+            retVal = joinPoint.proceed();
+        } catch (Throwable e) {
+            e.printStackTrace();
+        }
         long duration = System.currentTimeMillis() - startMillis;
         LOGGER.info("(AOP-myExecTime) Call to " + joinPoint.getSignature() + " took " + duration + " ms");
         return retVal;
