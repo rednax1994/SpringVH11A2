@@ -25,89 +25,89 @@ import edu.avans.hartigehap.service.RestaurantService;
 @Transactional
 public class OwnerServiceImpl implements OwnerService {
 
-	private final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
+    private final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
 
-	@Autowired private OwnerRepository ownerRepository;
-	@Autowired private RestaurantService restaurantService;
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<Owner> findAll() {
-		List<Owner> retval = Lists.newLinkedList(ownerRepository.findAll());
-		logger.info("" + retval);
-		return retval;
-	}
+    @Autowired private OwnerRepository ownerRepository;
+    @Autowired private RestaurantService restaurantService;
 
-	@Override
-	@Transactional(readOnly = true)
-	public Owner findById(Long id) {
-		return ownerRepository.findOne(id);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Owner> findAll() {
+        List<Owner> retval = Lists.newLinkedList(ownerRepository.findAll());
+        logger.info("" + retval);
+        return retval;
+    }
 
-	@Override
-	@Transactional(readOnly = true)
-	public List<Owner> findByName(String name) {
-		return ownerRepository.findByName(name);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public Owner findById(Long id) {
+        return ownerRepository.findOne(id);
+    }
 
-	@Override
-	public Owner save(Owner owner) {
-		return ownerRepository.save(owner);
-	}
+    @Override
+    @Transactional(readOnly = true)
+    public List<Owner> findByName(String name) {
+        return ownerRepository.findByName(name);
+    }
 
-	@Override
-	public void delete(Long id) {
-		ownerRepository.delete(id);		
-	}
+    @Override
+    public Owner save(Owner owner) {
+        return ownerRepository.save(owner);
+    }
 
-	@Override
-	public List<Owner> findByRestaurant(String restaurantId) {
-		Restaurant restaurant = restaurantService.findById(restaurantId);
-		return ownerRepository.findByRestaurants(Arrays.asList(new Restaurant[]{restaurant}), new Sort(Sort.Direction.ASC, "name"));
-	}
+    @Override
+    public void delete(Long id) {
+        ownerRepository.delete(id);		
+    }
 
-	@Override
-	public Owner addRestaurantToOwner(String restaurantId, Owner owner) {
-		// start tx - restaurant now attached. The owner is detached.
-		Restaurant restaurant = restaurantService.findById(restaurantId);
-		logger.debug("restaurant: {}", restaurant);
-		if (restaurant == null) {
-			logger.debug("Cannot find Restaurant {}", restaurantId);
-			return null;
-		}
+    @Override
+    public List<Owner> findByRestaurant(String restaurantId) {
+        Restaurant restaurant = restaurantService.findById(restaurantId);
+        return ownerRepository.findByRestaurants(Arrays.asList(new Restaurant[]{restaurant}), new Sort(Sort.Direction.ASC, "name"));
+    }
 
-		if (!owner.getRestaurants().contains(restaurant)) {
-			owner.getRestaurants().add(restaurant);
-			restaurant.getOwners().add(owner);
-		}
-		Owner ownerSaved = ownerRepository.save(owner);
-		logger.debug("return: {}", ownerSaved);
-		return ownerSaved;
-	}
+    @Override
+    public Owner addRestaurantToOwner(String restaurantId, Owner owner) {
+        // start tx - restaurant now attached. The owner is detached.
+        Restaurant restaurant = restaurantService.findById(restaurantId);
+        logger.debug("restaurant: {}", restaurant);
+        if (restaurant == null) {
+            logger.debug("Cannot find Restaurant {}", restaurantId);
+            return null;
+        }
 
-	@Override
-	public Owner removeRestaurantFromOwner(Long ownerId, String restaurantId) {
-		Restaurant restaurant = restaurantService.findById(restaurantId);
-		if (restaurant == null) {
-			throw new RuntimeException("restaurant not found " + restaurantId);
-		}
-		Owner owner = ownerRepository.findOne(ownerId);
-		if (owner == null) {
-			logger.debug("owner not found {} - return", ownerId);
-			return null;
-		}
+        if (!owner.getRestaurants().contains(restaurant)) {
+            owner.getRestaurants().add(restaurant);
+            restaurant.getOwners().add(owner);
+        }
+        Owner ownerSaved = ownerRepository.save(owner);
+        logger.debug("return: {}", ownerSaved);
+        return ownerSaved;
+    }
 
-		Collection<Restaurant> restaurants = owner.getRestaurants();
-		if (!restaurants.contains(restaurant)) {
-			logger.debug("restaurant {} not associated to customer - return", restaurantId, ownerId);
-			logger.debug("return: {}", owner);
-			return owner;
-		}
+    @Override
+    public Owner removeRestaurantFromOwner(Long ownerId, String restaurantId) {
+        Restaurant restaurant = restaurantService.findById(restaurantId);
+        if (restaurant == null) {
+            throw new RuntimeException("restaurant not found " + restaurantId);
+        }
+        Owner owner = ownerRepository.findOne(ownerId);
+        if (owner == null) {
+            logger.debug("owner not found {} - return", ownerId);
+            return null;
+        }
 
-		restaurants.remove(restaurant);
-		Owner retval = ownerRepository.save(owner);
-		logger.debug("return: {}", retval);
-		return retval;
-	}
+        Collection<Restaurant> restaurants = owner.getRestaurants();
+        if (!restaurants.contains(restaurant)) {
+            logger.debug("restaurant {} not associated to customer - return", restaurantId, ownerId);
+            logger.debug("return: {}", owner);
+            return owner;
+        }
+
+        restaurants.remove(restaurant);
+        Owner retval = ownerRepository.save(owner);
+        logger.debug("return: {}", retval);
+        return retval;
+    }
 
 }

@@ -78,7 +78,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
 
         createMealOption("bell pepper", "pizza.jpg", 2, "easy", Arrays.<FoodCategory> asList(foodCats.get(7)));
         createMealOption("mushrooms", "pizza.jpg", 3, "easy", Arrays.<FoodCategory> asList(foodCats.get(7)));
-        
+
         // create Drinks
         createDrink("Large beer", "beer.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(5)));
         createDrink("Medium beer", "beer.jpg", 1, Drink.Size.MEDIUM, Arrays.<FoodCategory> asList(foodCats.get(5)));
@@ -98,13 +98,13 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     }
 
     private void createMealOption(String name, String image, int price, String recipe, List<FoodCategory> foodCats) {
-    	Meal meal = new Meal(name, image, price, recipe);
-    	meal.addFoodCategories(foodCats);
-    	meal = menuItemRepository.save(meal);
-    	mealOptions.add(meal);
+        Meal meal = new Meal(name, image, price, recipe);
+        meal.addFoodCategories(foodCats);
+        meal = menuItemRepository.save(meal);
+        mealOptions.add(meal);
     }
 
-    
+
     private void createFoodCategory(String tag) {
         FoodCategory foodCategory = new FoodCategory(tag);
         foodCategory = foodCategoryRepository.save(foodCategory);
@@ -112,7 +112,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     }
 
     private void createMeal(String name, String image, int price, String recipe, List<FoodCategory> foodCats) {
-        
+
         Meal meal = new Meal(name, image, price, recipe);
         // as there is no cascading between FoodCategory and MenuItem (both
         // ways), it is important to first
@@ -187,7 +187,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     public void createRestaurantsWithInventory() {
 
         createCommonEntities();
-        
+
         Restaurant restaurant = new Restaurant(HARTIGEHAP_RESTAURANT_NAME, "deHartigeHap.jpg");
         restaurant = populateRestaurant(restaurant);
 
@@ -196,18 +196,18 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
 
         restaurant = new Restaurant(HMMMBURGER_RESTAURANT_NAME, "deHmmmBurger.jpg");
         restaurant = populateRestaurant(restaurant);
-        
+
         ConcreteOrderItem orderItem = new ConcreteOrderItem(meals.get(3), 1); // pizza
         orderItemRepository.save(orderItem);
         OrderOption orderOption = new OrderOption(orderItem, mealOptions.get(1), 1); // mushrooms
         orderItemRepository.save(orderOption);
         //OrderOption orderOption2 = new OrderOption(orderOption, mealOptions.get(0), 1); // mushrooms
         //orderItemRepository.save(orderOption2);
-//        OrderOption orderOption3 = new OrderOption(orderOption2, mealOptions.get(0), 1); // bell pepper
-//        orderItemRepository.save(orderOption3);
+        //        OrderOption orderOption3 = new OrderOption(orderOption2, mealOptions.get(0), 1); // bell pepper
+        //        orderItemRepository.save(orderOption3);
 
-        //log.info("***************************** description: " + orderOption2.description());
-        //log.info("***************************** price: " + orderOption2.getPrice());
+        log.info("***************************** description: " + orderOption.description());
+        log.info("***************************** price: " + orderOption.getPrice());
 
 
         // add the decorated pizza to the current order to table 1 of the hmmm burger (to show it in the GUI)
@@ -215,7 +215,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         DiningTable t = null;
         Iterator<DiningTable> it = diningTables.iterator();
         if(it.hasNext()) {
-        t = it.next(); // this is dining table 1
+            t = it.next(); // this is dining table 1
         }
 
         t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption);

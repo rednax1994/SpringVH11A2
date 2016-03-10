@@ -2,17 +2,21 @@ package edu.avans.hartigehap.service.impl;
 
 import java.util.List;
 import java.util.ListIterator;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import edu.avans.hartigehap.service.*;
-import edu.avans.hartigehap.domain.*;
+
+import edu.avans.hartigehap.domain.Order;
+import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.StateException;
 import edu.avans.hartigehap.repository.Container;
 import edu.avans.hartigehap.repository.Iterator;
 import edu.avans.hartigehap.repository.OrderRepository;
+import edu.avans.hartigehap.service.OrderService;
+import lombok.extern.slf4j.Slf4j;
 
 @Service("orderService")
 @Repository
@@ -44,7 +48,7 @@ public class OrderServiceImpl implements OrderService, Container{
 
         log.info("findSubmittedOrdersForRestaurant using named query");
         Iterator it = getIterator(submittedOrdersList);
-        
+
         while (it.hasNext()) {
             Order order = it.next();
             log.info("submittedOrder = " + order.getId() + ", for table = " + order.getBill().getDiningTable().getId()
@@ -94,34 +98,34 @@ public class OrderServiceImpl implements OrderService, Container{
 
     @Override
     public Iterator getIterator(List<Order> submittedOrdersList) {
-       return new OrderIterator(submittedOrdersList);
+        return new OrderIterator(submittedOrdersList);
     }
 
     private class OrderIterator implements Iterator {
 
-       int index;
-       List<Order> list;
+        int index;
+        List<Order> list;
 
-       public OrderIterator(List<Order> list) {
-		this.list = list;
-	}
+        public OrderIterator(List<Order> list) {
+            this.list = list;
+        }
 
-	@Override
-       public boolean hasNext() {
-       
-          if(index < list.size()){
-             return true;
-          }
-          return false;
-       }
+        @Override
+        public boolean hasNext() {
 
-       @Override
-       public Order next() {
-       
-          if(this.hasNext()){
-             return list.get(index++);
-          }
-          return null;
-       }		
+            if(index < list.size()){
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public Order next() {
+
+            if(this.hasNext()){
+                return list.get(index++);
+            }
+            return null;
+        }		
     }
 }
