@@ -96,7 +96,7 @@ public class OwnerServiceImpl implements OwnerService {
             try {
                 throw new MyException("restaurant not found " + restaurantId);
             } catch (MyException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
             }
         }
         Owner owner = ownerRepository.findOne(ownerId);
