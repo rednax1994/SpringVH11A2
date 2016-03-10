@@ -47,7 +47,7 @@ public class DiningTableController {
 
     @RequestMapping(value = "/orderItems/{orderItemId}/orderOptions", method = RequestMethod.POST)
     public String addOrderOption(@PathVariable("orderItemId") String orderItemId, @RequestParam String diningTableId,
-            @RequestParam(value = "menu.foodCategories") String menuItemName, Model uiModel) {
+            @RequestParam(value = "menu.foodCategories") String menuItemName) {
 
         log.info("addOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId
                 + ", selected menu item: " + menuItemName);
@@ -62,8 +62,7 @@ public class DiningTableController {
 
     @RequestMapping(value = "/orderItems/{orderItemId}/orderOptions", method = RequestMethod.DELETE)
     public String removeOrderOption(@PathVariable("orderItemId") String orderItemId,
-            @RequestParam String diningTableId, @RequestParam(value = "menu.foodCategories") String menuItemName,
-            Model uiModel) {
+            @RequestParam String diningTableId, @RequestParam(value = "menu.foodCategories") String menuItemName) {
 
         log.info("removeOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId
                 + ", selected menu item: " + menuItemName);
