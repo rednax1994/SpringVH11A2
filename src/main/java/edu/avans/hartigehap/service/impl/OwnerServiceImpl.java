@@ -25,7 +25,7 @@ import edu.avans.hartigehap.service.RestaurantService;
 @Transactional
 public class OwnerServiceImpl implements OwnerService {
 
-    private final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
+    private static final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
 
     @Autowired private OwnerRepository ownerRepository;
     @Autowired private RestaurantService restaurantService;
