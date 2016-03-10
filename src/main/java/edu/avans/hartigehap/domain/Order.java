@@ -92,7 +92,6 @@ public class Order extends DomainObject {
         boolean found = false;
         while (orderItemIterator.hasNext()) {
             OrderItem orderItem = orderItemIterator.next();
-            // log.info(orderItem.toString());
             if (orderItem.getMenuItem().equals(menuItem)) {
                 orderItem.incrementQuantity();
                 found = true;
