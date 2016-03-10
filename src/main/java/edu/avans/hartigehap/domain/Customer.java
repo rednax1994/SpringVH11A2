@@ -78,7 +78,6 @@ public class Customer extends DomainObject {
     @OneToMany(mappedBy = "customer")
     private Collection<Bill> bills = new ArrayList<Bill>();
 
-    // TODO not complete (bills)
     public Customer(String firstName, String lastName, DateTime birthDate, int partySize, String description,
             byte[] photo) {
         this.firstName = firstName;
