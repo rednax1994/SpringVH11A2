@@ -25,7 +25,7 @@ import edu.avans.hartigehap.service.RestaurantService;
 @Transactional
 public class OwnerServiceImpl implements OwnerService {
 
-    private static final Logger logger = LoggerFactory.getLogger(OwnerServiceImpl.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.class);
 
     @Autowired private OwnerRepository ownerRepository;
     @Autowired private RestaurantService restaurantService;
@@ -34,7 +34,7 @@ public class OwnerServiceImpl implements OwnerService {
     @Transactional(readOnly = true)
     public List<Owner> findAll() {
         List<Owner> retval = Lists.newLinkedList(ownerRepository.findAll());
-        logger.info("" + retval);
+        LOGGER.info("" + retval);
         return retval;
     }
 
@@ -70,9 +70,9 @@ public class OwnerServiceImpl implements OwnerService {
     public Owner addRestaurantToOwner(String restaurantId, Owner owner) {
         // start tx - restaurant now attached. The owner is detached.
         Restaurant restaurant = restaurantService.findById(restaurantId);
-        logger.debug("restaurant: {}", restaurant);
+        LOGGER.debug("restaurant: {}", restaurant);
         if (restaurant == null) {
-            logger.debug("Cannot find Restaurant {}", restaurantId);
+            LOGGER.debug("Cannot find Restaurant {}", restaurantId);
             return null;
         }
 
@@ -81,7 +81,7 @@ public class OwnerServiceImpl implements OwnerService {
             restaurant.getOwners().add(owner);
         }
         Owner ownerSaved = ownerRepository.save(owner);
-        logger.debug("return: {}", ownerSaved);
+        LOGGER.debug("return: {}", ownerSaved);
         return ownerSaved;
     }
 
@@ -93,20 +93,20 @@ public class OwnerServiceImpl implements OwnerService {
         }
         Owner owner = ownerRepository.findOne(ownerId);
         if (owner == null) {
-            logger.debug("owner not found {} - return", ownerId);
+            LOGGER.debug("owner not found {} - return", ownerId);
             return null;
         }
 
         Collection<Restaurant> restaurants = owner.getRestaurants();
         if (!restaurants.contains(restaurant)) {
-            logger.debug("restaurant {} not associated to customer - return", restaurantId, ownerId);
-            logger.debug("return: {}", owner);
+            LOGGER.debug("restaurant {} not associated to customer - return", restaurantId, ownerId);
+            LOGGER.debug("return: {}", owner);
             return owner;
         }
 
         restaurants.remove(restaurant);
         Owner retval = ownerRepository.save(owner);
-        logger.debug("return: {}", retval);
+        LOGGER.debug("return: {}", retval);
         return retval;
     }
 

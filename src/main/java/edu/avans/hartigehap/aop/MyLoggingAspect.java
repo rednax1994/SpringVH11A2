@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class MyLoggingAspect {
-    private static final Logger logger = LoggerFactory.getLogger(MyLoggingAspect.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyLoggingAspect.class);
 
     @Pointcut("execution(* edu.avans.hartigehap..*(..))")
     public void anyHartigeHapMethod(){
@@ -22,7 +22,7 @@ public class MyLoggingAspect {
 
     @Before("anyHartigeHapMethod()")
     public void loggingBeforeAdvice(JoinPoint joinPoint){
-        logger.info("(AOP-myLogger) Executing: "
+        LOGGER.info("(AOP-myLogger) Executing: "
                 + joinPoint.getSignature().getDeclaringTypeName() + "."
                 + joinPoint.getSignature().getName());
     }
@@ -30,11 +30,11 @@ public class MyLoggingAspect {
     @Around("anyHartigeHapMethod()")
     public Object loggingAroundAdvice(ProceedingJoinPoint pjp)
             throws Throwable{
-        logger.info("(AOP-myLogger) Before execution: "
+        LOGGER.info("(AOP-myLogger) Before execution: "
                 + pjp.getSignature().getDeclaringTypeName() + "."
                 + pjp.getSignature().getName());
         Object retVal = pjp.proceed();
-        logger.info("(AOP-myLogger) After execution: "
+        LOGGER.info("(AOP-myLogger) After execution: "
                 + pjp.getSignature().getDeclaringTypeName() + "."
                 + pjp.getSignature().getName());
         return retVal;

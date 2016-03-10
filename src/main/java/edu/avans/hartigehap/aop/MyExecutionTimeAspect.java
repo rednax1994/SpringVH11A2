@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component
 @Aspect
 public class MyExecutionTimeAspect {
-    private static final Logger logger = LoggerFactory.getLogger(MyLoggingAspect.class);
-    
+    private static final Logger LOGGER = LoggerFactory.getLogger(MyExecutionTimeAspect.class);
+
     @Pointcut("@annotation(edu.avans.hartigehap.aop.MyExecutionTime) && execution(* edu.avans.hartigehap..*(..))") 	// the pointcut expression
     public void myExecutionTimeAnnotation() { 
         // the pointcut signature
@@ -22,11 +22,11 @@ public class MyExecutionTimeAspect {
     public Object myExecutionTimeAdvice(ProceedingJoinPoint joinPoint /*,
 			MyExecutionTime annotation*/) throws Throwable {
         long startMillis = System.currentTimeMillis();
-        logger.info("(AOP-myExecTime) Starting timing method " +
+        LOGGER.info("(AOP-myExecTime) Starting timing method " +
                 joinPoint.getSignature());
         Object retVal = joinPoint.proceed();
         long duration = System.currentTimeMillis() - startMillis;
-        logger.info("(AOP-myExecTime) Call to " + 
+        LOGGER.info("(AOP-myExecTime) Call to " + 
                 joinPoint.getSignature()
         + " took " + duration + " ms");
         return retVal;
