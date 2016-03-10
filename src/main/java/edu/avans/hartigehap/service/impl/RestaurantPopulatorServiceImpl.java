@@ -152,24 +152,24 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         // will save everything that is reachable by cascading
         // even if it is linked to the restaurant after the save
         // operation
-        restaurant = restaurantRepository.save(restaurant);
+        Restaurant restaurant2 = restaurantRepository.save(restaurant);
 
         // every restaurant has its own dining tables
-        createDiningTables(5, restaurant);
+        createDiningTables(5, restaurant2);
 
         // for the moment every restaurant has all available food categories
         for (FoodCategory foodCat : foodCats) {
-            restaurant.getMenu().getFoodCategories().add(foodCat);
+            restaurant2.getMenu().getFoodCategories().add(foodCat);
         }
 
         // for the moment every restaurant has the same menu
         for (Meal meal : meals) {
-            restaurant.getMenu().getMeals().add(meal);
+            restaurant2.getMenu().getMeals().add(meal);
         }
 
         // for the moment every restaurant has the same menu
         for (Drink drink : drinks) {
-            restaurant.getMenu().getDrinks().add(drink);
+            restaurant2.getMenu().getDrinks().add(drink);
         }
 
         // for the moment, every customer has dined in every restaurant
@@ -177,11 +177,11 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         // restaurant and customer
         // must have been saved before linking them one to another
         for (Customer customer : customers) {
-            customer.getRestaurants().add(restaurant);
-            restaurant.getCustomers().add(customer);
+            customer.getRestaurants().add(restaurant2);
+            restaurant2.getCustomers().add(customer);
         }
 
-        return restaurant;
+        return restaurant2;
     }
 
     public void createRestaurantsWithInventory() {
@@ -201,21 +201,19 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         orderItemRepository.save(orderItem);
         OrderOption orderOption = new OrderOption(orderItem, mealOptions.get(1), 1); // mushrooms
         orderItemRepository.save(orderOption);
-        //OrderOption orderOption2 = new OrderOption(orderOption, mealOptions.get(0), 1); // mushrooms
-        //orderItemRepository.save(orderOption2);
-        //        OrderOption orderOption3 = new OrderOption(orderOption2, mealOptions.get(0), 1); // bell pepper
-        //        orderItemRepository.save(orderOption3);
 
         log.info("***************************** description: " + orderOption.description());
         log.info("***************************** price: " + orderOption.getPrice());
 
 
         // add the decorated pizza to the current order to table 1 of the hmmm burger (to show it in the GUI)
-        Collection<DiningTable> diningTables = restaurant.getDiningTables(); // dining tables of the hmmm burger
+        // dining tables of the hmmm burger
+        Collection<DiningTable> diningTables = restaurant.getDiningTables(); 
         DiningTable t = null;
         Iterator<DiningTable> it = diningTables.iterator();
         if(it.hasNext()) {
-            t = it.next(); // this is dining table 1
+            // this is dining table 1
+            t = it.next(); 
         }
 
         t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption);
