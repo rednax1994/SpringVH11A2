@@ -31,7 +31,6 @@ public abstract class OrderItem extends DomainObject {
 
     private int quantity;
     
-    
     public OrderItem(MenuItem menuItem, int quantity) {
         this.menuItem = menuItem;
         this.quantity = quantity;
@@ -54,6 +53,6 @@ public abstract class OrderItem extends DomainObject {
     }
     
     public String description(){
-    	return menuItem.getId() + "(" + getQuantity() + ")";
+    	return menuItem.getId() + "(" + getQuantity() + "x)";
     }
 }

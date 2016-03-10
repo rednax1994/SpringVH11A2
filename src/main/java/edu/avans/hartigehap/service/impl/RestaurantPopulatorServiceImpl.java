@@ -66,6 +66,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createFoodCategory("Asian");
         createFoodCategory("Alcoholic drinks");
         createFoodCategory("Energizing drinks");
+        createFoodCategory("Extra options");
 
         // create Meals
         createMeal("Spaghetti", "spaghetti.jpg", 8, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1)));
@@ -75,8 +76,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createMeal("Carpaccio", "carpaccio.jpg", 7, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(0)));
         createMeal("Ravioli", "ravioli.jpg", 8, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(1), foodCats.get(2)));
 
-        createMealOption("bell pepper", "pizza.jpg", 2, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(2)));
-        createMealOption("mushrooms", "pizza.jpg", 3, "easy", Arrays.<FoodCategory> asList(foodCats.get(3), foodCats.get(2)));
+        createMealOption("bell pepper", "pizza.jpg", 2, "easy", Arrays.<FoodCategory> asList(foodCats.get(7)));
+        createMealOption("mushrooms", "pizza.jpg", 3, "easy", Arrays.<FoodCategory> asList(foodCats.get(7)));
         
         // create Drinks
         createDrink("Large beer", "beer.jpg", 1, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(5)));
@@ -200,13 +201,13 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         orderItemRepository.save(orderItem);
         OrderOption orderOption = new OrderOption(orderItem, mealOptions.get(1), 1); // mushrooms
         orderItemRepository.save(orderOption);
-        OrderOption orderOption2 = new OrderOption(orderOption, mealOptions.get(1), 1); // mushrooms
-        orderItemRepository.save(orderOption2);
-        OrderOption orderOption3 = new OrderOption(orderOption2, mealOptions.get(0), 1); // bell pepper
-        orderItemRepository.save(orderOption3);
+        //OrderOption orderOption2 = new OrderOption(orderOption, mealOptions.get(0), 1); // mushrooms
+        //orderItemRepository.save(orderOption2);
+//        OrderOption orderOption3 = new OrderOption(orderOption2, mealOptions.get(0), 1); // bell pepper
+//        orderItemRepository.save(orderOption3);
 
-        log.info("***************************** description: " + orderOption3.description());
-        log.info("***************************** price: " + orderOption3.getPrice());
+        //log.info("***************************** description: " + orderOption2.description());
+        //log.info("***************************** price: " + orderOption2.getPrice());
 
 
         // add the decorated pizza to the current order to table 1 of the hmmm burger (to show it in the GUI)
@@ -217,7 +218,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         t = it.next(); // this is dining table 1
         }
 
-        t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption3);
+        t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption);
 
     }
 }

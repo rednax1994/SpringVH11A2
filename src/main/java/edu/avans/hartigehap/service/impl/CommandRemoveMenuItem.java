@@ -3,10 +3,10 @@ package edu.avans.hartigehap.service.impl;
 import org.springframework.ui.Model;
 
 import edu.avans.hartigehap.domain.DiningTable;
-import edu.avans.hartigehap.service.DiningTableCommand;
+import edu.avans.hartigehap.service.CommandDiningTable;
 import edu.avans.hartigehap.service.DiningTableService;
 
-public class CommandRemoveMenuItem implements DiningTableCommand{
+public class CommandRemoveMenuItem implements CommandDiningTable{
 	
 	private DiningTableService diningTableService;
 	

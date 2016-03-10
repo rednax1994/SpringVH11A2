@@ -7,23 +7,27 @@ import edu.avans.hartigehap.domain.*;
 
 public interface DiningTableService {
 
-    List<DiningTable> findAll();
+	List<DiningTable> findAll();
 
-    DiningTable findById(Long id);
+	DiningTable findById(Long id);
 
-    DiningTable save(DiningTable diningTable);
+	DiningTable save(DiningTable diningTable);
 
-    void delete(Long id);
+	void delete(Long id);
 
-    Page<DiningTable> findAllByPage(Pageable pageable);
+	Page<DiningTable> findAllByPage(Pageable pageable);
 
-    DiningTable fetchWarmedUp(Long diningTableId);
+	DiningTable fetchWarmedUp(Long diningTableId);
 
-    void addOrderItem(DiningTable diningTable, String menuItemName);
+	void addOrderItem(DiningTable diningTable, String menuItemName);
 
-    void deleteOrderItem(DiningTable diningTable, String menuItemName);
+	void addOrderOption(DiningTable diningTable, String menuItemName, Long orderItemName);
 
-    void submitOrder(DiningTable diningTable) throws StateException;
+	void deleteOrderItem(DiningTable diningTable, String menuItemName);
 
-    void submitBill(DiningTable diningTable) throws StateException, EmptyBillException;
+	void removeOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId);
+
+	void submitOrder(DiningTable diningTable) throws StateException;
+
+	void submitBill(DiningTable diningTable) throws StateException, EmptyBillException;
 }
