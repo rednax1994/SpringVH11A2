@@ -19,87 +19,89 @@ import com.google.common.collect.Lists;
 @Slf4j
 public class DiningTableServiceImpl implements DiningTableService {
 
-    @Autowired
-    private DiningTableRepository diningTableRepository;
-    @Autowired
-    private MenuItemRepository menuItemRepository;
-    @Autowired
-    private OrderItemRepository orderItemRepository;
+	@Autowired
+	private DiningTableRepository diningTableRepository;
+	@Autowired
+	private MenuItemRepository menuItemRepository;
+	@Autowired
+	private OrderItemRepository orderItemRepository;
 
-    @Transactional(readOnly = true)
-    public List<DiningTable> findAll() {
-        return Lists.newArrayList(diningTableRepository.findAll());
-    }
+	@Transactional(readOnly = true)
+	public List<DiningTable> findAll() {
+		return Lists.newArrayList(diningTableRepository.findAll());
+	}
 
-    @Transactional(readOnly = true)
-    public DiningTable findById(Long id) {
-        return diningTableRepository.findOne(id);
-    }
+	@Transactional(readOnly = true)
+	public DiningTable findById(Long id) {
+		return diningTableRepository.findOne(id);
+	}
 
-    public DiningTable save(DiningTable diningTable) {
-        return diningTableRepository.save(diningTable);
-    }
+	public DiningTable save(DiningTable diningTable) {
+		return diningTableRepository.save(diningTable);
+	}
 
-    public void delete(Long id) {
-        diningTableRepository.delete(id);
-    }
+	public void delete(Long id) {
+		diningTableRepository.delete(id);
+	}
 
-    @Transactional(readOnly = true)
-    public Page<DiningTable> findAllByPage(Pageable pageable) {
-        return diningTableRepository.findAll(pageable);
-    }
+	@Transactional(readOnly = true)
+	public Page<DiningTable> findAllByPage(Pageable pageable) {
+		return diningTableRepository.findAll(pageable);
+	}
 
-    // to be able to follow associations outside the context of a transaction,
-    // prefetch the associated entities by traversing the associations
-    @Transactional(readOnly = true)
-    public DiningTable fetchWarmedUp(Long id) {
-        log.info("(fetchWarmedUp) diningTable id: " + id);
+	// to be able to follow associations outside the context of a transaction,
+	// prefetch the associated entities by traversing the associations
+	@Transactional(readOnly = true)
+	public DiningTable fetchWarmedUp(Long id) {
+		log.info("(fetchWarmedUp) diningTable id: " + id);
 
-        // finding an item using find
-        DiningTable diningTable = diningTableRepository.findOne(id);
+		// finding an item using find
+		DiningTable diningTable = diningTableRepository.findOne(id);
 
-        // the following code will deliberately cause a null pointer exception,
-        // if something is wrong
-        log.info("diningTable = " + diningTable.getId());
+		// the following code will deliberately cause a null pointer exception,
+		// if something is wrong
+		log.info("diningTable = " + diningTable.getId());
 
-        diningTable.warmup();
+		diningTable.warmup();
 
-        return diningTable;
-    }
+		return diningTable;
+	}
 
-    public void addOrderItem(DiningTable diningTable, String menuItemName) {
-    	log.info("addOrderItem started " + diningTable.getTableNr() + " - menuItemName: " + menuItemName);
-        MenuItem menuItem = menuItemRepository.findOne(menuItemName);
-        diningTable.getCurrentBill().getCurrentOrder().addOrderItem(menuItem);
-    }
-    
-    public void addOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId){
-    	log.info("enter addOrderOption " + diningTable.getTableNr() + " - menuItemName: " + menuItemName + "- orderItemId: " + orderItemId);
-    	OrderItem orderItem = orderItemRepository.findOne(orderItemId);
-    	MenuItem menuItem = menuItemRepository.findOne(menuItemName);
-    	diningTable.getCurrentBill().getCurrentOrder().addOrderOption(menuItem, orderItem);
-    }
+	public void addOrderItem(DiningTable diningTable, String menuItemName) {
+		log.info("addOrderItem started " + diningTable.getTableNr() + " - menuItemName: " + menuItemName);
+		MenuItem menuItem = menuItemRepository.findOne(menuItemName);
+		diningTable.getCurrentBill().getCurrentOrder().addOrderItem(menuItem);
+	}
 
-    public void deleteOrderItem(DiningTable diningTable, String menuItemName) {
-        MenuItem menuItem = menuItemRepository.findOne(menuItemName);
-        diningTable.getCurrentBill().getCurrentOrder().deleteOrderItem(menuItem);
-    }
+	public void addOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId) {
+		log.info("enter addOrderOption " + diningTable.getTableNr() + " - menuItemName: " + menuItemName
+				+ "- orderItemId: " + orderItemId);
+		OrderItem orderItem = orderItemRepository.findOne(orderItemId);
+		MenuItem menuItem = menuItemRepository.findOne(menuItemName);
+		diningTable.getCurrentBill().getCurrentOrder().addOrderOption(menuItem, orderItem);
+	}
 
-    public void removeOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId){
-    	log.info("enter removeOrderOption " + diningTable.getTableNr() + " - menuItemName: " + menuItemName + "- orderItemId: " + orderItemId);
-    	OrderItem orderItem = orderItemRepository.findOne(orderItemId);
-    	MenuItem menuItem = menuItemRepository.findOne(menuItemName);
-    	diningTable.getCurrentBill().getCurrentOrder().removeOrderOption(menuItem, orderItem);
-    }
-    
-    public void submitOrder(DiningTable diningTable) throws StateException {
-        diningTable.getCurrentBill().submitOrder();
+	public void deleteOrderItem(DiningTable diningTable, String menuItemName) {
+		MenuItem menuItem = menuItemRepository.findOne(menuItemName);
+		diningTable.getCurrentBill().getCurrentOrder().deleteOrderItem(menuItem);
+	}
 
-        // for test purposes: to cause a rollback, throw new
-        // StateException("boe")
-    }
+	public void removeOrderOption(DiningTable diningTable, String menuItemName, Long orderItemId) {
+		log.info("enter removeOrderOption " + diningTable.getTableNr() + " - menuItemName: " + menuItemName
+				+ "- orderItemId: " + orderItemId);
+		OrderItem orderItem = orderItemRepository.findOne(orderItemId);
+		MenuItem menuItem = menuItemRepository.findOne(menuItemName);
+		diningTable.getCurrentBill().getCurrentOrder().removeOrderOption(menuItem, orderItem);
+	}
 
-    public void submitBill(DiningTable diningTable) throws StateException, EmptyBillException {
-        diningTable.submitBill();
-    }
+	public void submitOrder(DiningTable diningTable) throws StateException {
+		diningTable.getCurrentBill().submitOrder();
+
+		// for test purposes: to cause a rollback, throw new
+		// StateException("boe")
+	}
+
+	public void submitBill(DiningTable diningTable) throws StateException, EmptyBillException {
+		diningTable.submitBill();
+	}
 }

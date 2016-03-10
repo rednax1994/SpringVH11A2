@@ -19,164 +19,167 @@ import org.springframework.web.servlet.mvc.support.*;
 @Slf4j
 public class DiningTableController {
 
-    @Autowired
-    private MessageSource messageSource;
-    @Autowired
-    private RestaurantService restaurantService;
-    @Autowired
-    private DiningTableService diningTableService;
+	@Autowired
+	private MessageSource messageSource;
+	@Autowired
+	private RestaurantService restaurantService;
+	@Autowired
+	private DiningTableService diningTableService;
 
-    @RequestMapping(value = "/diningTables/{diningTableId}", method = RequestMethod.GET)
-    public String showTable(@PathVariable("diningTableId") String diningTableId, Model uiModel) {
-        log.info("diningTable = " + diningTableId);
+	@RequestMapping(value = "/diningTables/{diningTableId}", method = RequestMethod.GET)
+	public String showTable(@PathVariable("diningTableId") String diningTableId, Model uiModel) {
+		log.info("diningTable = " + diningTableId);
 
-        warmupRestaurant(diningTableId, uiModel);
+		warmupRestaurant(diningTableId, uiModel);
 
-        return "hartigehap/diningtable";
-    }
-    
-    @RequestMapping(value = "/diningTables/{diningTableId}/orderItems", method = RequestMethod.POST)
-    public String addOrderOption(@PathVariable("diningTableId") String diningTableId, @RequestParam String orderItemId, @RequestParam(value="menu.foodCategories") String menuItemName,
-            Model uiModel)	{
-    	
-    	log.info("addOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId + ", selected menu item: " + menuItemName);
-    	
-    	DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
-    	
-    	log.info("diningTable fetched, start addOrderOption");
-    	diningTableService.addOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
-    	
-    	return "redirect:/diningTables/" + diningTableId;
-    }
-    
-    @RequestMapping(value = "/diningTables/{diningTableId}/removeOrderItems", method = RequestMethod.DELETE)
-    public String removeOrderOption(@PathVariable("diningTableId") String diningTableId, @RequestParam String orderItemId, @RequestParam(value="menu.foodCategories") String menuItemName,
-            Model uiModel)	{
-    	
-    	log.info("removeOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId + ", selected menu item: " + menuItemName);
-    	
-    	DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
-    	
-    	log.info("diningTable fetched, start removeOrderOption");
-    	diningTableService.removeOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
-    	
-    	return "redirect:/diningTables/" + diningTableId;
-    }
+		return "hartigehap/diningtable";
+	}
 
-    @RequestMapping(value = "/diningTables/{diningTableId}/menuItems", method = RequestMethod.POST)
-    public String addMenuItem(@PathVariable("diningTableId") String diningTableId, @RequestParam String menuItemName,
-            Model uiModel) {
-    	
-    	CommandDiningTable command = new CommandAddMenuItem(diningTableService);
-    	command.execute(diningTableId, menuItemName, uiModel);
-    	
-        return "redirect:/diningTables/" + diningTableId;
-    }
+	@RequestMapping(value = "/orderItems/{orderItemId}/orderOptions", method = RequestMethod.POST)
+	public String addOrderOption(@PathVariable("orderItemId") String orderItemId, @RequestParam String diningTableId,
+			@RequestParam(value = "menu.foodCategories") String menuItemName, Model uiModel) {
 
-    @RequestMapping(value = "/diningTables/{diningTableId}/menuItems/{menuItemName}", method = RequestMethod.DELETE)
-    public String deleteMenuItem(@PathVariable("diningTableId") String diningTableId,
-    		@PathVariable("menuItemName") String menuItemName, Model uiModel) {
-    	
-    	CommandDiningTable command = new CommandRemoveMenuItem(diningTableService);
-    	command.execute(diningTableId, menuItemName, uiModel);
+		log.info("addOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId
+				+ ", selected menu item: " + menuItemName);
 
-        return "redirect:/diningTables/" + diningTableId;
-    }
+		DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
 
-    @RequestMapping(value = "/diningTables/{diningTableId}", method = RequestMethod.PUT)
-    public String receiveEvent(@PathVariable("diningTableId") String diningTableId, @RequestParam String event,
-            RedirectAttributes redirectAttributes, Model uiModel, Locale locale) {
+		log.info("diningTable fetched, start addOrderOption");
+		diningTableService.addOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
 
-        log.info("(receiveEvent) diningTable = " + diningTableId);
+		return "redirect:/diningTables/" + diningTableId;
+	}
 
-        // because of REST, the "event" parameter is part of the body. It
-        // therefore cannot be used for
-        // the request mapping so all events for the same resource will be
-        // handled by the same
-        // controller method; so we end up with an if statement
+	@RequestMapping(value = "/orderItems/{orderItemId}/orderOptions", method = RequestMethod.DELETE)
+	public String removeOrderOption(@PathVariable("orderItemId") String orderItemId,
+			@RequestParam String diningTableId, @RequestParam(value = "menu.foodCategories") String menuItemName,
+			Model uiModel) {
 
-        switch (event) {
-        case "submitOrder":
-            return submitOrder(diningTableId, redirectAttributes, uiModel, locale);
-        // break unreachable
+		log.info("removeOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId
+				+ ", selected menu item: " + menuItemName);
 
-        case "submitBill":
-            return submitBill(diningTableId, redirectAttributes, uiModel, locale);
-        // break unreachable
+		DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
 
-        default:
-            warmupRestaurant(diningTableId, uiModel);
-            log.error("internal error: event " + event + "not recognized");
-            return "hartigehap/diningtable";
-        }
-    }
+		log.info("diningTable fetched, start removeOrderOption");
+		diningTableService.removeOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
 
-    private String submitOrder(String diningTableId, RedirectAttributes redirectAttributes, Model uiModel,
-            Locale locale) {
-        
-        DiningTable diningTable = warmupRestaurant(diningTableId, uiModel);
-        
-        try {
-            diningTableService.submitOrder(diningTable);
-        } catch (StateException e) {
-            return handleStateException(e, "message_submit_order_fail", diningTableId, uiModel, locale);
-        }
-        
-        // store the message temporarily in the session to allow displaying
-        // after redirect
-        redirectAttributes.addFlashAttribute("message", new Message("success",
-                messageSource.getMessage("message_submit_order_success", new Object[] {}, locale)));
-        
-        return "redirect:/diningTables/" + diningTableId;
+		return "redirect:/diningTables/" + diningTableId;
+	}
 
-    }
+	@RequestMapping(value = "/diningTables/{diningTableId}/menuItems", method = RequestMethod.POST)
+	public String addMenuItem(@PathVariable("diningTableId") String diningTableId, @RequestParam String menuItemName,
+			Model uiModel) {
 
-    private String submitBill(String diningTableId, RedirectAttributes redirectAttributes, Model uiModel,
-            Locale locale) {
-        
-        DiningTable diningTable = warmupRestaurant(diningTableId, uiModel);
-        
-        try {
-            diningTableService.submitBill(diningTable);
-        } catch (EmptyBillException e) {
-            log.error("EmptyBillException", e);
-            uiModel.addAttribute("message", new Message("error",
-                    messageSource.getMessage("message_submit_empty_bill_fail", new Object[] {}, locale)));
-            return "hartigehap/diningtable";
-        } catch (StateException e) {
-            return handleStateException(e, "message_submit_bill_fail", diningTableId, uiModel, locale);
-        }
-        
-        // store the message temporarily in the session to allow displaying
-        // after redirect
-        redirectAttributes.addFlashAttribute("message", new Message("success",
-                messageSource.getMessage("message_submit_bill_success", new Object[] {}, locale)));
-        
-        return "redirect:/diningTables/" + diningTableId;
-    }
+		CommandDiningTable command = new CommandAddMenuItem(diningTableService);
+		command.execute(diningTableId, menuItemName, uiModel);
 
-    private DiningTable warmupRestaurant(String diningTableId, Model uiModel) {
-        Collection<Restaurant> restaurants = restaurantService.findAll();
-        uiModel.addAttribute("restaurants", restaurants);
-        DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
-        uiModel.addAttribute("diningTable", diningTable);
-        Restaurant restaurant = restaurantService.fetchWarmedUp(diningTable.getRestaurant().getId());
-        uiModel.addAttribute("restaurant", restaurant);
+		return "redirect:/diningTables/" + diningTableId;
+	}
 
-        return diningTable;
-    }
-    
-    private String handleStateException(StateException e, String errorMessage, String diningTableId, 
-            Model uiModel, Locale locale) {
-        log.error("StateException", e);
-        uiModel.addAttribute("message", new Message("error",
-                messageSource.getMessage(errorMessage, new Object[] {}, locale)));
+	@RequestMapping(value = "/diningTables/{diningTableId}/menuItems/{menuItemName}", method = RequestMethod.DELETE)
+	public String deleteMenuItem(@PathVariable("diningTableId") String diningTableId,
+			@PathVariable("menuItemName") String menuItemName, Model uiModel) {
 
-        // StateException triggers a rollback; consequently all Entities are
-        // invalidated by Hibernate
-        // So new warmup needed
-        warmupRestaurant(diningTableId, uiModel);
+		CommandDiningTable command = new CommandRemoveMenuItem(diningTableService);
+		command.execute(diningTableId, menuItemName, uiModel);
 
-        return "hartigehap/diningtable";
-    }
+		return "redirect:/diningTables/" + diningTableId;
+	}
+
+	@RequestMapping(value = "/diningTables/{diningTableId}", method = RequestMethod.PUT)
+	public String receiveEvent(@PathVariable("diningTableId") String diningTableId, @RequestParam String event,
+			RedirectAttributes redirectAttributes, Model uiModel, Locale locale) {
+
+		log.info("(receiveEvent) diningTable = " + diningTableId);
+
+		// because of REST, the "event" parameter is part of the body. It
+		// therefore cannot be used for
+		// the request mapping so all events for the same resource will be
+		// handled by the same
+		// controller method; so we end up with an if statement
+
+		switch (event) {
+		case "submitOrder":
+			return submitOrder(diningTableId, redirectAttributes, uiModel, locale);
+		// break unreachable
+
+		case "submitBill":
+			return submitBill(diningTableId, redirectAttributes, uiModel, locale);
+		// break unreachable
+
+		default:
+			warmupRestaurant(diningTableId, uiModel);
+			log.error("internal error: event " + event + "not recognized");
+			return "hartigehap/diningtable";
+		}
+	}
+
+	private String submitOrder(String diningTableId, RedirectAttributes redirectAttributes, Model uiModel,
+			Locale locale) {
+
+		DiningTable diningTable = warmupRestaurant(diningTableId, uiModel);
+
+		try {
+			diningTableService.submitOrder(diningTable);
+		} catch (StateException e) {
+			return handleStateException(e, "message_submit_order_fail", diningTableId, uiModel, locale);
+		}
+
+		// store the message temporarily in the session to allow displaying
+		// after redirect
+		redirectAttributes.addFlashAttribute("message", new Message("success",
+				messageSource.getMessage("message_submit_order_success", new Object[] {}, locale)));
+
+		return "redirect:/diningTables/" + diningTableId;
+
+	}
+
+	private String submitBill(String diningTableId, RedirectAttributes redirectAttributes, Model uiModel,
+			Locale locale) {
+
+		DiningTable diningTable = warmupRestaurant(diningTableId, uiModel);
+
+		try {
+			diningTableService.submitBill(diningTable);
+		} catch (EmptyBillException e) {
+			log.error("EmptyBillException", e);
+			uiModel.addAttribute("message", new Message("error",
+					messageSource.getMessage("message_submit_empty_bill_fail", new Object[] {}, locale)));
+			return "hartigehap/diningtable";
+		} catch (StateException e) {
+			return handleStateException(e, "message_submit_bill_fail", diningTableId, uiModel, locale);
+		}
+
+		// store the message temporarily in the session to allow displaying
+		// after redirect
+		redirectAttributes.addFlashAttribute("message", new Message("success",
+				messageSource.getMessage("message_submit_bill_success", new Object[] {}, locale)));
+
+		return "redirect:/diningTables/" + diningTableId;
+	}
+
+	private DiningTable warmupRestaurant(String diningTableId, Model uiModel) {
+		Collection<Restaurant> restaurants = restaurantService.findAll();
+		uiModel.addAttribute("restaurants", restaurants);
+		DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
+		uiModel.addAttribute("diningTable", diningTable);
+		Restaurant restaurant = restaurantService.fetchWarmedUp(diningTable.getRestaurant().getId());
+		uiModel.addAttribute("restaurant", restaurant);
+
+		return diningTable;
+	}
+
+	private String handleStateException(StateException e, String errorMessage, String diningTableId, Model uiModel,
+			Locale locale) {
+		log.error("StateException", e);
+		uiModel.addAttribute("message",
+				new Message("error", messageSource.getMessage(errorMessage, new Object[] {}, locale)));
+
+		// StateException triggers a rollback; consequently all Entities are
+		// invalidated by Hibernate
+		// So new warmup needed
+		warmupRestaurant(diningTableId, uiModel);
+
+		return "hartigehap/diningtable";
+	}
 }
