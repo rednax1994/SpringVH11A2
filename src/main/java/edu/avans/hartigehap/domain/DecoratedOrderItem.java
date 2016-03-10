@@ -19,22 +19,22 @@ import lombok.ToString;
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
 public abstract class DecoratedOrderItem extends OrderItem{
-	private static final long serialVersionUID = 1L;
-	
-	@OneToOne
-	private OrderItem orderItem;
-    
+    private static final long serialVersionUID = 1L;
+
+    @OneToOne
+    private OrderItem orderItem;
+
     public DecoratedOrderItem(OrderItem orderItem, MenuItem menuItem, int quantity) {
         super(menuItem, quantity);
         this.orderItem = orderItem;
     }
-	
-	public String description(){
-		return  orderItem.description() + " + extra " + super.description();
-	}
-	
-	@Transient
-	public int getPrice(){
-		return orderItem.getPrice() +  getMenuItem().getPrice() * getQuantity();
-	}
+
+    public String description(){
+        return  orderItem.description() + " + extra " + super.description();
+    }
+
+    @Transient
+    public int getPrice(){
+        return orderItem.getPrice() +  getMenuItem().getPrice() * getQuantity();
+    }
 }

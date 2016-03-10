@@ -3,6 +3,7 @@ package edu.avans.hartigehap.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -44,10 +45,10 @@ public class Restaurant extends DomainObjectNaturalId {
     // no cascading
     @ManyToMany(mappedBy = "restaurants")
     private Collection<Customer> customers = new ArrayList<>();
-    
- // no cascading
- 	@ManyToMany(mappedBy="restaurants")
- 	private Collection<Owner> owners = new ArrayList<Owner>();
+
+    // no cascading
+    @ManyToMany(mappedBy="restaurants")
+    private Collection<Owner> owners = new ArrayList<Owner>();
 
     public Restaurant(String name, String imageFileName) {
         super(name);
