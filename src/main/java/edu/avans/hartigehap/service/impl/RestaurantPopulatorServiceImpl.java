@@ -60,6 +60,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     public static final int SEVEN = 7;
     public static final int EIGHT = 8;
     public static final int NINE = 9;
+    public static final int HUNDEREDTWENTYSEVEN = 127;
+    public static final int NEGATIVEHUNDEREDTWENTYEIGHT = -128;
     
     /**
      * menu items, food categories and customers are common to all restaurants
@@ -110,7 +112,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
                 Arrays.<FoodCategory> asList(foodCats.get(SIX)));
         
         // create Customers
-        byte[] photo = new byte[] { 127, -128, 0 };
+        byte[] photo = new byte[] { HUNDEREDTWENTYSEVEN, NEGATIVEHUNDEREDTWENTYEIGHT, 0 };
         createCustomer("Peter", "Limonade", new DateTime(), ONE, "description", photo);
         createCustomer("Barry", "Batsbak", new DateTime(), ONE, "description", photo);
         createCustomer("Piet", "Bakker", new DateTime(), ONE, "description", photo);
