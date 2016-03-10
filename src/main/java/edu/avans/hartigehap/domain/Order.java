@@ -124,6 +124,7 @@ public class Order extends DomainObject {
         }
     }
     
+    @SuppressWarnings("null")
     public void removeOrderOption(MenuItem menuItem, OrderItem orderItem) {
         log.info(
                 "started addOrderOption with menuItem: " + menuItem.getId() + " - and orderItem: " + orderItem.getId());
@@ -135,20 +136,19 @@ public class Order extends DomainObject {
             if (orderItemCursor.getMenuItem().equals(menuItem)) {
                 if (orderItemCursor.getQuantity() > 1) {
                     orderItemCursor.decrementQuantity();
-                } else { // quantity == 1 so order option must be removed
-                    if (first) {
-                        orderItems.remove(orderItemCursor);
-                        orderItems.add(((DecoratedOrderItem) orderItemCursor).getOrderItem());
-                    } else {
-                        previousOrderItemCursor.setOrderItem(((DecoratedOrderItem) orderItemCursor).getOrderItem());
-                    }
+                } else if (first) {
+                    // quantity == 1 so order option must be removed
+                    orderItems.remove(orderItemCursor);
+                    orderItems.add(((DecoratedOrderItem) orderItemCursor).getOrderItem());
+                } else {
+                    previousOrderItemCursor.setOrderItem(((DecoratedOrderItem) orderItemCursor).getOrderItem());
                 }
-                removed = true;
             }
-            previousOrderItemCursor = (DecoratedOrderItem) orderItemCursor;
-            orderItemCursor = ((DecoratedOrderItem) orderItemCursor).getOrderItem();
-            first = false;
+            removed = true;
         }
+        previousOrderItemCursor = (DecoratedOrderItem) orderItemCursor;
+        orderItemCursor = ((DecoratedOrderItem) orderItemCursor).getOrderItem();
+        first = false;
     }
     
     public void deleteOrderItem(MenuItem menuItem) {
@@ -161,7 +161,7 @@ public class Order extends DomainObject {
                 if (orderItem.getQuantity() > 1) {
                     orderItem.decrementQuantity();
                 } else {
-                    // orderItem.getQuantity() == 1
+                    // orderItem quantity == 1
                     orderItemIterator.remove();
                 }
                 break;
