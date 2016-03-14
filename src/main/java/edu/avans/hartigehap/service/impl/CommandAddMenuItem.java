@@ -7,20 +7,20 @@ import edu.avans.hartigehap.service.CommandDiningTable;
 import edu.avans.hartigehap.service.DiningTableService;
 
 public class CommandAddMenuItem implements CommandDiningTable {
-
-	private DiningTableService diningTableService;
-	
-	public CommandAddMenuItem(DiningTableService diningTableService){
-		this.diningTableService = diningTableService;
-	}
-
-	@Override
-	public void execute(String diningTableId, String menuItemName, Model uiModel) {
-		DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
+    
+    private DiningTableService diningTableService;
+    
+    public CommandAddMenuItem(DiningTableService diningTableService) {
+        this.diningTableService = diningTableService;
+    }
+    
+    @Override
+    public void execute(String diningTableId, String menuItemName, Model uiModel) {
+        DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
         uiModel.addAttribute("diningTable", diningTable);
-
+        
         diningTableService.addOrderItem(diningTable, menuItemName);
-		
-	}
-
+        
+    }
+    
 }

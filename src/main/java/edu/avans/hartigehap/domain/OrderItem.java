@@ -4,13 +4,13 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * 
@@ -24,35 +24,35 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @NoArgsConstructor
 public abstract class OrderItem extends DomainObject {
     private static final long serialVersionUID = 1L;
-
+    
     // unidirectional many-to-one; deliberately no cascade
     @ManyToOne
     private MenuItem menuItem;
-
+    
     private int quantity;
     
     public OrderItem(MenuItem menuItem, int quantity) {
         this.menuItem = menuItem;
         this.quantity = quantity;
     }
-
+    
     /* business logic */
-
+    
     public void incrementQuantity() {
         this.quantity++;
     }
-
+    
     public void decrementQuantity() {
         assert quantity > 0 : "quantity cannot be below 0";
         this.quantity--;
     }
-
+    
     @Transient
     public int getPrice() {
         return menuItem.getPrice() * quantity;
     }
     
-    public String description(){
-    	return menuItem.getId() + "(" + getQuantity() + "x)";
+    public String description() {
+        return menuItem.getId() + "(" + getQuantity() + "x)";
     }
 }

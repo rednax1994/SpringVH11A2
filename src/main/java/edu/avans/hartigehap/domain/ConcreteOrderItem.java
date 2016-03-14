@@ -1,6 +1,7 @@
 package edu.avans.hartigehap.domain;
 
 import javax.persistence.Entity;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -15,9 +16,15 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
+<<<<<<< HEAD
 public class ConcreteOrderItem extends OrderItem{  
     private static final long serialVersionUID = 1L;
 
+=======
+public class ConcreteOrderItem extends OrderItem {
+    private static final long serialVersionUID = 1L;
+    
+>>>>>>> master
     public ConcreteOrderItem(MenuItem menuItem, int quantity) {
         super(menuItem, quantity);
     }

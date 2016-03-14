@@ -1,8 +1,9 @@
 package edu.avans.hartigehap.web.controller.rs;
 
 import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,23 +16,25 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
+
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.service.RestaurantService;
+import lombok.extern.slf4j.Slf4j;
 
 // http://briansjavablog.blogspot.nl/2012/08/rest-services-with-spring.html
 @Controller
 @Slf4j
 public class RestaurantsRS {
-
+    
     @Autowired
     private RestaurantService restaurantService;
-
+    
     @Autowired
     private View jsonView;
-
+    
     private static final String DATA_FIELD = "data";
     private static final String ERROR_FIELD = "error";
-
+    
     /**
      * list all restaurants.
      * 
@@ -47,7 +50,7 @@ public class RestaurantsRS {
         log.debug("");
         return restaurantService.findAll();
     }
-
+    
     /**
      * create a new restaurant.
      * 
@@ -66,7 +69,7 @@ public class RestaurantsRS {
     public ModelAndView createRestaurantJson(@RequestBody Restaurant restaurant, HttpServletResponse httpResponse,
             WebRequest httpRequest) {
         log.debug("body: {}", restaurant);
-
+        
         try {
             Restaurant savedRestaurant = restaurantService.save(restaurant);
             httpResponse.setStatus(HttpStatus.CREATED.value());
@@ -79,7 +82,7 @@ public class RestaurantsRS {
             return createErrorResponse(String.format(message, e.toString()));
         }
     }
-
+    
     @RequestMapping(value = RSConstants.URL_PREFIX
             + "/restaurants/{restaurantId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
@@ -87,17 +90,17 @@ public class RestaurantsRS {
         log.debug("restaurantId: {}", restaurantId);
         return restaurantService.findById(restaurantId);
     }
-
+    
     private ModelAndView createErrorResponse(String sMessage) {
         return new ModelAndView(jsonView, ERROR_FIELD, sMessage);
     }
-
+    
     public void setRestaurantService(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
     }
-
+    
     public void setJsonView(View jsonView) {
         this.jsonView = jsonView;
     }
-
+    
 }

@@ -4,6 +4,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import edu.avans.hartigehap.domain.OrderItem;
 
-public interface OrderItemRepository extends PagingAndSortingRepository<OrderItem, Long>{
-
+public interface OrderItemRepository extends PagingAndSortingRepository<OrderItem, Long> {
+    
 }

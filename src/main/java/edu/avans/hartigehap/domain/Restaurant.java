@@ -3,6 +3,7 @@ package edu.avans.hartigehap.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -31,36 +32,36 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Restaurant extends DomainObjectNaturalId {
     private static final long serialVersionUID = 1L;
-
+    
     private String imageFileName;
-
+    
     // unidirectional one-to-one
     @OneToOne(cascade = CascadeType.ALL)
     private Menu menu = new Menu();
-
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
     private Collection<DiningTable> diningTables = new ArrayList<>();
-
+    
     // no cascading
     @ManyToMany(mappedBy = "restaurants")
     private Collection<Customer> customers = new ArrayList<>();
     
- // no cascading
- 	@ManyToMany(mappedBy="restaurants")
- 	private Collection<Owner> owners = new ArrayList<Owner>();
-
+    // no cascading
+    @ManyToMany(mappedBy = "restaurants")
+    private Collection<Owner> owners = new ArrayList<Owner>();
+    
     public Restaurant(String name, String imageFileName) {
         super(name);
         this.imageFileName = imageFileName;
     }
-
+    
     // business methods
     public void warmup() {
         Iterator<DiningTable> diningTableIterator = diningTables.iterator();
         while (diningTableIterator.hasNext()) {
             diningTableIterator.next().getId();
         }
-
+        
         Iterator<MenuItem> mealsIterator = menu.getMeals().iterator();
         while (mealsIterator.hasNext()) {
             MenuItem mi = mealsIterator.next();
@@ -70,7 +71,7 @@ public class Restaurant extends DomainObjectNaturalId {
                 fcIterator.next().getId();
             }
         }
-
+        
         Iterator<MenuItem> drinksIterator = menu.getDrinks().iterator();
         while (drinksIterator.hasNext()) {
             MenuItem mi = drinksIterator.next();
@@ -80,7 +81,7 @@ public class Restaurant extends DomainObjectNaturalId {
                 fcIterator.next().getId();
             }
         }
-
+        
         Iterator<FoodCategory> foodCategoryIterator = menu.getFoodCategories().iterator();
         while (foodCategoryIterator.hasNext()) {
             FoodCategory fc = foodCategoryIterator.next();
@@ -89,6 +90,6 @@ public class Restaurant extends DomainObjectNaturalId {
                 miIterator.next().getId();
             }
         }
-
+        
     }
 }

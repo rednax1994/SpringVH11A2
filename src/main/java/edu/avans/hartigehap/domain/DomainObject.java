@@ -8,13 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @MappedSuperclass
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
@@ -23,15 +23,15 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @ToString(includeFieldNames = true, of = { "id", "version" })
 public abstract class DomainObject implements Serializable {
     private static final long serialVersionUID = 1L;
-
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-
+    
     @Version
     @Setter(AccessLevel.NONE)
     Long version;
-
+    
     /*
      * This hashCode() implementation violates an important property: - The id
      * changes during the lifetime of the object: before being persisted, the id
@@ -54,7 +54,7 @@ public abstract class DomainObject implements Serializable {
             return super.hashCode();
         }
     }
-
+    
     /*
      * This equals() implementation is meant for entities with *surrogate id*,
      * where the id is provided by the ORM provider upon invocation of the
@@ -83,14 +83,14 @@ public abstract class DomainObject implements Serializable {
         if (!(o instanceof DomainObject)) {
             return false;
         }
-
+        
         DomainObject other = (DomainObject) o;
-
+        
         // unsaved objects are never equal
         if (id == null || other.getId() == null) {
             return false;
         }
-
+        
         return id.equals(other.getId());
     }
 }

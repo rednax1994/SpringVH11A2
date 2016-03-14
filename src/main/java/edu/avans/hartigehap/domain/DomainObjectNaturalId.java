@@ -6,14 +6,14 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @MappedSuperclass
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
@@ -24,19 +24,19 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public abstract class DomainObjectNaturalId implements Serializable {
     private static final long serialVersionUID = 1L;
     private static final int PRIME = 31;
-
+    
     // natural id (so no auto generation needed)
     @Id
     private String id;
-
+    
     @Version
     @Setter(AccessLevel.NONE)
     Long version;
-
+    
     DomainObjectNaturalId(String id) {
         this.id = id;
     }
-
+    
     /*
      * Domain objects with a natural id get their id upon object creation.
      * During the complete lifetime of the object (before being persisted and
@@ -54,7 +54,7 @@ public abstract class DomainObjectNaturalId implements Serializable {
         result = result * PRIME + (id == null ? 0 : id.hashCode());
         return result;
     }
-
+    
     /*
      * Domain objects with a natural id get their id upon object creation.
      * During the complete lifetime of the object (before being persisted and
@@ -81,7 +81,7 @@ public abstract class DomainObjectNaturalId implements Serializable {
         Object otherId = other.id;
         return thisId == null ? otherId == null : thisId.equals(otherId);
     }
-
+    
     public boolean canEqual(Object other) {
         return other instanceof DomainObjectNaturalId;
     }
