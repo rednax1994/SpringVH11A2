@@ -37,39 +37,39 @@ import edu.avans.hartigehap.service.RestaurantService;
 @ImportResource({ "classpath:/test-root-context.xml", "classpath:*servlet-context.xml" })
 @Slf4j
 public class RestaurantControllerMockMvcTest {
-
+    
     private static final String RESTAURANT_ID = "De Plak";
-
+    
     @Autowired
     private RestaurantController restaurantController;
-
+    
     @Autowired
     private WebApplicationContext webApplicationContext;
-
+    
     private MockMvc mockMvc;
-
+    
     @Autowired
     private RestaurantService restaurantServiceMock;
-
+    
     @Before
     public void setUp() {
         // Thanks to: Petri Kinulainen:
         // http://www.petrikainulainen.net/programming/spring-framework/unit-testing-of-spring-mvc-controllers-normal-controllers/
         // https://github.com/pkainulainen/spring-mvc-test-examples/tree/master/controllers-unittest
-
+        
         // We have to reset our mock between tests because the mock objects
         // are managed by the Spring container. If we would not reset them,
         // stubbing and verified behavior would "leak" from one test to another.
         Mockito.reset(restaurantServiceMock);
-
+        
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
-
+    
     @Bean
     public RestaurantService restaurantService() {
         return Mockito.mock(RestaurantService.class);
     }
-
+    
     /**
      * verifies the 'wiring' of the test case:
      * <ul>
@@ -89,7 +89,7 @@ public class RestaurantControllerMockMvcTest {
         log.debug("className: {}", className);
         assertTrue("classname contains 'Mock' since it is a mockito mock", className.indexOf("Mock") >= 0);
     }
-
+    
     /**
      * verifies the following qualities of the RestaurantController:
      * <ul>
@@ -107,7 +107,7 @@ public class RestaurantControllerMockMvcTest {
                 .andExpect(view().name("hartigehap/listrestaurants"))
                 .andExpect(model().attribute("restaurants", hasItems(restaurants.toArray(new Restaurant[] {}))));
     }
-
+    
     private List<Restaurant> getRestaurants() {
         LinkedList<Restaurant> retval = new LinkedList<Restaurant>();
         Restaurant r1 = new Restaurant();
@@ -115,5 +115,5 @@ public class RestaurantControllerMockMvcTest {
         retval.add(r1);
         return retval;
     }
-
+    
 }

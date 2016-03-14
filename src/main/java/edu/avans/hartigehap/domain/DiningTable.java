@@ -10,12 +10,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * 
@@ -30,20 +30,20 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @ToString(callSuper = true, includeFieldNames = true, of = { "bills", "currentBill" })
 public class DiningTable extends DomainObject {
     private static final long serialVersionUID = 1L;
-
+    
     private int tableNr;
-
+    
     // example of an *unidirectional* one-to-one relationship, mapped on
     // database by diningTable side
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     private Bill currentBill;
-
+    
     @OneToMany(cascade = javax.persistence.CascadeType.ALL, mappedBy = "diningTable")
     private Collection<Bill> bills = new ArrayList<Bill>();
-
+    
     @ManyToOne()
     private Restaurant restaurant;
-
+    
     public DiningTable() {
         // when the system resets, the c'tor is executed and a new Bill object
         // is created (which in its turn creates a new order object. However,
@@ -54,7 +54,7 @@ public class DiningTable extends DomainObject {
         currentBill.setDiningTable(this);
         bills.add(currentBill);
     }
-
+    
     public DiningTable(int tableNr) {
         this.tableNr = tableNr;
         // when the system resets, the c'tor is executed and a new Bill object
@@ -66,9 +66,9 @@ public class DiningTable extends DomainObject {
         currentBill.setDiningTable(this);
         bills.add(currentBill);
     }
-
+    
     /* business logic */
-
+    
     public void warmup() {
         Iterator<OrderItem> orderItemIterator = currentBill.getCurrentOrder().getOrderItems().iterator();
         while (orderItemIterator.hasNext()) {
@@ -78,12 +78,12 @@ public class DiningTable extends DomainObject {
             // is not needed to warm these objects via this relation
         }
     }
-
+    
     public void submitBill() throws StateException, EmptyBillException {
         currentBill.submit();
         currentBill = new Bill();
         currentBill.setDiningTable(this);
         bills.add(currentBill);
     }
-
+    
 }

@@ -317,16 +317,16 @@
       <artifactId>tiles-core</artifactId>
 <!-- using Apache tiles 3.x.x results in a java.lang.ClassNotFoundException: org.apache.tiles.TilesApplicationContext -->
 <!-- see: http://stackoverflow.com/questions/17719176/noclassdeffounderror-while-using-ajaxurlbasedviewresolver-in-spring-mvc-3 -->
-<!-- <version>3.0.5</version> -->
-      <version>2.2.2</version>
+		<version>3.0.5</version>
+      <!-- <version>2.2.2</version>-->
     </dependency>
     <dependency>
       <groupId>org.apache.tiles</groupId>
       <artifactId>tiles-jsp</artifactId>
 <!-- using Apache tiles 3.x.x results in a java.lang.ClassNotFoundException: org.apache.tiles.TilesApplicationContext -->
 <!-- see: http://stackoverflow.com/questions/17719176/noclassdeffounderror-while-using-ajaxurlbasedviewresolver-in-spring-mvc-3 -->
-<!-- <version>3.0.5</version> -->
-      <version>2.2.2</version>
+	<version>3.0.5</version>
+    <!-- <version>2.2.2</version> -->
     </dependency>
 
 

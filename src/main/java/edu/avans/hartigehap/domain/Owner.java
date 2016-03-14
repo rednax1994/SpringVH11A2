@@ -1,6 +1,7 @@
 package edu.avans.hartigehap.domain;
 
-import java.util.List;
+import java.util.ArrayList;
+import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -21,11 +22,11 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true, of = { "name" })
 public class Owner extends DomainObject {
-	private static final long serialVersionUID = 1L;
-
-	private String name;
-
-	@ManyToMany(cascade = javax.persistence.CascadeType.ALL)
-	private List<Restaurant> restaurants;
-
+    private static final long serialVersionUID = 1L;
+    
+    private String name;
+    
+    @ManyToMany
+    private Collection<Restaurant> restaurants = new ArrayList<Restaurant>();
+    
 }

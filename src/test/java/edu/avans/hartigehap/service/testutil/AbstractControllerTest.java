@@ -15,11 +15,11 @@ import edu.avans.hartigehap.web.controller.ControllerTestConfig;
 // sets the profile to "test"
 @ActiveProfiles("test")
 public abstract class AbstractControllerTest {
-
+    
     @Test
     // class must contain a test to prevent "initialization error"
     public void dummy() {
         // deliberately empty
     }
-
+    
 }

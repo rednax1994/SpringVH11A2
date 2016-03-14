@@ -1,9 +1,11 @@
 package edu.avans.hartigehap.service.impl;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
@@ -14,6 +16,7 @@ import com.google.common.collect.Lists;
 
 import edu.avans.hartigehap.domain.Owner;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.exception.MyException;
 import edu.avans.hartigehap.repository.OwnerRepository;
 import edu.avans.hartigehap.service.OwnerService;
 import edu.avans.hartigehap.service.RestaurantService;
@@ -22,42 +25,97 @@ import edu.avans.hartigehap.service.RestaurantService;
 @Repository
 @Transactional
 public class OwnerServiceImpl implements OwnerService {
-
-	@Autowired private OwnerRepository ownerRepository;
-	@Autowired private RestaurantService restaurantService;
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Owner> findAll() {
-		return Lists.newArrayList(ownerRepository.findAll());
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Owner findById(Long id) {
-		return ownerRepository.findOne(id);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Owner> findByName(String name) {
-		return ownerRepository.findByName(name);
-	}
-
-	@Override
-	public Owner save(Owner owner) {
-		return ownerRepository.save(owner);
-	}
-
-	@Override
-	public void delete(Owner owner) {
-		ownerRepository.delete(owner);
-	}
-
-	@Override
-	public List<Owner> findByRestaurants(String restaurantId) {
-		Restaurant restaurant = restaurantService.findById(restaurantId);
-		return ownerRepository.findByRestaurants(Arrays.asList(new Restaurant[]{restaurant}), new Sort(Sort.Direction.ASC, "name"));
-	}
-
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.class);
+    
+    @Autowired
+    private OwnerRepository ownerRepository;
+    @Autowired
+    private RestaurantService restaurantService;
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Owner> findAll() {
+        List<Owner> retval = Lists.newLinkedList(ownerRepository.findAll());
+        LOGGER.info("" + retval);
+        return retval;
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public Owner findById(Long id) {
+        return ownerRepository.findOne(id);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<Owner> findByName(String name) {
+        return ownerRepository.findByName(name);
+    }
+    
+    @Override
+    public Owner save(Owner owner) {
+        return ownerRepository.save(owner);
+    }
+    
+    @Override
+    public void delete(Long id) {
+        ownerRepository.delete(id);
+    }
+    
+    @Override
+    public List<Owner> findByRestaurant(String restaurantId) {
+        Restaurant restaurant = restaurantService.findById(restaurantId);
+        return ownerRepository.findByRestaurants(Arrays.asList(new Restaurant[] { restaurant }),
+                new Sort(Sort.Direction.ASC, "name"));
+    }
+    
+    @Override
+    public Owner addRestaurantToOwner(String restaurantId, Owner owner) {
+        // start tx - restaurant now attached. The owner is detached.
+        Restaurant restaurant = restaurantService.findById(restaurantId);
+        LOGGER.debug("restaurant: {}", restaurant);
+        if (restaurant == null) {
+            LOGGER.debug("Cannot find Restaurant {}", restaurantId);
+            return null;
+        }
+        
+        if (!owner.getRestaurants().contains(restaurant)) {
+            owner.getRestaurants().add(restaurant);
+            restaurant.getOwners().add(owner);
+        }
+        Owner ownerSaved = ownerRepository.save(owner);
+        LOGGER.debug("return: {}", ownerSaved);
+        return ownerSaved;
+    }
+    
+    @Override
+    public Owner removeRestaurantFromOwner(Long ownerId, String restaurantId) {
+        Restaurant restaurant = restaurantService.findById(restaurantId);
+        if (restaurant == null) {
+            try {
+                throw new MyException("restaurant not found " + restaurantId);
+            } catch (MyException e) {
+                LOGGER.error(e.getMessage());
+            }
+        }
+        Owner owner = ownerRepository.findOne(ownerId);
+        if (owner == null) {
+            LOGGER.debug("owner not found {} - return", ownerId);
+            return null;
+        }
+        
+        Collection<Restaurant> restaurants = owner.getRestaurants();
+        if (!restaurants.contains(restaurant)) {
+            LOGGER.debug("restaurant {} not associated to customer - return", restaurantId, ownerId);
+            LOGGER.debug("return: {}", owner);
+            return owner;
+        }
+        
+        restaurants.remove(restaurant);
+        Owner retval = ownerRepository.save(owner);
+        LOGGER.debug("return: {}", retval);
+        return retval;
+    }
+    
 }
