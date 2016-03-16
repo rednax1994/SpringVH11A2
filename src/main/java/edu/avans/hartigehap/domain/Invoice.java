@@ -19,12 +19,12 @@ import lombok.ToString;
 @Getter @Setter
 @ToString(callSuper=true, includeFieldNames=true)
 @NoArgsConstructor
-public class Quotation extends DomainObject{
+public class Invoice extends DomainObject{
 
     private static final long serialVersionUID = 1L;
     
     private int number;
-    private Date eventDate;
+    private Date date;
     private Date expirationDate;
     
 //    @ManyToOne
@@ -32,8 +32,6 @@ public class Quotation extends DomainObject{
     
     @ManyToOne
     private Customer customer;
-    
-//    private Banquetingfacade banquetingfacade;
     
 //    private TemplateMailer templatemailer;
     
