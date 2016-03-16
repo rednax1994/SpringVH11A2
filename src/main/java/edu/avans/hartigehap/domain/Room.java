@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -16,6 +17,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
+@NoArgsConstructor
 public class Room extends DomainObject {
 	private static final long serialVersionUID = 1L;
 

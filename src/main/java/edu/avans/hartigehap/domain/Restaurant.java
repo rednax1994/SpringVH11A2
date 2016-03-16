@@ -42,6 +42,9 @@ public class Restaurant extends DomainObjectNaturalId {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
     private Collection<DiningTable> diningTables = new ArrayList<>();
     
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
+    private Collection<Room> rooms = new ArrayList<>();
+    
     // no cascading
     @ManyToMany(mappedBy = "restaurants")
     private Collection<Customer> customers = new ArrayList<>();

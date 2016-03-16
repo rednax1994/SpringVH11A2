@@ -22,7 +22,7 @@
 	<spring:message code="label_dining_tables" var="labelDiningTables" />
 	<spring:message code="label_dining_table" var="labelDiningTable" />
 	<spring:message code="label_rooms" var="labelRooms" />
-	<spring:message code="label_room" var="labelRoom"/>
+	<spring:message code="label_room" var="labelRoom" />
 
 	<spring:message code="label_management_subsystem"
 		var="labelManagementSubSystem" />
@@ -58,15 +58,17 @@
 
 	<div class="row">
 		<div class="panel panel-default">
-			<h3 class="panel-title">${labelRooms}</h3>
+			<div class="panel-heading">
+				<h3 class="panel-title">${labelRooms}</h3>
+			</div>
+			<ul class="list-group">
+				<c:forEach items="${restaurant.rooms}" var="room">
+					<spring:url var="showTable" value="/rooms/${room.id }" />
+					<a href="${showTable}" class="list-group-item">${labelRoom}
+						${room.roomNr}</a>
+				</c:forEach>
+			</ul>
 		</div>
-		<ul class="list-group">
-			<c:forEach items="${restaurant.rooms}" var="room">
-				<spring:url var="showTable" value="/rooms/${room.id }" />
-				<a href="${showRoom}" class="list-group-item">${labelRoom}
-					${room.roomNr}</a>
-			</c:forEach>
-		</ul>
 	</div>
 
 	<sec:authorize access="hasRole('ROLE_EMPLOYEE')">
