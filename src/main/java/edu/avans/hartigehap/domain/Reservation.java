@@ -1,8 +1,10 @@
 package edu.avans.hartigehap.domain;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -19,25 +21,35 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Reservation implements Serializable{
+public class Reservation extends DomainObject{
     private static final long serialVersionUID = 1L;
-
+    
+    public enum TimeOfDayEnum{
+        MORNING, NOON, EVENING
+    }
+    
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     private ReservationStatus currentState;
     
     private int amountOfPeople;
     
-    private TimeOfDay startTime;
+    protected TimeOfDayEnum startTimeOfDay;
     
-    private TimeOfDay endTime;
+    private Date startTime;
+    
+    protected TimeOfDayEnum endTimeOfDay;
+    
+    private Date endTime;
     
     private String booker;
     
-    public Reservation(int amountOfPeople, String booker, TimeOfDay startTime, TimeOfDay endTime) {
+    public Reservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime, TimeOfDayEnum endTimeOfDay, Date endTime) {
         this.currentState = new StateConcept(this);
         this.amountOfPeople = amountOfPeople;
         this.booker = booker;
+        this.startTimeOfDay = startTimeOfDay;
         this.startTime = startTime;
+        this.endTimeOfDay = endTimeOfDay;
         this.endTime = endTime;
     }
     

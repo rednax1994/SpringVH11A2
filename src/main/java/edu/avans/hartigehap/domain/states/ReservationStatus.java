@@ -1,11 +1,6 @@
 package edu.avans.hartigehap.domain.states;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -22,16 +17,12 @@ import lombok.Setter;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") 
 @Getter @Setter
 @NoArgsConstructor
-public abstract class ReservationStatus implements Serializable {
+public abstract class ReservationStatus extends DomainObject{
     private static final long serialVersionUID = 1L;
     
     public enum ReservationStatusId {
         CONCEPT, APPROVED, FINISHED
     }
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     
     protected ReservationStatusId reservationStatusId;
     
