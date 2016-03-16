@@ -6,7 +6,6 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import edu.avans.hartigehap.domain.DomainObject;
 import edu.avans.hartigehap.domain.Reservation;
 import edu.avans.hartigehap.domain.StateException;
 import lombok.Getter;
@@ -14,8 +13,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") 
-@Getter @Setter
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@Getter
+@Setter
 @NoArgsConstructor
 public abstract class ReservationStatus extends DomainObject{
     private static final long serialVersionUID = 1L;

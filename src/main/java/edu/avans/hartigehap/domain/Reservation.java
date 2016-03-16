@@ -27,7 +27,7 @@ public class Reservation extends DomainObject{
     public enum TimeOfDayEnum{
         MORNING, NOON, EVENING
     }
-    
+
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     private ReservationStatus currentState;
     
