@@ -20,12 +20,10 @@ import edu.avans.hartigehap.service.QuotationService;
 @Transactional
 public class QuotationServiceImpl implements QuotationService{
 
-private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.class);
+private static final Logger LOGGER = LoggerFactory.getLogger(QuotationServiceImpl.class);
     
     @Autowired
     private QuotationRepository quotationRepository;
-    @Autowired
-    private QuotationService quotationService;
     
     @Override
     @Transactional(readOnly = true)
@@ -49,12 +47,12 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.cl
 
     @Override
     public Quotation save(Quotation quotation) {
-        return quotationService.save(quotation);
+        return quotationRepository.save(quotation);
     }
 
     @Override
     public void delete(Quotation quotation) {
-       quotationService.delete(quotation);
+       quotationRepository.delete(quotation);
     }
 
 }

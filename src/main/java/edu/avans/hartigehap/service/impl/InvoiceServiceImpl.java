@@ -20,12 +20,10 @@ import edu.avans.hartigehap.service.InvoiceService;
 @Transactional
 public class InvoiceServiceImpl implements InvoiceService{
 
-private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.class);
+private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceServiceImpl.class);
     
     @Autowired
     private InvoiceRepository invoiceRepository;
-    @Autowired
-    private InvoiceService invoiceService;
     
     @Override
     @Transactional(readOnly = true)
@@ -49,12 +47,12 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OwnerServiceImpl.cl
 
     @Override
     public Invoice save(Invoice invoice) {
-        return invoiceService.save(invoice);
+        return invoiceRepository.save(invoice);
     }
 
     @Override
     public void delete(Invoice invoice) {
-       invoiceService.delete(invoice);
+        invoiceRepository.delete(invoice);
     }
 
 }
