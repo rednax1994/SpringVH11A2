@@ -1,10 +1,11 @@
-package edu.avans.hartigehap.domain;
+package edu.avans.hartigehap.domain.states;
 
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,12 +17,16 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
-
-public class ConcreteOrderItem extends OrderItem {
+public class StateConcept extends ReservationState{
     private static final long serialVersionUID = 1L;
-
-
-    public ConcreteOrderItem(MenuItem menuItem, int quantity) {
-        super(menuItem, quantity);
+    
+    public StateConcept(Reservation reservation, String name){
+        super(reservation, name);
     }
+    
+    public void getCurrentState(){
+        getReservation().setCurrentState(new StateConcept());
+        
+    }
+    
 }
