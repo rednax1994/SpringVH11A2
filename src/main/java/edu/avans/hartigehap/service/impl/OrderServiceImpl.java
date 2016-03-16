@@ -13,9 +13,10 @@ import edu.avans.hartigehap.domain.Order;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.StateException;
 import edu.avans.hartigehap.repository.Container;
-import edu.avans.hartigehap.repository.Iterator;
 import edu.avans.hartigehap.repository.OrderRepository;
 import edu.avans.hartigehap.service.OrderService;
+import iterator.Iterator;
+import iterator.MyIterator;
 import lombok.extern.slf4j.Slf4j;
 
 @Service("orderService")
@@ -47,7 +48,7 @@ public class OrderServiceImpl implements OrderService, Container {
         List<Order> submittedOrdersList = orderRepository.findSubmittedOrdersForRestaurant(restaurant);
         
         log.info("findSubmittedOrdersForRestaurant using named query");
-        Iterator it = getIterator(submittedOrdersList);
+        Iterator<Order> it = getIterator(submittedOrdersList);
         
         while (it.hasNext()) {
             Order order = it.next();
@@ -96,36 +97,10 @@ public class OrderServiceImpl implements OrderService, Container {
         order.served();
     }
     
-    @Override
-    public Iterator getIterator(List<Order> submittedOrdersList) {
-        return new OrderIterator(submittedOrdersList);
+    
+    public Iterator<Order> getIterator(List<Order> submittedOrdersList) {
+        return new MyIterator<Order>(submittedOrdersList);
     }
     
-    private class OrderIterator implements Iterator {
-        
-        int index;
-        List<Order> list;
-        
-        public OrderIterator(List<Order> list) {
-            this.list = list;
-        }
-        
-        @Override
-        public boolean hasNext() {
-            
-            if (index < list.size()) {
-                return true;
-            }
-            return false;
-        }
-        
-        @Override
-        public Order next() {
-            
-            if (this.hasNext()) {
-                return list.get(index++);
-            }
-            return null;
-        }
-    }
+    
 }
