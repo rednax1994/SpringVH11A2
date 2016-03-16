@@ -12,4 +12,6 @@ public interface RoomService {
 	Room save(Room room);
 
 	void delete(Room room);
+	
+	Room fetchWarmedUp(Long roomId);
 }

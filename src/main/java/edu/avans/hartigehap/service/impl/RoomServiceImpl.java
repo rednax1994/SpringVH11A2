@@ -12,12 +12,15 @@ import org.springframework.transaction.annotation.Transactional;
 import com.google.common.collect.Lists;
 
 import edu.avans.hartigehap.domain.Room;
+import edu.avans.hartigehap.domain.StateException;
 import edu.avans.hartigehap.repository.RoomRepository;
 import edu.avans.hartigehap.service.RoomService;
+import lombok.extern.slf4j.Slf4j;
 
 @Service("roomService")
 @Repository
-@Transactional
+@Transactional(rollbackFor = StateException.class)
+@Slf4j
 public class RoomServiceImpl implements RoomService {
 	@Autowired
 	private RoomRepository roomRepository;
@@ -47,5 +50,21 @@ public class RoomServiceImpl implements RoomService {
 	public void delete(Room room) {
 		roomRepository.delete(room);
 	}
+	
+	// to be able to follow associations outside the context of a transaction,
+	    // prefetch the associated entities by traversing the associations
+	    @Transactional(readOnly = true)
+	    public Room fetchWarmedUp(Long id) {
+	        log.info("(fetchWarmedUp) room id: " + id);
+	        
+	        // finding an item using find
+	        Room room = roomRepository.findOne(id);
+	        
+	        // the following code will deliberately cause a null pointer exception,
+	        // if something is wrong
+	        log.info("diningTable = " + room.getId());
+	        
+	        return room;
+	    }
 
 }
