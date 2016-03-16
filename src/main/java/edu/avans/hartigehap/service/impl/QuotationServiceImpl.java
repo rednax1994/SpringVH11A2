@@ -11,12 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
-import edu.avans.hartigehap.domain.Owner;
 import edu.avans.hartigehap.domain.Quotation;
-import edu.avans.hartigehap.repository.OwnerRepository;
 import edu.avans.hartigehap.repository.QuotationRepository;
 import edu.avans.hartigehap.service.QuotationService;
-import edu.avans.hartigehap.service.RestaurantService;
 
 @Service("quotationService")
 @Repository

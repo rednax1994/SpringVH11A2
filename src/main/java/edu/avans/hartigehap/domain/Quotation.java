@@ -2,8 +2,9 @@ package edu.avans.hartigehap.domain;
 
 import java.util.Date;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -24,9 +25,17 @@ public class Quotation extends DomainObject{
     private Date eventDate;
     private Date expirationDate;
     
-//    @OneToMany
+//    @ManyToOne
 //    private Room room;
     
-    @ManyToOne(cascade = javax.persistence.CascadeType.ALL)
+    @ManyToOne
     private Customer customer;
+    
+//    private Banquetingfacade banquetingfacade;
+    
+//    private TemplateMailer templatemailer;
+    
+    @Enumerated(EnumType.ORDINAL)
+    // represented in database as integer
+    private Status status;
 }
