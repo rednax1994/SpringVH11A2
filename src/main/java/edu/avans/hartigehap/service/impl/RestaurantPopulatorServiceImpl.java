@@ -20,11 +20,13 @@ import edu.avans.hartigehap.domain.FoodCategory;
 import edu.avans.hartigehap.domain.Meal;
 import edu.avans.hartigehap.domain.OrderOption;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.Room;
 import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
 import edu.avans.hartigehap.repository.OrderItemRepository;
 import edu.avans.hartigehap.repository.RestaurantRepository;
+import edu.avans.hartigehap.repository.RoomRepository;
 import edu.avans.hartigehap.service.RestaurantPopulatorService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,12 +46,15 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private CustomerRepository customerRepository;
     @Autowired
     private OrderItemRepository orderItemRepository;
+    @Autowired
+    private RoomRepository roomRepository;
     
     private List<Meal> meals = new ArrayList<>();
     private List<Meal> mealOptions = new ArrayList<>();
     private List<FoodCategory> foodCats = new ArrayList<>();
     private List<Drink> drinks = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
+    private List<Room> rooms = new ArrayList<>();
     
     public static final int ONE = 1;
     public static final int TWO = 2;
@@ -118,6 +123,17 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createCustomer("Piet", "Bakker", new DateTime(), ONE, "description", photo);
         createCustomer("Piet", "Bakker", new DateTime(), ONE, "description", photo);
         createCustomer("Piet", "Bakker", new DateTime(), ONE, "description", photo);
+        
+        // create Rooms
+        createRoom(1, false, 80);
+        createRoom(2, true, 100);
+        createRoom(3, false, 250);
+    }
+    
+    private void createRoom(long roomNr, boolean occupied, int capacity){
+    	Room room = new Room(roomNr, occupied, capacity);
+    	room = roomRepository.save(room);
+    	rooms.add(room);
     }
     
     private void createMealOption(String name, String image, int price, String recipe, List<FoodCategory> foodCats) {
