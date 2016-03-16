@@ -1,12 +1,15 @@
 package edu.avans.hartigehap.repository;
 
 import java.util.List;
+
+import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.PagingAndSortingRepository;
-import org.springframework.data.domain.*;
-import edu.avans.hartigehap.domain.*;
+
+import edu.avans.hartigehap.domain.Order;
+import edu.avans.hartigehap.domain.Restaurant;
 
 public interface OrderRepository extends PagingAndSortingRepository<Order, Long>, OrderRepositoryCustom {
-
+    
     // Spring creates an implementation based one the method name
     // in this case all orders for which:
     // order.getOrderStatus() == orderStatus
@@ -14,7 +17,7 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
     // order.getBill().getDiningTable().getRestaurant() == restaurant
     List<Order> findByOrderStatusAndBillDiningTableRestaurant(Order.OrderStatus orderStatus, Restaurant restaurant,
             Sort sort);
-
+    
     // compare to:
     // @NamedQuery(
     // name = "Order.findSubmittedOrders",
@@ -23,5 +26,5 @@ public interface OrderRepository extends PagingAndSortingRepository<Order, Long>
     // edu.avans.hartigehap.domain.Order$OrderStatus.SUBMITTED " +
     // "AND o.bill.diningTable.restaurant = :restaurant " +
     // "ORDER BY o.submittedTime")
-
+    
 }

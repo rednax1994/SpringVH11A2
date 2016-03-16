@@ -3,22 +3,33 @@ package edu.avans.hartigehap.web.controller;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
-import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-import edu.avans.hartigehap.domain.*;
-import edu.avans.hartigehap.service.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import edu.avans.hartigehap.domain.Bill;
+import edu.avans.hartigehap.domain.Order;
+import edu.avans.hartigehap.domain.OrderItem;
+import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.service.BillService;
+import edu.avans.hartigehap.service.OrderService;
+import edu.avans.hartigehap.service.RestaurantService;
 import edu.avans.hartigehap.web.form.Message;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @PreAuthorize("hasRole('ROLE_EMPLOYEE')")
 @Slf4j
 public class WaiterController {
-
+    
     @Autowired
     private MessageSource messageSource;
     @Autowired
@@ -27,90 +38,85 @@ public class WaiterController {
     private BillService billService;
     @Autowired
     private OrderService orderService;
-
+    
     @RequestMapping(value = "/restaurants/{restaurantName}/waiter", method = RequestMethod.GET)
     public String showWaiter(@PathVariable("restaurantName") String restaurantName, Model uiModel) {
-
+        
         // warmup stuff
         Collection<Restaurant> restaurants = restaurantService.findAll();
         uiModel.addAttribute("restaurants", restaurants);
         Restaurant restaurant = restaurantService.fetchWarmedUp(restaurantName);
         uiModel.addAttribute("restaurant", restaurant);
-
+        
         List<Order> allPreparedOrders = orderService.findPreparedOrdersForRestaurant(restaurant);
         uiModel.addAttribute("allPreparedOrders", allPreparedOrders);
-
+        
         List<Bill> allSubmittedBills = billService.findSubmittedBillsForRestaurant(restaurant);
         uiModel.addAttribute("allSubmittedBills", allSubmittedBills);
-
+        
         return "hartigehap/waiter";
     }
-
+    
     @RequestMapping(value = "/waiter/orders/{orderId}", method = RequestMethod.GET)
     public String showOrderInWaiter(@PathVariable("orderId") String orderId, Model uiModel, Locale locale) {
-
+        
         // warmup stuff
         Order order = warmupRestaurantByOrder(orderId, uiModel);
         Restaurant resto = order.getBill().getDiningTable().getRestaurant();
-
+        
         List<Order> allPreparedOrders = orderService.findPreparedOrdersForRestaurant(resto);
         uiModel.addAttribute("allPreparedOrders", allPreparedOrders);
-
+        
         List<Bill> allSubmittedBills = billService.findSubmittedBillsForRestaurant(resto);
         uiModel.addAttribute("allSubmittedBills", allSubmittedBills);
-
+        
         String orderContent = "";
         for (OrderItem orderItem : order.getOrderItems()) {
             orderContent += orderItem.getMenuItem().getId() + " (" + orderItem.getQuantity() + "x)" + "; ";
         }
-
+        
         uiModel.addAttribute("message", new Message("info",
                 messageSource.getMessage("label_order_content", new Object[] {}, locale) + ": " + orderContent));
-
+        
         return "hartigehap/waiter";
     }
-
+    
     @RequestMapping(value = "/waiter/bills/{billId}", method = RequestMethod.GET)
     public String showBillInWaiter(@PathVariable("billId") String billId, Model uiModel, Locale locale) {
-
+        
         // warmup stuff
         Bill bill = warmupRestaurant(billId, uiModel);
         Restaurant resto = bill.getDiningTable().getRestaurant();
-
+        
         List<Order> allPreparedOrders = orderService.findPreparedOrdersForRestaurant(resto);
         uiModel.addAttribute("allPreparedOrders", allPreparedOrders);
-
+        
         List<Bill> allSubmittedBills = billService.findSubmittedBillsForRestaurant(resto);
         uiModel.addAttribute("allSubmittedBills", allSubmittedBills);
-
+        
         uiModel.addAttribute("message",
                 new Message("info",
                         messageSource.getMessage("label_bill_amount", new Object[] {}, locale) + ": "
                                 + bill.getPriceAllOrders() + " "
                                 + messageSource.getMessage("label_currency", new Object[] {}, locale)));
-
+        
         return "hartigehap/waiter";
     }
-
+    
     @RequestMapping(value = "/waiter/orders/{orderId}", method = RequestMethod.PUT)
     public String receiveOrderEvent(@PathVariable("orderId") String orderId, @RequestParam String event,
             Model uiModel) {
-
+        
         Order order = warmupRestaurantByOrder(orderId, uiModel);
-
-        switch (event) {
-        case "orderHasBeenServed":
+        if (event == "orderHasBeenServed") {
             orderHasBeenServed(order);
-            break;
-            
-        default:
+        } else {
             log.error("Internal error: event " + event + " not recognized");
-            break;
         }
         
         return "redirect:/restaurants/" + order.getBill().getDiningTable().getRestaurant().getId() + "/waiter";
     }
-
+    
     private void orderHasBeenServed(Order order) {
         try {
             orderService.orderServed(order);
@@ -120,22 +126,16 @@ public class WaiterController {
         }
     }
     
-
     @RequestMapping(value = "/waiter/bills/{billId}", method = RequestMethod.PUT)
     public String receiveBillEvent(@PathVariable("billId") String billId, @RequestParam String event, Model uiModel) {
-
+        
         Bill bill = warmupRestaurant(billId, uiModel);
-
-        switch (event) {
-        case "billHasBeenPaid":
+        if (event == "billHasBeenPaid") {
             billHasBeenPaid(bill);
-            break;
-
-        default:
+        } else {
             log.error("Internal error: event " + event + " not recognized");
-            break;
         }
-
+        
         return "redirect:/restaurants/" + bill.getDiningTable().getRestaurant().getId() + "/waiter";
     }
     
@@ -147,7 +147,6 @@ public class WaiterController {
                     + "has not been changed to served state!", e);
         }
     }
-
     
     private Order warmupRestaurantByOrder(String orderId, Model uiModel) {
         Order order = orderService.findById(Long.valueOf(orderId));
@@ -158,7 +157,7 @@ public class WaiterController {
         uiModel.addAttribute("restaurant", restaurant);
         return order;
     }
-
+    
     private Bill warmupRestaurant(String billId, Model uiModel) {
         Bill bill = billService.findById(Long.valueOf(billId));
         Collection<Restaurant> restaurants = restaurantService.findAll();

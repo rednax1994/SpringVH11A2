@@ -1,7 +1,6 @@
 package edu.avans.hartigehap.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -19,25 +18,23 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
-public abstract class DecoratedOrderItem extends OrderItem{
-	private static final long serialVersionUID = 1L;
-	
-	@OneToOne
-	private OrderItem orderitem;
+public abstract class DecoratedOrderItem extends OrderItem {
+    private static final long serialVersionUID = 1L;
     
-    public DecoratedOrderItem(OrderItem orderitem, MenuItem menuItem, int quantity) {
+    @OneToOne
+    private OrderItem orderItem;
+    
+    public DecoratedOrderItem(OrderItem orderItem, MenuItem menuItem, int quantity) {
         super(menuItem, quantity);
-        this.orderitem = orderitem;
+        this.orderItem = orderItem;
     }
-	
-	public String description(){
-		return getMenuItem().getId() + "(" + getQuantity() + ")" + " " + orderitem.description();
-	}
-	
-	@Transient
-	public int getPrice(){
-		return getMenuItem().getPrice() * getQuantity() + orderitem.getPrice();
-		
-	}
-	
+    
+    public String description() {
+        return orderItem.description() + " + extra " + super.description();
+    }
+    
+    @Transient
+    public int getPrice() {
+        return orderItem.getPrice() + getMenuItem().getPrice() * getQuantity();
+    }
 }

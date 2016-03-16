@@ -9,10 +9,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 @Slf4j
 public class BrowserUtils {
-
+    
     private static WebDriver webDriver = null;
     private static boolean shutdownHookEnabled = false;
-
+    
     public static WebDriver getWebDriver() {
         if (webDriver == null) {
             if (!shutdownHookEnabled) {
@@ -28,7 +28,7 @@ public class BrowserUtils {
              */
             webDriver = new FirefoxDriver();
         }
-
+        
         /*
          * Stel een timeout in die aangeeft hoe lang de webDriver moet blijven
          * proberen om een element dat op de pagina aanwezig zou moeten zijn te
@@ -37,7 +37,7 @@ public class BrowserUtils {
         webDriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
         return webDriver;
     }
-
+    
     public static void close() {
         if (webDriver == null) {
             return;
@@ -49,5 +49,5 @@ public class BrowserUtils {
         }
         webDriver = null;
     }
-
+    
 }

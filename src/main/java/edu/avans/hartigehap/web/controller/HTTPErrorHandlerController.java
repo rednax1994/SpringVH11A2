@@ -9,7 +9,7 @@ public class HTTPErrorHandlerController {
     public String error404() {
         return "404";
     }
-
+    
     @RequestMapping(value = "/400")
     public String error400() {
         return "400";
