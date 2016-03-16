@@ -1,5 +1,7 @@
 package edu.avans.hartigehap.domain.states;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,11 +19,10 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@Getter
-@Setter
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") 
+@Getter @Setter
 @NoArgsConstructor
-public abstract class ReservationStatus extends DomainObject {
+public abstract class ReservationStatus implements Serializable {
     private static final long serialVersionUID = 1L;
     
     public enum ReservationStatusId {
@@ -34,7 +35,7 @@ public abstract class ReservationStatus extends DomainObject {
     
     protected ReservationStatusId reservationStatusId;
     
-    @OneToOne(mappedBy = "currentState")
+    @OneToOne(cascade = javax.persistence.CascadeType.ALL, mappedBy = "currentState")
     private Reservation reservation;
     
     public ReservationStatus(Reservation reservation) {

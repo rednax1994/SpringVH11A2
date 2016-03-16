@@ -10,13 +10,10 @@ import edu.avans.hartigehap.domain.StateException;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@Getter
-@Setter
-@ToString(callSuper = true, includeFieldNames = true)
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") 
+@Getter @Setter
 @NoArgsConstructor
 public class StateConcept extends ReservationStatus {
     private static final long serialVersionUID = 1L;
@@ -28,7 +25,7 @@ public class StateConcept extends ReservationStatus {
     
     @Override
     public void acceptReservation() throws StateException {
-        
+        throw new StateException("");
     }
     
     @Override

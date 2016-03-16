@@ -1,5 +1,7 @@
 package edu.avans.hartigehap.domain;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
@@ -17,10 +19,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Reservation extends DomainObject{
+public class Reservation implements Serializable{
     private static final long serialVersionUID = 1L;
 
-    @OneToOne
+    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     private ReservationStatus currentState;
     
     private int amountOfPeople;
