@@ -4,7 +4,7 @@ import java.util.List;
 
 import edu.avans.hartigehap.domain.Order;
 import edu.avans.hartigehap.repository.Container;
-import edu.avans.hartigehap.repository.Iterator;
+import iterator.Iterator;
 
 public class OrderItemRepositoryImpl implements Container {
     
