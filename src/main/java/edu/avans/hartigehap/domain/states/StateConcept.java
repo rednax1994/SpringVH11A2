@@ -25,7 +25,7 @@ public class StateConcept extends ReservationStatus {
     
     @Override
     public void acceptReservation() throws StateException {
-        throw new StateException("");
+        getReservation().setCurrentState(new StateApproved(getReservation()));
     }
     
     @Override
