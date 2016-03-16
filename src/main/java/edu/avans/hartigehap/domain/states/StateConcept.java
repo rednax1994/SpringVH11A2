@@ -26,20 +26,8 @@ public class StateConcept extends ReservationStatus {
         reservationStatusId = ReservationStatusId.CONCEPT;
     }
     
-    public void getCurrentState() {
-        getReservation().setCurrentState(new StateConcept());
-        
-    }
-    
     @Override
     public void acceptReservation() throws StateException {
-        // TODO Auto-generated method stub
-        
-    }
-    
-    @Override
-    public void approveReservation() throws StateException {
-        throw new StateException("");
         
     }
     

@@ -43,8 +43,6 @@ public abstract class ReservationStatus extends DomainObject {
     
     public abstract void acceptReservation() throws StateException;
     
-    public abstract void approveReservation() throws StateException;
-    
     public abstract void endReservation() throws StateException;
     
 }
