@@ -5,7 +5,6 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,31 +20,26 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
-public class Room extends DomainObject {
+public class RoomOption extends DomainObject {
+
 	private static final long serialVersionUID = 1L;
-
-	private long roomNr;
-
-	private Boolean occupied;
-
-	private int capacity;
-
-	@OneToOne(cascade = javax.persistence.CascadeType.ALL)
-	private Bill currentBill;
-
-	// @OneToMany()
-	// private Collection<Reservation> reservations = new
-	// ArrayList<Reservation>();
-
+	
 	@ManyToOne()
 	private Restaurant restaurant;
 	
-	@ManyToMany()
-	private List<RoomOption> options;
+	@ManyToMany(mappedBy="rooms")
+	private List<Room> rooms;
 
-	public Room(long roomNr, Boolean occupied, int capacity){
-		this.roomNr = roomNr;
-		this.occupied = occupied;
-		this.capacity = capacity;
+	private long optionNr;
+	private String name;
+	private String description;
+	private long price;
+	private boolean isUsed;
+
+	public RoomOption(String name, String description, long price, boolean isUsed) {
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.isUsed = isUsed;
 	}
 }
