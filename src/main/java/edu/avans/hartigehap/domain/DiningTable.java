@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.reservationFactory.TableReservation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -42,11 +43,12 @@ public class DiningTable extends DomainObject {
     @OneToMany(cascade = javax.persistence.CascadeType.ALL, mappedBy = "diningTable")
     private Collection<Bill> bills = new ArrayList<Bill>();
     
+    
     @ManyToOne()
     private Restaurant restaurant;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "diningTable")
-    private Collection<Reservation> reservations = new ArrayList<Reservation>();
+    private Collection<TableReservation> reservations = new ArrayList<TableReservation>();
     
     public DiningTable() {
         // when the system resets, the c'tor is executed and a new Bill object

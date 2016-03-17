@@ -15,6 +15,8 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.reservationFactory.Reservation;
+import edu.avans.hartigehap.domain.reservationFactory.RoomReservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,7 +38,10 @@ public class Room extends DomainObject {
     private int capacity;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
-    private Collection<Reservation> reservations = new ArrayList<Reservation>();
+    private Collection<RoomReservation> reservations = new ArrayList<RoomReservation>();
+    
+    @ManyToMany
+    private List<RoomOption> options;
     
     @ManyToOne()
     private Restaurant restaurant;

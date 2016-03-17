@@ -1,5 +1,7 @@
 package edu.avans.hartigehap.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -28,7 +30,7 @@ public class RoomOption extends DomainObject {
 	private Restaurant restaurant;
 	
 	@ManyToMany(mappedBy="rooms")
-	private List<Room> rooms;
+	private Collection<Room> rooms = new ArrayList<Room>();
 
 	private long optionNr;
 	private String name;

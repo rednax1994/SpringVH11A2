@@ -5,8 +5,8 @@ import javax.persistence.Entity;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import edu.avans.hartigehap.domain.Reservation;
 import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.reservationFactory.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

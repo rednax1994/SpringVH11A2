@@ -1,7 +1,7 @@
 package edu.avans.hartigehap.domain.states;
 
-import edu.avans.hartigehap.domain.Reservation;
 import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.reservationFactory.Reservation;
 
 public class ApprovedState extends ReservationStatus {
     private static final long serialVersionUID = 1L;

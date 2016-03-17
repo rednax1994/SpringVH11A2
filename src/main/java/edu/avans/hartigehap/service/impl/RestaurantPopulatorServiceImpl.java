@@ -22,10 +22,10 @@ import edu.avans.hartigehap.domain.Drink;
 import edu.avans.hartigehap.domain.FoodCategory;
 import edu.avans.hartigehap.domain.Meal;
 import edu.avans.hartigehap.domain.OrderOption;
-import edu.avans.hartigehap.domain.Reservation;
-import edu.avans.hartigehap.domain.Reservation.TimeOfDayEnum;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.Room;
+import edu.avans.hartigehap.domain.reservationFactory.Reservation;
+import edu.avans.hartigehap.domain.reservationFactory.Reservation.TimeOfDayEnum;
 import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
@@ -272,9 +272,6 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             e.printStackTrace();
         }
         
-        Reservation reservation = new Reservation(10, "Alex Baron", TimeOfDayEnum.MORNING, date, TimeOfDayEnum.MORNING,
-                date);
-        reservation.setRoom(roomRepository.findById((long) 1));
-        reservationRepository.save(reservation);
+       
     }
 }
