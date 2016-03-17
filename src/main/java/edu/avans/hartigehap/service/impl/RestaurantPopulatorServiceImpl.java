@@ -24,7 +24,6 @@ import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
 import edu.avans.hartigehap.repository.OrderItemRepository;
-import edu.avans.hartigehap.repository.ReservationRepository;
 import edu.avans.hartigehap.repository.RestaurantRepository;
 import edu.avans.hartigehap.service.RestaurantPopulatorService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,9 +44,6 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private CustomerRepository customerRepository;
     @Autowired
     private OrderItemRepository orderItemRepository;
-    @Autowired
-    private ReservationRepository reservationRepository;
-    
     
     private List<Meal> meals = new ArrayList<>();
     private List<Meal> mealOptions = new ArrayList<>();

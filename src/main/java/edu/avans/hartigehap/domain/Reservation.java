@@ -41,8 +41,10 @@ public class Reservation extends DomainObject {
     
     private String booker;
     
+    private DiningTable table;
+    
     public Reservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime,
-            TimeOfDayEnum endTimeOfDay, Date endTime) {
+            TimeOfDayEnum endTimeOfDay, Date endTime, DiningTable table) {
         this.currentState = new ConceptState(this);
         this.amountOfPeople = amountOfPeople;
         this.booker = booker;
@@ -50,6 +52,6 @@ public class Reservation extends DomainObject {
         this.startTime = startTime;
         this.endTimeOfDay = endTimeOfDay;
         this.endTime = endTime;
+        this.table = table;
     }
-    
 }
