@@ -3,23 +3,23 @@ package edu.avans.hartigehap.domain.states;
 import edu.avans.hartigehap.domain.Reservation;
 import edu.avans.hartigehap.domain.StateException;
 
-public class StateApproved extends ReservationStatus {
+public class FinishedState extends ReservationStatus {
     private static final long serialVersionUID = 1L;
     
-    public StateApproved(Reservation reservation) {
+    public FinishedState(Reservation reservation) {
         super(reservation);
-        reservationStatusId = ReservationStatusId.APPROVED;
+        reservationStatusId = ReservationStatusId.FINISHED;
     }
     
     @Override
     public void acceptReservation() throws StateException {
-        // TODO Auto-generated method stub
+        throw new StateException("You are not allowed to go into this state from the finished state");
         
     }
     
     @Override
     public void endReservation() throws StateException {
-        // TODO Auto-generated method stub
+        throw new StateException("You are not allowed to go into this state from the finished state");
         
     }
     

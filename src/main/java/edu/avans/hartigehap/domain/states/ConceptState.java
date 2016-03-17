@@ -12,25 +12,26 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id") 
-@Getter @Setter
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@Getter
+@Setter
 @NoArgsConstructor
-public class StateConcept extends ReservationStatus {
+public class ConceptState extends ReservationStatus {
     private static final long serialVersionUID = 1L;
     
-    public StateConcept(Reservation reservation) {
+    public ConceptState(Reservation reservation) {
         super(reservation);
         reservationStatusId = ReservationStatusId.CONCEPT;
     }
     
     @Override
     public void acceptReservation() throws StateException {
-        getReservation().setCurrentState(new StateApproved(getReservation()));
+        getReservation().setCurrentState(new ApprovedState(getReservation()));
     }
     
     @Override
     public void endReservation() throws StateException {
-        throw new StateException("");
+        throw new StateException("You are not allowed to go into this state from the Concept State");
         
     }
     

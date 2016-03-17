@@ -1,17 +1,15 @@
 package edu.avans.hartigehap.domain;
 
-import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.states.ConceptState;
 import edu.avans.hartigehap.domain.states.ReservationStatus;
-import edu.avans.hartigehap.domain.states.StateConcept;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,13 +19,13 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Reservation extends DomainObject{
+public class Reservation extends DomainObject {
     private static final long serialVersionUID = 1L;
     
-    public enum TimeOfDayEnum{
+    public enum TimeOfDayEnum {
         MORNING, NOON, EVENING
     }
-
+    
     @OneToOne(cascade = javax.persistence.CascadeType.ALL)
     private ReservationStatus currentState;
     
@@ -43,8 +41,9 @@ public class Reservation extends DomainObject{
     
     private String booker;
     
-    public Reservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime, TimeOfDayEnum endTimeOfDay, Date endTime) {
-        this.currentState = new StateConcept(this);
+    public Reservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime,
+            TimeOfDayEnum endTimeOfDay, Date endTime) {
+        this.currentState = new ConceptState(this);
         this.amountOfPeople = amountOfPeople;
         this.booker = booker;
         this.startTimeOfDay = startTimeOfDay;
