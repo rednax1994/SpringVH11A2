@@ -22,14 +22,12 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
-
+@NoArgsConstructor
 public class Quotation extends DomainObject {
 
-    public Quotation(int number, Date eventDate, Date expirationDate, Status status) {
+    public Quotation(int number) {
         this.number = number;
-        this.eventDate = eventDate;
-        this.expirationDate = expirationDate;
-        this.status = status;
+      
     }
 
     private static final long serialVersionUID = 1L;

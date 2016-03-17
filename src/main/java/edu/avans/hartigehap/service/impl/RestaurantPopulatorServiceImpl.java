@@ -172,8 +172,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         }
     }
     
-    private void createQuotation(int number, Date eventDate, Date expirationDate, Status status, Restaurant restaurant) {
-        Quotation quotation = new Quotation(number, eventDate, expirationDate, status);
+    private void createQuotation(int number, Restaurant restaurant) {
+        Quotation quotation = new Quotation(number);
         quotation.setRestaurant(restaurant);
         restaurant.getQuotations().add(quotation);
     }
@@ -189,8 +189,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         // every restaurant has its own dining tables
         createDiningTables(FIVE, restaurant2);
         
-        createQuotation(15000, new Date(2016, 6, 3), new Date(2016, 8, 18), Status.CONCEPT, restaurant2);
-        createQuotation(15001, new Date(2016, 8, 14), new Date(2016, 10, 24), Status.CONCEPT, restaurant2);
+        createQuotation(15000, restaurant2);
+        createQuotation(15001, restaurant2);
         
         // for the moment every restaurant has all available food categories
         for (FoodCategory foodCat : foodCats) {
