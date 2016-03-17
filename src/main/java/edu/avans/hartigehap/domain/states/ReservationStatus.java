@@ -1,6 +1,8 @@
 package edu.avans.hartigehap.domain.states;
 
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -25,6 +27,8 @@ public abstract class ReservationStatus extends DomainObject {
         CONCEPT, APPROVED, FINISHED
     }
     
+    @Enumerated(EnumType.STRING)
+    // represented in database as integer
     protected ReservationStatusId reservationStatusId;
     
     @OneToOne(cascade = javax.persistence.CascadeType.ALL, mappedBy = "currentState")

@@ -30,6 +30,7 @@ import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
 import edu.avans.hartigehap.repository.OrderItemRepository;
+import edu.avans.hartigehap.repository.ReservationRepository;
 import edu.avans.hartigehap.repository.RestaurantRepository;
 import edu.avans.hartigehap.repository.RoomRepository;
 import edu.avans.hartigehap.service.RestaurantPopulatorService;
@@ -53,6 +54,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private OrderItemRepository orderItemRepository;
     @Autowired
     private RoomRepository roomRepository;
+    @Autowired
+    private ReservationRepository reservationRepository;
     
     private List<Meal> meals = new ArrayList<>();
     private List<Meal> mealOptions = new ArrayList<>();
@@ -266,13 +269,12 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         try {
             date = formatter.parse("7-Jun-2016");
         } catch (ParseException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         
         Reservation reservation = new Reservation(10, "Alex Baron", TimeOfDayEnum.MORNING, date, TimeOfDayEnum.MORNING,
                 date);
-        reservation.setRoom(roomRepository.findById((long) ONE));
-        
+        reservation.setRoom(roomRepository.findById((long) 1));
+        reservationRepository.save(reservation);
     }
 }

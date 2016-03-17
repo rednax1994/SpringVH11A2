@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -43,6 +44,9 @@ public class DiningTable extends DomainObject {
     
     @ManyToOne()
     private Restaurant restaurant;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "diningTable")
+    private Collection<Reservation> reservations = new ArrayList<Reservation>();
     
     public DiningTable() {
         // when the system resets, the c'tor is executed and a new Bill object

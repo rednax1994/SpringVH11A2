@@ -3,10 +3,10 @@ package edu.avans.hartigehap.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -31,10 +31,7 @@ public class Room extends DomainObject {
     
     private int capacity;
     
-    @OneToOne(cascade = javax.persistence.CascadeType.ALL)
-    private Bill currentBill;
-    
-    @OneToMany()
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
     private Collection<Reservation> reservations = new ArrayList<Reservation>();
     
     @ManyToOne()
