@@ -36,6 +36,9 @@ public class Quotation extends DomainObject{
     @ManyToOne
     private Customer customer;
     
+    @ManyToOne
+    private Restaurant restaurant;
+    
 //    private Banquetingfacade banquetingfacade;
     
 //    private TemplateMailer templatemailer;

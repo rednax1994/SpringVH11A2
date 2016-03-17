@@ -33,6 +33,9 @@ public class Invoice extends DomainObject{
     @ManyToOne
     private Customer customer;
     
+    @ManyToOne
+    private Restaurant restaurant;
+    
 //    private TemplateMailer templatemailer;
     
     @Enumerated(EnumType.ORDINAL)
