@@ -1,14 +1,10 @@
 package edu.avans.hartigehap.domain;
 
-import java.util.List;
-
 import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.CascadeType;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
