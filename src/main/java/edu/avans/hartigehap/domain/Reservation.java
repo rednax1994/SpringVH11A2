@@ -3,6 +3,7 @@ package edu.avans.hartigehap.domain;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -41,10 +42,14 @@ public class Reservation extends DomainObject {
     
     private String booker;
     
-    private DiningTable table;
+    @ManyToOne
+    private Room room;
+    
+    @ManyToOne
+    private DiningTable diningTable;
     
     public Reservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime,
-            TimeOfDayEnum endTimeOfDay, Date endTime, DiningTable table) {
+            TimeOfDayEnum endTimeOfDay, Date endTime) {
         this.currentState = new ConceptState(this);
         this.amountOfPeople = amountOfPeople;
         this.booker = booker;
@@ -52,6 +57,5 @@ public class Reservation extends DomainObject {
         this.startTime = startTime;
         this.endTimeOfDay = endTimeOfDay;
         this.endTime = endTime;
-        this.table = table;
     }
 }
