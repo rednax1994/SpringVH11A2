@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -27,6 +28,9 @@ import lombok.ToString;
 public class Room extends DomainObject {
     private static final long serialVersionUID = 1L;
     
+    @ManyToMany()
+    private Collection<RoomOption> options = new ArrayList<RoomOption>();
+    
     private long roomNr;
     
     private Boolean occupied;
@@ -35,9 +39,6 @@ public class Room extends DomainObject {
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
     private Collection<RoomReservation> reservations = new ArrayList<RoomReservation>();
-    
-    @ManyToMany
-    private List<RoomOption> options;
     
     @ManyToOne()
     private Restaurant restaurant;
