@@ -1,9 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<div id="body" xmlns:jsp="http://java.sun.com/JSP/Page" xmlns:c="http://java.sun.com/jsp/jstl/core"
-	xmlns:joda="http://www.joda.org/joda/time/tags" xmlns:spring="http://www.springframework.org/tags"
-	xmlns:form="http://www.springframework.org/tags/form" xmlns:sec="http://www.springframework.org/security/tags"
-	version="2.0">
+<div id="body" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:joda="http://www.joda.org/joda/time/tags"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:form="http://www.springframework.org/tags/form"
+	xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
-hallo
+	hallo
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">${labelOptions}</h3>
+			</div>
+			<ul class="list-group">
+				<c:forEach items="${room.roomOptions}" var="roomOption">
+					<spring:url var="showTable" value="/rooms/${room.id }" />
+					<a href="${showTable}" class="list-group-item">${labelRoom}
+						${room.roomNr}</a>
+				</c:forEach>
+			</ul>
+		</div>
+	</div>
 </div>
