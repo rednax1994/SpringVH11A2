@@ -1,10 +1,13 @@
 package edu.avans.hartigehap.domain;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -40,4 +43,11 @@ public class Quotation extends DomainObject{
     @Enumerated(EnumType.ORDINAL)
     // represented in database as integer
     private Status status;
+    
+    @OneToMany(mappedBy = "quotation")
+    private Collection<Line> quotationLines = new ArrayList<Line>();
+    
+    @OneToMany(mappedBy = "invoice")
+    private Collection<Line> invoiceLines = new ArrayList<Line>();
+    
 }
