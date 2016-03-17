@@ -1,11 +1,18 @@
 package edu.avans.hartigehap.domain;
 
+<<<<<<< HEAD
 import java.util.List;
 
+=======
+import java.util.ArrayList;
+import java.util.Collection;
+
+import javax.persistence.CascadeType;
+>>>>>>> Reservation_Entity
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -48,4 +55,25 @@ public class Room extends DomainObject {
 		this.occupied = occupied;
 		this.capacity = capacity;
 	}
+=======
+    private static final long serialVersionUID = 1L;
+    
+    private long roomNr;
+    
+    private Boolean occupied;
+    
+    private int capacity;
+    
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "room")
+    private Collection<Reservation> reservations = new ArrayList<Reservation>();
+    
+    @ManyToOne()
+    private Restaurant restaurant;
+    
+    public Room(long roomNr, Boolean occupied, int capacity) {
+        this.roomNr = roomNr;
+        this.occupied = occupied;
+        this.capacity = capacity;
+    }
+>>>>>>> Reservation_Entity
 }
