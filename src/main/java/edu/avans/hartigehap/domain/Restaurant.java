@@ -50,7 +50,7 @@ public class Restaurant extends DomainObjectNaturalId {
     @ManyToMany(mappedBy = "restaurants")
     private Collection<Owner> owners = new ArrayList<Owner>();
     
-    @OneToMany(mappedBy="restaurant")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy="restaurant")
     private Collection<Quotation> quotations = new ArrayList<Quotation>();
     
     @OneToMany(mappedBy="restaurant")
