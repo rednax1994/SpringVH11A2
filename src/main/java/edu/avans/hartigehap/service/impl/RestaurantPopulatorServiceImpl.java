@@ -177,8 +177,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         quotation.setRestaurant(restaurant);
         restaurant.getQuotations().add(quotation);
     }
-    
-    @SuppressWarnings("deprecation")
+
     private Restaurant populateRestaurant(Restaurant restaurant) {
         
         // will save everything that is reachable by cascading
