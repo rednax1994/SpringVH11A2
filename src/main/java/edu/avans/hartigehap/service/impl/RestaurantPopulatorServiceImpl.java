@@ -3,6 +3,7 @@ package edu.avans.hartigehap.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import edu.avans.hartigehap.domain.Drink;
 import edu.avans.hartigehap.domain.FoodCategory;
 import edu.avans.hartigehap.domain.Meal;
 import edu.avans.hartigehap.domain.OrderOption;
+import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.Status;
 import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
@@ -169,6 +172,13 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         }
     }
     
+    private void createQuotation(int number, Date eventDate, Date expirationDate, Status status, Restaurant restaurant) {
+        Quotation quotation = new Quotation(number, eventDate, expirationDate, status);
+        quotation.setRestaurant(restaurant);
+        restaurant.getQuotations().add(quotation);
+    }
+    
+    @SuppressWarnings("deprecation")
     private Restaurant populateRestaurant(Restaurant restaurant) {
         
         // will save everything that is reachable by cascading
@@ -178,6 +188,9 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         
         // every restaurant has its own dining tables
         createDiningTables(FIVE, restaurant2);
+        
+        createQuotation(15000, new Date(2016, 6, 3), new Date(2016, 8, 18), Status.CONCEPT, restaurant2);
+        createQuotation(15001, new Date(2016, 8, 14), new Date(2016, 10, 24), Status.CONCEPT, restaurant2);
         
         // for the moment every restaurant has all available food categories
         for (FoodCategory foodCat : foodCats) {
