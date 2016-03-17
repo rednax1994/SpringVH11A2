@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -22,13 +21,9 @@ import lombok.ToString;
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
 public class RoomOption extends DomainObject {
-    
     private static final long serialVersionUID = 1L;
     
-    @ManyToOne()
-    private Restaurant restaurant;
-    
-    @ManyToMany(mappedBy = "rooms")
+    @ManyToMany
     private Collection<Room> rooms = new ArrayList<Room>();
     
     private long optionNr;
