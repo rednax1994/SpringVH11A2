@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -24,6 +25,9 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Room extends DomainObject {
     private static final long serialVersionUID = 1L;
+    
+    @ManyToMany()
+    private Collection<RoomOption> options = new ArrayList<RoomOption>();
     
     private long roomNr;
     
