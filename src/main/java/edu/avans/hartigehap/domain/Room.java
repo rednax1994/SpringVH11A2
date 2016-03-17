@@ -26,7 +26,7 @@ import lombok.ToString;
 public class Room extends DomainObject {
     private static final long serialVersionUID = 1L;
     
-    @ManyToMany()
+    @ManyToMany(mappedBy = "rooms")
     private Collection<RoomOption> options = new ArrayList<RoomOption>();
     
     private long roomNr;

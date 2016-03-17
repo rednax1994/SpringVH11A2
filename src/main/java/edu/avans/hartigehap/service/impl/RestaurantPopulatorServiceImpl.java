@@ -26,12 +26,14 @@ import edu.avans.hartigehap.domain.Reservation;
 import edu.avans.hartigehap.domain.Reservation.TimeOfDayEnum;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.Room;
+import edu.avans.hartigehap.domain.RoomOption;
 import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
 import edu.avans.hartigehap.repository.OrderItemRepository;
 import edu.avans.hartigehap.repository.ReservationRepository;
 import edu.avans.hartigehap.repository.RestaurantRepository;
+import edu.avans.hartigehap.repository.RoomOptionRepository;
 import edu.avans.hartigehap.repository.RoomRepository;
 import edu.avans.hartigehap.service.RestaurantPopulatorService;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +58,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private RoomRepository roomRepository;
     @Autowired
     private ReservationRepository reservationRepository;
+    @Autowired
+    private RoomOptionRepository roomOptionRepository;
     
     private List<Meal> meals = new ArrayList<>();
     private List<Meal> mealOptions = new ArrayList<>();
@@ -264,6 +268,15 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         
         t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption);
         
+        /*
+         * room options added
+         */
+        RoomOption roomOption = new RoomOption("Buffet", "Western Buffet", (long) 50, false);
+        roomOptionRepository.save(roomOption);
+        
+        /*
+         * Reservation test
+         */
         SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
         Date date = null;
         try {
