@@ -7,6 +7,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
@@ -16,6 +17,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.service.impl.BanquetingFacadeImpl;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -57,7 +59,8 @@ public class Quotation extends DomainObject {
 	@ManyToOne
 	private Restaurant restaurant;
 
-	// private Banquetingfacade banquetingfacade;
+    @Transient
+    private BanquetingFacadeImpl banquetingfacade = new BanquetingFacadeImpl();
 
 	// private TemplateMailer templatemailer;
 
