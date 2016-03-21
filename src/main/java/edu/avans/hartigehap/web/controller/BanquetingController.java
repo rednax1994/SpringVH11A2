@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.avans.hartigehap.domain.Invoice;
 import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.service.BanquetingFacadeService;
 import edu.avans.hartigehap.service.InvoiceService;
 import edu.avans.hartigehap.service.QuotationService;
 import edu.avans.hartigehap.service.RestaurantService;
+import edu.avans.hartigehap.service.impl.BanquetingFacadeImpl;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -32,6 +34,9 @@ public class BanquetingController {
 
     @Autowired
     private InvoiceService invoiceService;
+    
+    @Autowired
+    private BanquetingFacadeService banguetingFacadeService;
 
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting", method = RequestMethod.GET)
     public String listQuotationsAndInvoices(@PathVariable("restaurantName") String restaurantName, Model uiModel) {
@@ -60,6 +65,20 @@ public class BanquetingController {
         Quotation quotation = quotationService.findById(id);
         uiModel.addAttribute("quotation", quotation);
         return "hartigehap/showquotation";
+    }
+    
+    @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations/{id}", params = "submit", method = RequestMethod.GET)
+    public String acceptQuotation(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
+            Model uiModel) {
+        
+        warmupRestaurant(restaurantName, uiModel);
+        
+        log.info("Quotation update form for quotation: " + id);
+        
+        Quotation quotation = quotationService.findById(id);
+        Restaurant restaurant = restaurantService.fetchWarmedUp(restaurantName);
+        banguetingFacadeService.acceptQuotation(restaurant, quotation);
+        return "redirect:/restaurants/" + restaurantName + "/banqueting/";
     }
 
     private Restaurant warmupRestaurant(String restaurantName, Model uiModel) {
