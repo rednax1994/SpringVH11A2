@@ -36,7 +36,7 @@
 			<c:if test="${not empty restaurant.quotations}">
 				<ul class="list-group">
 					<c:forEach items="${restaurant.quotations}" var="quotation">
-						<spring:url var="showTable" value="/quotations/${quotation.id}" />
+						<spring:url var="showTable" value="/restaurants/${restaurant.id}/banqueting/quotations/${quotation.id}" />
 						<a href="${showTable}" class="list-group-item">${labelQuotation}
 							${quotation.id}</a>
 					</c:forEach>
@@ -58,7 +58,7 @@
 			<c:if test="${not empty restaurant.invoices}">
 				<ul class="list-group">
 					<c:forEach items="${restaurant.invoices}" var="invoice">
-						<spring:url var="showTable" value="/invoices/${invoice.id}" />
+						<spring:url var="showTable" value="/restaurants/${restaurant.id}/banqueting/invoices/${invoice.id}" />
 						<a href="${showTable}" class="list-group-item">${labelInvoice}
 							${invoice.id}</a>
 					</c:forEach>
