@@ -3,7 +3,6 @@ package edu.avans.hartigehap.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -172,8 +171,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         }
     }
     
-    private void createQuotation(int number, Restaurant restaurant) {
-        Quotation quotation = new Quotation(number);
+    private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status, Restaurant restaurant) {
+        Quotation quotation = new Quotation(number, eventDate, expirationDate, status);
         quotation.setRestaurant(restaurant);
         restaurant.getQuotations().add(quotation);
     }
@@ -188,8 +187,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         // every restaurant has its own dining tables
         createDiningTables(FIVE, restaurant2);
         
-        createQuotation(15000, restaurant2);
-        createQuotation(15001, restaurant2);
+        createQuotation(15000, new DateTime(2016, 6, 23, 0, 0), new DateTime(2016, 8, 23, 0, 0), Status.CONCEPT, restaurant2);
+        createQuotation(15001, new DateTime(2016, 8, 26, 0, 0), new DateTime(2016, 10, 26, 0, 0), Status.CONCEPT, restaurant2);
         
         // for the moment every restaurant has all available food categories
         for (FoodCategory foodCat : foodCats) {

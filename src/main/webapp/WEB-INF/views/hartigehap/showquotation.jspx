@@ -18,18 +18,20 @@
 	<spring:message code="label_banqueting_subsystem" var="labelBanquetingSubsystem" />
 	<spring:message code="label_quotation_info" var="labelQuotationInfo" />
 	<spring:message code="label_quotation_number" var="labelQuotationNumber" />
+	<spring:message code="label_quotation_event_date" var="labelQuotationEventDate" />
+	<spring:message code="label_quotation_expiration_date" var="labelQuotationExpirationDate" />
+	<spring:message code="label_quotation_status" var="labelQuotationStatus" />
 	<spring:message code="label_quotation_update" var="labelQuotationUpdate" />
 	<spring:message code="label_quotation_delete" var="labelQuotationDelete" />
 	<spring:message code="date_format_pattern" var="dateFormatPattern" />
-
-	<spring:message code="label_customer_photo" var="labelCustomerPhoto" />
 
 	<spring:url value="/restaurants/${restaurant.id}/quotations" var="editQuotationUrl" />
 	<spring:url value="/restaurants/${restaurant.id}/quotations" var="deleteQuotationUrl" />
 	<spring:url value="/restaurants/${restaurant.id}" var="showRestaurant" />
 
 
-	<joda:format var="birthDate" value="${customer.birthDate}" pattern="${dateFormatPattern}" />
+	<joda:format var="expirationDate" value="${quotation.expirationDate}" pattern="${dateFormatPattern}" />
+	<joda:format var="eventDate" value="${quotation.eventDate}" pattern="${dateFormatPattern}" />
 
 	<div class="row">
 		<h1>${labelBanquetingSubsystem}</h1>
@@ -69,6 +71,21 @@
 					<span class="input-group-addon" id="description" path="description">${labelQuotationNumber}</span>
 					<input type="text" class="form-control capitalise" id="customerDescription" value="${quotation.number}" readonly="true" />
 				</div>
+				<!-- <joda:format value="${quotation.eventDate}" pattern="${dateFormatPattern}" />-->
+				<div class="input-group">
+					<span class="input-group-addon" id="description" path="description">${labelQuotationEventDate}</span>
+					<input type="text" class="form-control capitalise" id="customerDescription" value="${eventDate}" readonly="true" />
+				</div>
+				<!-- <joda:format value="${quotation.expirationDate}" pattern="${dateFormatPattern}" />-->
+				<div class="input-group">
+					<span class="input-group-addon" id="description" path="description">${labelQuotationExpirationDate}</span>
+					<input type="text" class="form-control capitalise" id="customerDescription" value="${expirationDate}" readonly="true" />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon" id="description" path="description">${labelQuotationStatus}</span>
+					<input type="text" class="form-control capitalise" id="customerDescription" value="${quotation.status}" readonly="true" />
+				</div>
+				
 
 				<p />
 			</div>

@@ -2,12 +2,16 @@ package edu.avans.hartigehap.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -25,16 +29,24 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Quotation extends DomainObject {
 
-    public Quotation(int number) {
+    public Quotation(int number, DateTime eventDate, DateTime expirationDate, Status status) {
         this.number = number;
-      
+        this.eventDate = eventDate;
+        this.expirationDate = expirationDate;
+        this.status = status;
     }
 
     private static final long serialVersionUID = 1L;
 
     private int number;
-    private Date eventDate;
-    private Date expirationDate;
+
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @DateTimeFormat(iso = ISO.DATE)
+    private DateTime eventDate;
+
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @DateTimeFormat(iso = ISO.DATE)
+    private DateTime expirationDate;
 
     // @ManyToOne
     // private Room room;
