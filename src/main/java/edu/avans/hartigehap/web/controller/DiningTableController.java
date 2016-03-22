@@ -55,14 +55,16 @@ public class DiningTableController {
         DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
         
         log.info("diningTable fetched, start addOrderOption");
-        diningTableService.addOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
-        
+        if (!menuItemName.equals("NONE")) {
+            diningTableService.addOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
+        }
         return "redirect:/diningTables/" + diningTableId;
     }
     
     @RequestMapping(value = "/orderItems/{orderItemId}/orderOptions", method = RequestMethod.DELETE)
     public String removeOrderOption(@PathVariable("orderItemId") String orderItemId, @RequestParam String diningTableId,
-            @RequestParam(value = "menu.foodCategories") String menuItemName) {
+            @RequestParam(value = "menu.foodCategories") String menuItemName, RedirectAttributes redirectAttributes,
+            Locale locale) {
         
         log.info("removeOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId
                 + ", selected menu item: " + menuItemName);
@@ -70,8 +72,12 @@ public class DiningTableController {
         DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
         
         log.info("diningTable fetched, start removeOrderOption");
-        diningTableService.removeOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
-        
+        if (!menuItemName.equals("NONE")) {
+            diningTableService.removeOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
+        } else {
+            redirectAttributes.addFlashAttribute("message",
+                    new Message("error", messageSource.getMessage("remove_fail", new Object[] {}, locale)));
+        }
         return "redirect:/diningTables/" + diningTableId;
     }
     

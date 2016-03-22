@@ -147,12 +147,12 @@ public class Order extends DomainObject {
                 } else {
                     previousOrderItemCursor.setOrderItem(((DecoratedOrderItem) orderItemCursor).getOrderItem());
                 }
+                removed = true;
             }
-            removed = true;
+            previousOrderItemCursor = (DecoratedOrderItem) orderItemCursor;
+            orderItemCursor = ((DecoratedOrderItem) orderItemCursor).getOrderItem();
+            first = false;
         }
-        previousOrderItemCursor = (DecoratedOrderItem) orderItemCursor;
-        orderItemCursor = ((DecoratedOrderItem) orderItemCursor).getOrderItem();
-        first = false;
     }
     
     public void deleteOrderItem(MenuItem menuItem) {

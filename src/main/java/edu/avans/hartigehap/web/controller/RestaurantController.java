@@ -33,8 +33,9 @@ public class RestaurantController {
         uiModel.addAttribute("restaurants", restaurants);
         
         // use HartigeHap as default restaurant
-        Restaurant restaurant = restaurantService.fetchWarmedUp(RestaurantPopulatorService.HARTIGEHAP_RESTAURANT_NAME);
-        uiModel.addAttribute("restaurant", restaurant);
+        // Restaurant restaurant =
+        // restaurantService.fetchWarmedUp(RestaurantPopulatorService.HARTIGEHAP_RESTAURANT_NAME);
+        // uiModel.addAttribute("restaurant", restaurant);
         
         return "hartigehap/listrestaurants";
     }

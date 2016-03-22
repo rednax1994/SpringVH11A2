@@ -81,7 +81,7 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>${tableItem}/ ${tableQuantity}</th>
+								<th>${tableItem} / ${tableQuantity}</th>
 								<th>${tableActions}</th>
 								<th>${tableActions}</th>
 							</tr>
@@ -100,7 +100,7 @@
 											action="${addOrderOptionURL}" method="post">
 											<form:select path="menu.foodCategories" multiple="false"
 												name="orderOptionName">
-												<form:option value="NONE" label="---Select---"></form:option>
+												<form:option value="NONE" label="---Selecteer---"></form:option>
 												<c:forEach items="${restaurant.menu.foodCategories}"
 													var="foodCategory">
 													<c:forEach items="${foodCategory.menuItems}" var="menuItem">
@@ -129,7 +129,7 @@
 											action="${removeOrderOptionURL}" method="delete">
 											<form:select path="menu.foodCategories" multiple="false"
 												name="orderOptionName">
-												<form:option value="NONE" label="---Select---"></form:option>
+												<form:option value="NONE" label="--Verwijder Alles--"></form:option>
 												<c:forEach items="${restaurant.menu.foodCategories}"
 													var="foodCategory">
 													<c:forEach items="${foodCategory.menuItems}" var="menuItem">
