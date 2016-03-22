@@ -16,12 +16,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.EmptyBillException;
 import edu.avans.hartigehap.domain.Restaurant;
-import edu.avans.hartigehap.domain.StateException;
-import edu.avans.hartigehap.service.CommandDiningTable;
+import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.service.DiningTableService;
 import edu.avans.hartigehap.service.RestaurantService;
-import edu.avans.hartigehap.service.impl.CommandAddMenuItem;
-import edu.avans.hartigehap.service.impl.CommandRemoveMenuItem;
+import edu.avans.hartigehap.service.command.CommandDiningTable;
+import edu.avans.hartigehap.service.impl.command.CommandAddMenuItem;
+import edu.avans.hartigehap.service.impl.command.CommandRemoveMenuItem;
 import edu.avans.hartigehap.web.form.Message;
 import lombok.extern.slf4j.Slf4j;
 

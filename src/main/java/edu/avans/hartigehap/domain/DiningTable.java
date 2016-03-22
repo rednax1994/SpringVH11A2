@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.domain.reservationFactory.TableReservation;
 import lombok.Getter;
 import lombok.Setter;
@@ -42,7 +43,6 @@ public class DiningTable extends DomainObject {
     
     @OneToMany(cascade = javax.persistence.CascadeType.ALL, mappedBy = "diningTable")
     private Collection<Bill> bills = new ArrayList<Bill>();
-    
     
     @ManyToOne()
     private Restaurant restaurant;

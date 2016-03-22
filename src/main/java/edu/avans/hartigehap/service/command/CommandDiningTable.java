@@ -1,4 +1,4 @@
-package edu.avans.hartigehap.service;
+package edu.avans.hartigehap.service.command;
 
 import org.springframework.ui.Model;
 

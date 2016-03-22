@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.avans.hartigehap.domain.Bill;
 import edu.avans.hartigehap.domain.Restaurant;
-import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.repository.BillRepository;
 import edu.avans.hartigehap.service.BillService;
 

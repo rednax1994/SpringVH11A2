@@ -13,22 +13,22 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.avans.hartigehap.domain.ConcreteOrderItem;
 import edu.avans.hartigehap.domain.Customer;
 import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.Drink;
 import edu.avans.hartigehap.domain.FoodCategory;
 import edu.avans.hartigehap.domain.Meal;
-import edu.avans.hartigehap.domain.OrderOption;
 import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.Room;
 import edu.avans.hartigehap.domain.RoomOption;
 import edu.avans.hartigehap.domain.Status;
-import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.decorator.ConcreteOrderItem;
+import edu.avans.hartigehap.domain.decorator.OrderOption;
+import edu.avans.hartigehap.domain.exception.MyException;
+import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.domain.reservationFactory.Reservation;
 import edu.avans.hartigehap.domain.reservationFactory.ReservationFactory;
-import edu.avans.hartigehap.exception.MyException;
 import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.DiningTableRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
@@ -46,7 +46,7 @@ import lombok.extern.slf4j.Slf4j;
 @Transactional
 @Slf4j
 public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorService {
-
+    
     @Autowired
     private RestaurantRepository restaurantRepository;
     @Autowired
@@ -71,7 +71,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private List<FoodCategory> foodCats = new ArrayList<>();
     private List<Drink> drinks = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
-
+    
     public static final int ONE = 1;
     public static final int TWO = 2;
     public static final int THREE = 3;
@@ -83,7 +83,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     public static final int NINE = 9;
     public static final int HUNDEREDTWENTYSEVEN = 127;
     public static final int NEGATIVEHUNDEREDTWENTYEIGHT = -128;
-
+    
     /**
      * menu items, food categories and customers are common to all restaurants
      * and should be created only once. Although we can safely assume that the
@@ -100,7 +100,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createFoodCategory("Alcoholic drinks");
         createFoodCategory("Energizing drinks");
         createFoodCategory("Extra options");
-
+        
         // create Meals
         createMeal("Spaghetti", "spaghetti.jpg", EIGHT, "easy",
                 Arrays.<FoodCategory> asList(foodCats.get(THREE), foodCats.get(ONE)));
@@ -114,10 +114,10 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
                 Arrays.<FoodCategory> asList(foodCats.get(THREE), foodCats.get(0)));
         createMeal("Ravioli", "ravioli.jpg", EIGHT, "easy",
                 Arrays.<FoodCategory> asList(foodCats.get(THREE), foodCats.get(ONE), foodCats.get(TWO)));
-
+        
         createMealOption("bell pepper", "pizza.jpg", TWO, "easy", Arrays.<FoodCategory> asList(foodCats.get(SEVEN)));
         createMealOption("mushrooms", "pizza.jpg", THREE, "easy", Arrays.<FoodCategory> asList(foodCats.get(SEVEN)));
-
+        
         // create Drinks
         createDrink("Large beer", "beer.jpg", ONE, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(FIVE)));
         createDrink("Medium beer", "beer.jpg", ONE, Drink.Size.MEDIUM,
@@ -131,7 +131,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
                 Arrays.<FoodCategory> asList(foodCats.get(SIX)));
         createDrink("Medium coffee", "coffee.jpg", ONE, Drink.Size.MEDIUM,
                 Arrays.<FoodCategory> asList(foodCats.get(SIX)));
-
+        
         // create Customers
         byte[] photo = new byte[] { HUNDEREDTWENTYSEVEN, NEGATIVEHUNDEREDTWENTYEIGHT, 0 };
         createCustomer("Peter", "Limonade", new DateTime(), ONE, "description", photo);
@@ -139,24 +139,24 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createCustomer("Piet", "Bakker", new DateTime(), ONE, "description", photo);
         createCustomer("Piet", "Bakker", new DateTime(), ONE, "description", photo);
         createCustomer("Piet", "Bakker", new DateTime(), ONE, "description", photo);
-
+        
     }
-
+    
     private void createMealOption(String name, String image, int price, String recipe, List<FoodCategory> foodCats) {
         Meal meal = new Meal(name, image, price, recipe);
         meal.addFoodCategories(foodCats);
         meal = menuItemRepository.save(meal);
         mealOptions.add(meal);
     }
-
+    
     private void createFoodCategory(String tag) {
         FoodCategory foodCategory = new FoodCategory(tag);
         foodCategory = foodCategoryRepository.save(foodCategory);
         foodCats.add(foodCategory);
     }
-
+    
     private void createMeal(String name, String image, int price, String recipe, List<FoodCategory> foodCats) {
-
+        
         Meal meal = new Meal(name, image, price, recipe);
         // as there is no cascading between FoodCategory and MenuItem (both
         // ways), it is important to first
@@ -168,21 +168,21 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         meal = menuItemRepository.save(meal);
         meals.add(meal);
     }
-
+    
     private void createDrink(String name, String image, int price, Drink.Size size, List<FoodCategory> foodCats) {
         Drink drink = new Drink(name, image, price, size);
         drink = menuItemRepository.save(drink);
         drink.addFoodCategories(foodCats);
         drinks.add(drink);
     }
-
+    
     private void createCustomer(String firstName, String lastName, DateTime birthDate, int partySize,
             String description, byte[] photo) {
         Customer customer = new Customer(firstName, lastName, birthDate, partySize, description, photo);
         customers.add(customer);
         customerRepository.save(customer);
     }
-
+    
     private void createDiningTables(int numberOfTables, Restaurant restaurant) {
         for (int i = 0; i < numberOfTables; i++) {
             DiningTable diningTable = new DiningTable(i + ONE);
@@ -190,13 +190,13 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             restaurant.getDiningTables().add(diningTable);
         }
     }
-
+    
     private void createRoom(long roomNr, boolean occupied, int capacity, Restaurant restaurant) {
         Room room = new Room(roomNr, occupied, capacity);
         room.setRestaurant(restaurant);
         restaurant.getRooms().add(room);
     }
-
+    
     private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status,
             Restaurant restaurant) {
         Quotation quotation = new Quotation.QuotationBuilder(1).status(status).eventDate(eventDate)
@@ -204,42 +204,42 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         quotation.setRestaurant(restaurant);
         restaurant.getQuotations().add(quotation);
     }
-
+    
     private Restaurant populateRestaurant(Restaurant restaurant) {
-
+        
         // will save everything that is reachable by cascading
         // even if it is linked to the restaurant after the save
         // operation
         Restaurant restaurant2 = restaurantRepository.save(restaurant);
-
+        
         // every restaurant has its own dining tables
         createDiningTables(FIVE, restaurant2);
-
+        
         // create Rooms
         createRoom(1, false, 80, restaurant2);
         createRoom(2, true, 100, restaurant2);
         createRoom(3, false, 250, restaurant2);
-
+        
         createQuotation(15000, new DateTime(2016, 6, 23, 0, 0), new DateTime(2016, 8, 23, 0, 0), Status.CONCEPT,
                 restaurant2);
         createQuotation(15001, new DateTime(2016, 8, 26, 0, 0), new DateTime(2016, 10, 26, 0, 0), Status.CONCEPT,
                 restaurant2);
-
+        
         // for the moment every restaurant has all available food categories
         for (FoodCategory foodCat : foodCats) {
             restaurant2.getMenu().getFoodCategories().add(foodCat);
         }
-
+        
         // for the moment every restaurant has the same menu
         for (Meal meal : meals) {
             restaurant2.getMenu().getMeals().add(meal);
         }
-
+        
         // for the moment every restaurant has the same menu
         for (Drink drink : drinks) {
             restaurant2.getMenu().getDrinks().add(drink);
         }
-
+        
         // for the moment, every customer has dined in every restaurant
         // no cascading between customer and restaurant; therefore both
         // restaurant and customer
@@ -250,31 +250,30 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         }
         log.info("LOGGER TEST");
         
-        
         return restaurant2;
     }
     
     public void createRestaurantsWithInventory() {
-
+        
         createCommonEntities();
-
+        
         Restaurant restaurant = new Restaurant(HARTIGEHAP_RESTAURANT_NAME, "deHartigeHap.jpg");
         restaurant = populateRestaurant(restaurant);
-
+        
         restaurant = new Restaurant(PITTIGEPANNEKOEK_RESTAURANT_NAME, "dePittigePannekoek.jpg");
         restaurant = populateRestaurant(restaurant);
-
+        
         restaurant = new Restaurant(HMMMBURGER_RESTAURANT_NAME, "deHmmmBurger.jpg");
         restaurant = populateRestaurant(restaurant);
-
+        
         ConcreteOrderItem orderItem = new ConcreteOrderItem(meals.get(THREE), ONE); // pizza
         orderItemRepository.save(orderItem);
         OrderOption orderOption = new OrderOption(orderItem, mealOptions.get(ONE), ONE); // mushrooms
         orderItemRepository.save(orderOption);
-
+        
         log.info("***************************** description: " + orderOption.description());
         log.info("***************************** price: " + orderOption.getPrice());
-
+        
         // add the decorated pizza to the current order to table ONE of the hmmm
         // burger (to show it in the GUI)
         // dining tables of the hmmm burger
@@ -285,9 +284,9 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             // this is dining table ONE
             t = it.next();
         }
-
+        
         t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption);
-
+        
         /*
          * room options added
          */
@@ -296,11 +295,11 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         
         /*
          * Reservation test
-         */        
-        DiningTable diningTable =  t;
+         */
+        DiningTable diningTable = t;
         try {
-            
-            Reservation res = ReservationFactory.createReservation(21, "Thomas", Reservation.TimeOfDayEnum.MORNING, new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), null, diningTable);
+            Reservation res = ReservationFactory.createReservation(21, "Thomas", Reservation.TimeOfDayEnum.MORNING,
+                    new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), null, diningTable);
             res = reservationRepository.save(res);
             res.getCurrentState().acceptReservation();
         } catch (MyException e) {
@@ -311,5 +310,5 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             e.printStackTrace();
         }
     }
-
+    
 }

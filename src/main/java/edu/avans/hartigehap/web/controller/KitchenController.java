@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import edu.avans.hartigehap.domain.Order;
 import edu.avans.hartigehap.domain.OrderItem;
 import edu.avans.hartigehap.domain.Restaurant;
-import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.service.OrderService;
 import edu.avans.hartigehap.service.RestaurantService;
 import edu.avans.hartigehap.web.form.Message;

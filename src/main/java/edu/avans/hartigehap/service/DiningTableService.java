@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 
 import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.EmptyBillException;
-import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.exception.StateException;
 
 public interface DiningTableService {
     

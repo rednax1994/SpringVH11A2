@@ -15,7 +15,7 @@ import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.EmptyBillException;
 import edu.avans.hartigehap.domain.MenuItem;
 import edu.avans.hartigehap.domain.OrderItem;
-import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.repository.DiningTableRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
 import edu.avans.hartigehap.repository.OrderItemRepository;

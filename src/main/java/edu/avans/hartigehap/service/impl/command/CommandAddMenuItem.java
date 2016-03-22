@@ -1,10 +1,10 @@
-package edu.avans.hartigehap.service.impl;
+package edu.avans.hartigehap.service.impl.command;
 
 import org.springframework.ui.Model;
 
 import edu.avans.hartigehap.domain.DiningTable;
-import edu.avans.hartigehap.service.CommandDiningTable;
 import edu.avans.hartigehap.service.DiningTableService;
+import edu.avans.hartigehap.service.command.CommandDiningTable;
 
 public class CommandAddMenuItem implements CommandDiningTable {
     

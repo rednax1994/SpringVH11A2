@@ -1,10 +1,12 @@
-package edu.avans.hartigehap.domain;
+package edu.avans.hartigehap.domain.decorator;
 
 import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.MenuItem;
+import edu.avans.hartigehap.domain.OrderItem;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

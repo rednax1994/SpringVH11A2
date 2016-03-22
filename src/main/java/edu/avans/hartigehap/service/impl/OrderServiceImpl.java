@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import edu.avans.hartigehap.domain.Order;
 import edu.avans.hartigehap.domain.Restaurant;
-import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.repository.Container;
 import edu.avans.hartigehap.repository.OrderRepository;
 import edu.avans.hartigehap.service.OrderService;

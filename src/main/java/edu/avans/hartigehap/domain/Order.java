@@ -19,6 +19,10 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.decorator.ConcreteOrderItem;
+import edu.avans.hartigehap.domain.decorator.DecoratedOrderItem;
+import edu.avans.hartigehap.domain.decorator.OrderOption;
+import edu.avans.hartigehap.domain.exception.StateException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

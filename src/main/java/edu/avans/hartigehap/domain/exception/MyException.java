@@ -1,4 +1,4 @@
-package edu.avans.hartigehap.exception;
+package edu.avans.hartigehap.domain.exception;
 
 public class MyException extends Exception {
     private static final long serialVersionUID = 1L;

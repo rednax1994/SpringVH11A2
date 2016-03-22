@@ -16,7 +16,7 @@ import com.google.common.collect.Lists;
 
 import edu.avans.hartigehap.domain.Owner;
 import edu.avans.hartigehap.domain.Restaurant;
-import edu.avans.hartigehap.exception.MyException;
+import edu.avans.hartigehap.domain.exception.MyException;
 import edu.avans.hartigehap.repository.OwnerRepository;
 import edu.avans.hartigehap.service.OwnerService;
 import edu.avans.hartigehap.service.RestaurantService;
