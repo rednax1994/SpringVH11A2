@@ -130,8 +130,7 @@
 				</div>
 				<ul class="list-group">
 					<spring:url var="scheduleSubsystem"
-						value="/restaurants/${restaurant.id}/schedule" />
-					<a href="${scheduleSubsystem}" class="list-group-item">${labelScheduleSubsystem}</a>		
+						value="/restaurants/${restaurant.id}/schedule" />		
 					<spring:url var="banquetingSubsystem" value="/restaurants/${restaurant.id}/banqueting" />
 					<a href="${banquetingSubsystem}" class="list-group-item">${labelBanquetingSubsystem}</a>
 				</ul>
