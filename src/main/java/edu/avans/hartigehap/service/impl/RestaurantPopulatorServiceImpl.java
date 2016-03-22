@@ -298,7 +298,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
          */
         DiningTable diningTable = t;
         try {
-            Reservation res = ReservationFactory.createReservation(21, "Thomas", Reservation.TimeOfDayEnum.MORNING,
+            Reservation res = ReservationFactory.createReservation(21, customers.get(0), Reservation.TimeOfDayEnum.MORNING,
                     new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), null, diningTable);
             res = reservationRepository.save(res);
             res.getCurrentState().acceptReservation();

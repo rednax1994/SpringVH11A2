@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.Customer;
 import edu.avans.hartigehap.domain.DomainObject;
 import edu.avans.hartigehap.domain.states.ConceptState;
 import edu.avans.hartigehap.domain.states.ReservationStatus;
@@ -56,13 +57,14 @@ public abstract class Reservation extends DomainObject {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
     
-    private String booker;
+    @ManyToOne
+    private Customer customer;
     
-    public Reservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime,
+    public Reservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, Date startTime,
             TimeOfDayEnum endTimeOfDay, Date endTime) {
         currentState = new ConceptState(this);
         this.amountOfPeople = amountOfPeople;
-        this.booker = booker;
+        this.customer = customer;
         this.startTimeOfDay = startTimeOfDay;
         this.startTime = startTime;
         this.endTimeOfDay = endTimeOfDay;

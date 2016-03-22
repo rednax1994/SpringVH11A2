@@ -8,8 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.avans.hartigehap.domain.Invoice;
 import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.exception.MyException;
 import edu.avans.hartigehap.service.BanquetingFacadeService;
 import edu.avans.hartigehap.service.InvoiceService;
+import edu.avans.hartigehap.domain.reservationFactory.ReservationFactory;
 
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
@@ -28,8 +30,11 @@ public class BanquetingFacadeImpl implements BanquetingFacadeService{
         log.info(invoice.getDate().toString());
         invoiceService.save(invoice);
         
-        
-        //makeReservation(quotation);
+        try {
+            ReservationFactory.createReservation(quotation.getAmountOfPeople(), quotation.getCustomer(), quotation.getStartTimeOfDay(), quotation.getStartTime(), quotation.getEndTimeOfDay(), quotation.getEndTime(), quotation.getRoom(), null);
+        } catch (MyException e) {
+            e.printStackTrace();
+        }
         //notifyCustomer(quotation);
     }
 }
