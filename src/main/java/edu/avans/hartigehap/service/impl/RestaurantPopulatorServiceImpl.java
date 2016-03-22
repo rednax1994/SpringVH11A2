@@ -28,16 +28,15 @@ import edu.avans.hartigehap.domain.decorator.OrderOption;
 import edu.avans.hartigehap.domain.exception.MyException;
 import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.domain.reservationFactory.Reservation;
+import edu.avans.hartigehap.domain.reservationFactory.Reservation.TimeOfDayEnum;
 import edu.avans.hartigehap.domain.reservationFactory.ReservationFactory;
 import edu.avans.hartigehap.repository.CustomerRepository;
-import edu.avans.hartigehap.repository.DiningTableRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
 import edu.avans.hartigehap.repository.OrderItemRepository;
 import edu.avans.hartigehap.repository.ReservationRepository;
 import edu.avans.hartigehap.repository.RestaurantRepository;
 import edu.avans.hartigehap.repository.RoomOptionRepository;
-import edu.avans.hartigehap.repository.RoomRepository;
 import edu.avans.hartigehap.service.RestaurantPopulatorService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -58,13 +57,9 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     @Autowired
     private OrderItemRepository orderItemRepository;
     @Autowired
-    private RoomRepository roomRepository;
-    @Autowired
     private ReservationRepository reservationRepository;
     @Autowired
     private RoomOptionRepository roomOptionRepository;
-    @Autowired
-    private DiningTableRepository diningTableRepository;
     
     private List<Meal> meals = new ArrayList<>();
     private List<Meal> mealOptions = new ArrayList<>();
@@ -197,10 +192,10 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         restaurant.getRooms().add(room);
     }
     
-    private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status,
+    private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status, int amountOfPeople, Room room, Customer customer, Date endTime, TimeOfDayEnum endTimeOfDay, Date startTime, TimeOfDayEnum startTimeOfDay,
             Restaurant restaurant) {
         Quotation quotation = new Quotation.QuotationBuilder(1).status(status).eventDate(eventDate)
-                .expirationDate(expirationDate).build();
+                .expirationDate(expirationDate).amountofPeople(amountOfPeople).room(room).customer(customer).endTime(endTime).endTimeOfDay(endTimeOfDay).startTime(startTime).startTimeOfDay(startTimeOfDay).build();
         quotation.setRestaurant(restaurant);
         restaurant.getQuotations().add(quotation);
     }
@@ -220,9 +215,11 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createRoom(2, true, 100, restaurant2);
         createRoom(3, false, 250, restaurant2);
         
-        createQuotation(15000, new DateTime(2016, 6, 23, 0, 0), new DateTime(2016, 8, 23, 0, 0), Status.CONCEPT,
+        ArrayList<Room> rooms = new ArrayList<Room>();
+        
+        createQuotation(15000, new DateTime(2016, 6, 23, 0, 0), new DateTime(2016, 8, 23, 0, 0), Status.CONCEPT, 50, rooms.get(0), customers.get(0), new Date(2016, 6, 23, 19, 20), TimeOfDayEnum.EVENING, new Date(2016, 6, 23, 8, 5), TimeOfDayEnum.MORNING, 
                 restaurant2);
-        createQuotation(15001, new DateTime(2016, 8, 26, 0, 0), new DateTime(2016, 10, 26, 0, 0), Status.CONCEPT,
+        createQuotation(15001, new DateTime(2016, 8, 26, 0, 0), new DateTime(2016, 10, 26, 0, 0), Status.CONCEPT, 80, rooms.get(1), customers.get(1), new Date(2016, 8, 26, 20, 18), TimeOfDayEnum.EVENING, new Date(2016, 8, 26, 12, 0), TimeOfDayEnum.NOON, 
                 restaurant2);
         
         // for the moment every restaurant has all available food categories

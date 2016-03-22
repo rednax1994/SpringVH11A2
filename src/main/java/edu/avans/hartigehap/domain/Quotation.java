@@ -41,6 +41,13 @@ public class Quotation extends DomainObject {
         this.eventDate = builder.eventDate;
         this.expirationDate = builder.expirationDate;
         this.status = builder.status;
+        this.startTimeOfDay = builder.startTimeOfDay;
+        this.startTime = builder.startTime;
+        this.endTimeOfDay = builder.endTimeOfDay;
+        this.endTime = builder.endTime;
+        this.customer = builder.customer;
+        this.room = builder.room;
+        this.amountOfPeople = builder.amountOfPeople;
     }
 
     private static final long serialVersionUID = 1L;
@@ -76,7 +83,7 @@ public class Quotation extends DomainObject {
 
     @ManyToOne
     private Restaurant restaurant;
-    
+
     private int amountOfPeople;
 
     @Transient
@@ -96,6 +103,13 @@ public class Quotation extends DomainObject {
 
     public static class QuotationBuilder {
 
+        private int amountOfPeople;
+        private Room room;
+        private Customer customer;
+        private Date endTime;
+        private TimeOfDayEnum endTimeOfDay;
+        private Date startTime;
+        private TimeOfDayEnum startTimeOfDay;
         private Status status;
         private DateTime expirationDate;
         private DateTime eventDate;
@@ -103,6 +117,31 @@ public class Quotation extends DomainObject {
 
         public QuotationBuilder(int number) {
             this.number = number;
+        }
+
+        public QuotationBuilder startTime(Date startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+        
+        public QuotationBuilder startTimeOfDay(TimeOfDayEnum startTimeOfDay){
+            this.startTimeOfDay = startTimeOfDay;
+            return this;
+        }
+
+        public QuotationBuilder customer(Customer customer) {
+            this.customer = customer;
+            return this;
+        }
+
+        public QuotationBuilder endTime(Date endTime) {
+            this.endTime = endTime;
+            return this;
+        }
+
+        public QuotationBuilder endTimeOfDay(TimeOfDayEnum endTimeOfDay) {
+            this.endTimeOfDay = endTimeOfDay;
+            return this;
         }
 
         public QuotationBuilder status(Status status) {
@@ -117,6 +156,16 @@ public class Quotation extends DomainObject {
 
         public QuotationBuilder eventDate(DateTime eventDate) {
             this.eventDate = eventDate;
+            return this;
+        }
+
+        public QuotationBuilder amountofPeople(int amountOfPeople) {
+            this.amountOfPeople = amountOfPeople;
+            return this;
+        }
+
+        public QuotationBuilder room(Room room) {
+            this.room = room;
             return this;
         }
 

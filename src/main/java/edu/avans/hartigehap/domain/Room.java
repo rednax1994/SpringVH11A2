@@ -12,7 +12,6 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import edu.avans.hartigehap.domain.reservationFactory.Reservation;
 import edu.avans.hartigehap.domain.reservationFactory.RoomReservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
