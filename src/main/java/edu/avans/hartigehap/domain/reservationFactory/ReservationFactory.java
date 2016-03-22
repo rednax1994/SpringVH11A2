@@ -9,7 +9,7 @@ import edu.avans.hartigehap.exception.MyException;
 
 public class ReservationFactory {
 
-    public Reservation createReservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime, TimeOfDayEnum endTimeOfDay, Date endTime,Room room, DiningTable diningTable ) throws MyException{
+        public Reservation createReservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime, TimeOfDayEnum endTimeOfDay, Date endTime,Room room, DiningTable diningTable ) throws MyException{
         Reservation reservation = null;
         if((diningTable != null && room != null) || (diningTable == null && room == null)){
             throw new MyException("Fill one of the Reservation Types");

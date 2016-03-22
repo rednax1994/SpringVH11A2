@@ -30,8 +30,7 @@ public abstract class ReservationStatus extends DomainObject {
     @Enumerated(EnumType.STRING)
     // represented in database as integer
     protected ReservationStatusId reservationStatusId;
-    
-    @OneToOne(cascade = javax.persistence.CascadeType.ALL, mappedBy = "currentState")
+    @OneToOne(cascade = javax.persistence.CascadeType.ALL, mappedBy = "currentState", orphanRemoval=true)
     private Reservation reservation;
     
     public ReservationStatus(Reservation reservation) {

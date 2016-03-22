@@ -25,7 +25,12 @@ import edu.avans.hartigehap.domain.OrderOption;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.Room;
 import edu.avans.hartigehap.domain.RoomOption;
+import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.reservationFactory.Reservation;
+import edu.avans.hartigehap.domain.reservationFactory.ReservationFactory;
+import edu.avans.hartigehap.exception.MyException;
 import edu.avans.hartigehap.repository.CustomerRepository;
+import edu.avans.hartigehap.repository.DiningTableRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
 import edu.avans.hartigehap.repository.OrderItemRepository;
@@ -58,6 +63,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private ReservationRepository reservationRepository;
     @Autowired
     private RoomOptionRepository roomOptionRepository;
+    @Autowired
+    private DiningTableRepository diningTableRepository;
     
     private List<Meal> meals = new ArrayList<>();
     private List<Meal> mealOptions = new ArrayList<>();
@@ -189,7 +196,6 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         room.setRestaurant(restaurant);
         restaurant.getRooms().add(room);
     }
-    
     private Restaurant populateRestaurant(Restaurant restaurant) {
         
         // will save everything that is reachable by cascading
@@ -228,9 +234,12 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             customer.getRestaurants().add(restaurant2);
             restaurant2.getCustomers().add(customer);
         }
+        log.info("LOGGER TEST");
+        
         
         return restaurant2;
     }
+    
     
     public void createRestaurantsWithInventory() {
         
@@ -264,6 +273,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             t = it.next();
         }
         
+        
+        
         t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption);
         
         /*
@@ -274,15 +285,19 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         
         /*
          * Reservation test
-         */
-        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
-        Date date = null;
+         */        
+        DiningTable diningTable =  t;
         try {
-            date = formatter.parse("7-Jun-2016");
-        } catch (ParseException e) {
+            ReservationFactory f = new ReservationFactory();
+            Reservation res = f.createReservation(21, "Thomas", Reservation.TimeOfDayEnum.MORNING, new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), null, diningTable);
+            res = reservationRepository.save(res);
+            res.getCurrentState().acceptReservation();
+        } catch (MyException e) {
+            // TODO Auto-generated catch block
+            log.debug("" + e.getMessage());
+        } catch (StateException e) {
+            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
-       
     }
 }

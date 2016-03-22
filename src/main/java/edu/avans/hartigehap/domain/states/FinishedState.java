@@ -1,8 +1,21 @@
 package edu.avans.hartigehap.domain.states;
 
+import javax.persistence.Entity;
+
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import edu.avans.hartigehap.domain.StateException;
 import edu.avans.hartigehap.domain.reservationFactory.Reservation;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Entity
+@JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
+@Getter
+@Setter
+@NoArgsConstructor
 public class FinishedState extends ReservationStatus {
     private static final long serialVersionUID = 1L;
     
