@@ -409,6 +409,7 @@
   </dependencies>
 
   <build>
+   <finalName>hha2</finalName>
     <plugins>
       <plugin>
         <groupId>org.apache.tomcat.maven</groupId>
