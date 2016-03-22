@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div id="body" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:joda="http://www.joda.org/joda/time/tags"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+
+	<spring:message code="label_quotation_list" var="labelQuotationList" />
+	<spring:message code="label_invoice_list" var="labelInvoiceList" />
+	<spring:message code="label_banqueting_subsystem"
+		var="labelBanquetingSubsystem" />
+	<spring:message code="label_quotation" var="labelQuotation" />
+	<spring:message code="label_invoice" var="labelInvoice" />
+	<spring:message code="text_there_are_no_quotations"
+		var="textThereAreNoQuotations" />
+	<spring:message code="text_there_are_no_invoices"
+		var="textThereAreNoInvoices" />
+
+
+	<div class="row">
+		<h1>${labelBanquetingSubsystem}</h1>
+	</div>
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">${labelQuotationList}</h3>
+			</div>
+			<c:if test="${empty restaurant.quotations}">
+				<div class="panel-body">
+					<span>${textThereAreNoQuotations}</span>
+				</div>
+			</c:if>
+			<c:if test="${not empty restaurant.quotations}">
+				<ul class="list-group">
+					<c:forEach items="${restaurant.quotations}" var="quotation">
+						<spring:url var="showTable" value="/restaurants/${restaurant.id}/banqueting/quotations/${quotation.id}" />
+						<a href="${showTable}" class="list-group-item">${labelQuotation}
+							${quotation.id}</a>
+					</c:forEach>
+				</ul>
+			</c:if>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">${labelInvoiceList}</h3>
+			</div>
+			<c:if test="${empty restaurant.invoices}">
+				<div class="panel-body">
+					<span>${textThereAreNoInvoices}</span>
+				</div>
+			</c:if>
+			<c:if test="${not empty restaurant.invoices}">
+				<ul class="list-group">
+					<c:forEach items="${restaurant.invoices}" var="invoice">
+						<spring:url var="showTable" value="/restaurants/${restaurant.id}/banqueting/invoices/${invoice.id}" />
+						<a href="${showTable}" class="list-group-item">${labelInvoice}
+							${invoice.id}</a>
+					</c:forEach>
+				</ul>
+			</c:if>
+		</div>
+	</div>
+</div>

@@ -23,11 +23,13 @@
 	<spring:message code="label_dining_table" var="labelDiningTable" />
 	<spring:message code="label_rooms" var="labelRooms" />
 	<spring:message code="label_room" var="labelRoom" />
-
 	<spring:message code="label_management_subsystem"
 		var="labelManagementSubSystem" />
 	<spring:message code="label_employee_subsystem"
 		var="labelEmployeeSubsystem" />
+	<spring:message code="label_management_subsystem" var="labelManagementSubSystem" />
+	<spring:message code="label_employee_subsystem" var="labelEmployeeSubsystem" />
+	<spring:message code="label_banqueting_subsystem" var="labelBanquetingSubsystem" />
 
 	<div class="row">
 		<h1>${labelRestaurant}${restaurant.id}</h1>
@@ -124,12 +126,14 @@
 		<div class="row">
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">${labelScheduleSubsystem}</h3>
+					<h3 class="panel-title">${labelBanquetingSubsystem}</h3>
 				</div>
 				<ul class="list-group">
 					<spring:url var="scheduleSubsystem"
 						value="/restaurants/${restaurant.id}/schedule" />
-					<a href="${scheduleSubsystem}" class="list-group-item">${labelScheduleSubsystem}</a>
+					<a href="${scheduleSubsystem}" class="list-group-item">${labelScheduleSubsystem}</a>		
+					<spring:url var="banquetingSubsystem" value="/restaurants/${restaurant.id}/banqueting" />
+					<a href="${banquetingSubsystem}" class="list-group-item">${labelBanquetingSubsystem}</a>
 				</ul>
 			</div>
 		</div>

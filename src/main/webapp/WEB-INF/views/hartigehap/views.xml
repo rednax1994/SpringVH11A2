@@ -32,6 +32,12 @@
 	<definition extends="default" name="hartigehap/showcustomer">
 		<put-attribute name="body" value="/WEB-INF/views/hartigehap/showcustomer.jspx" />
 	</definition>
+	<definition extends="default" name="hartigehap/showquotation">
+		<put-attribute name="body" value="/WEB-INF/views/hartigehap/showquotation.jspx" />
+	</definition>
+	<definition extends="default" name="hartigehap/banquetinglist">
+		<put-attribute name="body" value="/WEB-INF/views/hartigehap/banquetinglist.jspx" />
+	</definition>
 	<definition extends="default" name="hartigehap/editcustomer">
 		<put-attribute name="body" value="/WEB-INF/views/hartigehap/editcustomer.jspx" />
 	</definition>
