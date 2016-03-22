@@ -1,7 +1,5 @@
 package edu.avans.hartigehap.service.impl;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -27,7 +25,12 @@ import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.Room;
 import edu.avans.hartigehap.domain.RoomOption;
 import edu.avans.hartigehap.domain.Status;
+import edu.avans.hartigehap.domain.StateException;
+import edu.avans.hartigehap.domain.reservationFactory.Reservation;
+import edu.avans.hartigehap.domain.reservationFactory.ReservationFactory;
+import edu.avans.hartigehap.exception.MyException;
 import edu.avans.hartigehap.repository.CustomerRepository;
+import edu.avans.hartigehap.repository.DiningTableRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
 import edu.avans.hartigehap.repository.OrderItemRepository;
@@ -60,7 +63,9 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private ReservationRepository reservationRepository;
     @Autowired
     private RoomOptionRepository roomOptionRepository;
-
+    @Autowired
+    private DiningTableRepository diningTableRepository;
+    
     private List<Meal> meals = new ArrayList<>();
     private List<Meal> mealOptions = new ArrayList<>();
     private List<FoodCategory> foodCats = new ArrayList<>();
@@ -243,10 +248,12 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             customer.getRestaurants().add(restaurant2);
             restaurant2.getCustomers().add(customer);
         }
-
+        log.info("LOGGER TEST");
+        
+        
         return restaurant2;
     }
-
+    
     public void createRestaurantsWithInventory() {
 
         createCommonEntities();
@@ -286,7 +293,23 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
          */
         RoomOption roomOption = new RoomOption("Buffet", "Western Buffet", (long) 50, false);
         roomOptionRepository.save(roomOption);
-
+        
+        /*
+         * Reservation test
+         */        
+        DiningTable diningTable =  t;
+        try {
+            
+            Reservation res = ReservationFactory.createReservation(21, "Thomas", Reservation.TimeOfDayEnum.MORNING, new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), null, diningTable);
+            res = reservationRepository.save(res);
+            res.getCurrentState().acceptReservation();
+        } catch (MyException e) {
+            // TODO Auto-generated catch block
+            log.debug("" + e.getMessage());
+        } catch (StateException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
 }
