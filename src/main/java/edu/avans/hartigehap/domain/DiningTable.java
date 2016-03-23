@@ -31,7 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true, includeFieldNames = true, of = { "bills", "currentBill" })
-public class DiningTable extends DomainObject {
+public class DiningTable extends RestaurantLocationObject {
     private static final long serialVersionUID = 1L;
     
     private int tableNr;

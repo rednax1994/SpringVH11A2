@@ -29,6 +29,7 @@
 		var="labelEmployeeSubsystem" />
 	<spring:message code="label_management_subsystem" var="labelManagementSubSystem" />
 	<spring:message code="label_employee_subsystem" var="labelEmployeeSubsystem" />
+	<spring:message code="label_reservation_subsystem" var="labelReservationSubSystem" />
 	<spring:message code="label_banqueting_subsystem" var="labelBanquetingSubsystem" />
 
 	<div class="row">
@@ -113,6 +114,19 @@
 					<spring:url var="customerSubsystem"
 						value="/restaurants/${restaurant.id}/customers" />
 					<a href="${customerSubsystem}" class="list-group-item">${labelCustomerSubsystem}</a>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="row">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<h3 class="panel-title">${labelReservationSubSystem}</h3>
+				</div>
+				<ul class="list-group">
+					<spring:url var="reservationSubSystem"
+						value="TOFILL" />
+					<a href="TOFILL" class="list-group-item">${labelReservationSubSystem}</a>	
 				</ul>
 			</div>
 		</div>

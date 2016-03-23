@@ -23,8 +23,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
-@NoArgsConstructor
-public class Room extends DomainObject {
+public class Room extends RestaurantLocationObject {
     private static final long serialVersionUID = 1L;
     
     @ManyToMany(mappedBy = "rooms")
