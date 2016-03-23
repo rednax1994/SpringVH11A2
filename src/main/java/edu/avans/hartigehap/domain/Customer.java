@@ -23,6 +23,7 @@ import org.springframework.format.annotation.DateTimeFormat.ISO;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.reservationFactory.Reservation;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -82,6 +83,9 @@ public class Customer extends DomainObject {
     
     @OneToMany(mappedBy="customer")
     private Collection<Invoice> invoices = new ArrayList<Invoice>();
+    
+    @OneToMany(mappedBy="customer")
+    private Collection<Reservation> reservations = new ArrayList<Reservation>();
     
     public Customer(String firstName, String lastName, DateTime birthDate, int partySize, String description,
             byte[] photo) {

@@ -8,9 +8,12 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.avans.hartigehap.domain.Invoice;
 import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.exception.MyException;
 import edu.avans.hartigehap.service.BanquetingFacadeService;
 import edu.avans.hartigehap.service.InvoiceService;
-
+import edu.avans.hartigehap.domain.reservationFactory.Reservation;
+import edu.avans.hartigehap.domain.reservationFactory.ReservationFactory;
+import edu.avans.hartigehap.repository.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service("banquetingFacade")
@@ -20,6 +23,9 @@ public class BanquetingFacadeImpl implements BanquetingFacadeService{
     
    @Autowired
    private InvoiceService invoiceService;
+   
+   @Autowired
+   private ReservationRepository reservationRepository;
     
     public void acceptQuotation(Restaurant restaurant, Quotation quotation){
         log.info("test?");
@@ -28,8 +34,12 @@ public class BanquetingFacadeImpl implements BanquetingFacadeService{
         log.info(invoice.getDate().toString());
         invoiceService.save(invoice);
         
-        
-        //makeReservation(quotation);
+        try {
+            Reservation reservation = ReservationFactory.createReservation(quotation.getAmountOfPeople(), quotation.getCustomer(), quotation.getStartTimeOfDay(), quotation.getStartTime(), quotation.getEndTimeOfDay(), quotation.getEndTime(), quotation.getRoom(), null);
+            reservationRepository.save(reservation);
+        } catch (MyException e) {
+            e.printStackTrace();
+        }
         //notifyCustomer(quotation);
     }
 }

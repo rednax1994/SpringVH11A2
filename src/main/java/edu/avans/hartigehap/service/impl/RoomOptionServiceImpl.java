@@ -11,11 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
-import edu.avans.hartigehap.domain.Room;
 import edu.avans.hartigehap.domain.RoomOption;
 import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.repository.RoomOptionRepository;
-import edu.avans.hartigehap.repository.RoomRepository;
 import edu.avans.hartigehap.service.RoomOptionService;
 import lombok.extern.slf4j.Slf4j;
 

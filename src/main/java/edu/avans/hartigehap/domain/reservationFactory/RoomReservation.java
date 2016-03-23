@@ -4,11 +4,10 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.Customer;
 import edu.avans.hartigehap.domain.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,7 +18,6 @@ import lombok.ToString;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @Getter
 @Setter
-@ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
 public class RoomReservation extends Reservation {
     private static final long serialVersionUID = 1L;
@@ -27,9 +25,9 @@ public class RoomReservation extends Reservation {
     @ManyToOne
     private Room room;
     
-    public RoomReservation(int amountOfPeople, String booker, TimeOfDayEnum startTimeOfDay, Date startTime,
+    public RoomReservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, Date startTime,
             TimeOfDayEnum endTimeOfDay, Date endTime, Room room){
-        super(amountOfPeople, booker, startTimeOfDay, startTime, endTimeOfDay, endTime);
+        super(amountOfPeople, customer, startTimeOfDay, startTime, endTimeOfDay, endTime);
         this.room = room;
     };
 }
