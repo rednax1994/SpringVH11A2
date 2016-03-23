@@ -108,7 +108,7 @@ public class WaiterController {
             Model uiModel) {
         
         Order order = warmupRestaurantByOrder(orderId, uiModel);
-        if (event == "orderHasBeenServed") {
+        if (event.equals("orderHasBeenServed")) {
             orderHasBeenServed(order);
         } else {
             log.error("Internal error: event " + event + " not recognized");
@@ -130,7 +130,7 @@ public class WaiterController {
     public String receiveBillEvent(@PathVariable("billId") String billId, @RequestParam String event, Model uiModel) {
         
         Bill bill = warmupRestaurant(billId, uiModel);
-        if (event == "billHasBeenPaid") {
+        if (event.equals("billHasBeenPaid")) {
             billHasBeenPaid(bill);
         } else {
             log.error("Internal error: event " + event + " not recognized");
