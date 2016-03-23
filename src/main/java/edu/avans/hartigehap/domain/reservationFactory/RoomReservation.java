@@ -18,7 +18,6 @@ import lombok.ToString;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @Getter
 @Setter
-@ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
 public class RoomReservation extends Reservation {
     private static final long serialVersionUID = 1L;

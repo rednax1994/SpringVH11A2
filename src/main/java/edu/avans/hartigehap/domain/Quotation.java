@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -75,7 +76,7 @@ public class Quotation extends DomainObject {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Room room;
 
     @ManyToOne

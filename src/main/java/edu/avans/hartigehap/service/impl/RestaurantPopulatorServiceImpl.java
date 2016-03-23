@@ -217,6 +217,10 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         
         ArrayList<Room> rooms = new ArrayList<Room>();
         
+        for(Room room : restaurant2.getRooms()){
+            rooms.add(room);
+        }
+        
         createQuotation(15000, new DateTime(2016, 6, 23, 0, 0), new DateTime(2016, 8, 23, 0, 0), Status.CONCEPT, 50, rooms.get(0), customers.get(0), new Date(2016, 6, 23, 19, 20), TimeOfDayEnum.EVENING, new Date(2016, 6, 23, 8, 5), TimeOfDayEnum.MORNING, 
                 restaurant2);
         createQuotation(15001, new DateTime(2016, 8, 26, 0, 0), new DateTime(2016, 10, 26, 0, 0), Status.CONCEPT, 80, rooms.get(1), customers.get(1), new Date(2016, 8, 26, 20, 18), TimeOfDayEnum.EVENING, new Date(2016, 8, 26, 12, 0), TimeOfDayEnum.NOON, 
