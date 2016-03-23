@@ -31,7 +31,7 @@ public class BanquetingFacadeImpl implements BanquetingFacadeService{
         log.info("test?");
         Invoice invoice = new Invoice();
         invoice.createFromQuotation(restaurant, quotation);
-        log.info(invoice.getDate().toString());
+        log.info(invoice.getEventDate().toString());
         invoiceService.save(invoice);
         
         try {

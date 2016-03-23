@@ -4,21 +4,11 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Type;
 import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -35,7 +25,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
-public class Quotation extends DomainObject {
+public class Quotation extends Document {
 
     private Quotation(QuotationBuilder builder) {
         this.number = builder.number;
@@ -49,58 +39,18 @@ public class Quotation extends DomainObject {
         this.customer = builder.customer;
         this.room = builder.room;
         this.amountOfPeople = builder.amountOfPeople;
+        displayTemplate = new DisplayQuotation();
     }
 
     private static final long serialVersionUID = 1L;
 
-    private int number;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @DateTimeFormat(iso = ISO.DATE)
-    private DateTime eventDate;
-
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @DateTimeFormat(iso = ISO.DATE)
-    private DateTime expirationDate;
-
-    @Enumerated(EnumType.STRING)
-    protected TimeOfDayEnum startTimeOfDay;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
-
-    @Enumerated(EnumType.STRING)
-    // represented in database as integer
-    protected TimeOfDayEnum endTimeOfDay;
-
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
-
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Room room;
-
-    @ManyToOne
-    private Customer customer;
-
-    @ManyToOne
-    private Restaurant restaurant;
-
-    private int amountOfPeople;
-
+    @OneToMany(mappedBy = "quotation")
+    private Collection<Line> quotationLines = new ArrayList<Line>();
     @Transient
     private BanquetingFacadeImpl banquetingfacade = new BanquetingFacadeImpl();
 
-    // private TemplateMailer templatemailer;
-
-    @Enumerated(EnumType.ORDINAL)
-    // represented in database as integer
-    private Status status;
-
-    @OneToMany(mappedBy = "quotation")
-    private Collection<Line> quotationLines = new ArrayList<Line>();
-
-    @OneToMany(mappedBy = "invoice")
-    private Collection<Line> invoiceLines = new ArrayList<Line>();
+    @Transient
+    private DisplayTemplate displayTemplate;
 
     public static class QuotationBuilder {
 
@@ -124,8 +74,8 @@ public class Quotation extends DomainObject {
             this.startTime = startTime;
             return this;
         }
-        
-        public QuotationBuilder startTimeOfDay(TimeOfDayEnum startTimeOfDay){
+
+        public QuotationBuilder startTimeOfDay(TimeOfDayEnum startTimeOfDay) {
             this.startTimeOfDay = startTimeOfDay;
             return this;
         }
