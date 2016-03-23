@@ -47,7 +47,8 @@ public class DiningTableController {
     
     @RequestMapping(value = "/orderItems/{orderItemId}/orderOptions", method = RequestMethod.POST)
     public String addOrderOption(@PathVariable("orderItemId") String orderItemId, @RequestParam String diningTableId,
-            @RequestParam(value = "menu.foodCategories") String menuItemName) {
+            @RequestParam(value = "menu.foodCategories") String menuItemName, RedirectAttributes redirectAttributes,
+            Locale locale) {
         
         log.info("addOrderOption: diningTableId: " + diningTableId + ", OrderItemId: " + orderItemId
                 + ", selected menu item: " + menuItemName);
@@ -57,6 +58,9 @@ public class DiningTableController {
         log.info("diningTable fetched, start addOrderOption");
         if (!menuItemName.equals("NONE")) {
             diningTableService.addOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
+        } else {
+            redirectAttributes.addFlashAttribute("message",
+                    new Message("danger", messageSource.getMessage("adding_fail", new Object[] {}, locale)));
         }
         return "redirect:/diningTables/" + diningTableId;
     }
@@ -76,7 +80,7 @@ public class DiningTableController {
             diningTableService.removeOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
         } else {
             redirectAttributes.addFlashAttribute("message",
-                    new Message("error", messageSource.getMessage("remove_fail", new Object[] {}, locale)));
+                    new Message("danger", messageSource.getMessage("remove_fail", new Object[] {}, locale)));
         }
         return "redirect:/diningTables/" + diningTableId;
     }

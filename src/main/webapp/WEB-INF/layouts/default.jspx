@@ -28,6 +28,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="${app_css_url}" />
     <link rel="stylesheet" type="text/css" media="screen" href="${app_css_custom_url}" />
 
+
     <!-- Get the user locale from the page context (it was set by Spring MVC's locale resolver) -->
     <c:set var="userLocale">
         <c:set var="plocale">${pageContext.response.locale}</c:set>

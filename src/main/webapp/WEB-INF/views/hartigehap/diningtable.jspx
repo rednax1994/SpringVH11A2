@@ -47,7 +47,10 @@
 		<c:set var="addons" scope="session" value="Extra options" />
 
 		<c:if test="${not empty message}">
-			<div id="message" class="alert alert-info ${message.type}">${message.message}</div>
+			<div id="message" class="alert alert-danger" role="alert">
+			<span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"><jsp:text /></span>
+				${message.message}
+			</div>
 		</c:if>
 	</div>
 
