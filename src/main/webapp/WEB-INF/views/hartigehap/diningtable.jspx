@@ -45,6 +45,7 @@
 			<a href="${showRestaurant}">${restaurant.id}</a>
 		</h2>
 		<c:set var="addons" scope="session" value="Extra options" />
+		<c:set var="drinks" scope="session" value="Drinks" />
 
 		<c:if test="${not empty message}">
 			<div id="message" class="alert alert-danger" role="alert">
@@ -95,37 +96,35 @@
 								var="orderItem">
 								<tr>
 									<td class="capitalise">${orderItem.description()}</td>
+									<!-- Start of the extra options -->
 									<td>
-										<!-- Start form for adding extras to items --> <spring:url
-											var="addOrderOptionURL"
-											value="/orderItems/${orderItem.id}/orderOptions" /> <form:form
-											name="addOrderOption" commandName="restaurant"
-											action="${addOrderOptionURL}" method="post">
-											<form:select path="menu.foodCategories" multiple="false"
-												name="orderOptionName">
-												<form:option value="NONE" label="---Selecteer---"></form:option>
-												<c:forEach items="${restaurant.menu.foodCategories}"
-													var="foodCategory">
-													<c:forEach items="${foodCategory.menuItems}" var="menuItem">
-														<c:if test="${foodCategory.tag == addons}">
-															<form:option value="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
-														</c:if>
+										<!-- Start form for adding extras to items -->
+										<c:if test="${ !orderItem.menuItem.includedFoodcategory(drinks) }" > 
+											<spring:url var="addOrderOptionURL" value="/orderItems/${orderItem.id}/orderOptions" /> 
+											<form:form name="addOrderOption" commandName="restaurant" action="${addOrderOptionURL}" method="post">
+												<form:select path="menu.foodCategories" multiple="false" name="orderOptionName">
+													<form:option value="NONE" label="---Selecteer---"></form:option>
+													<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">
+														<c:forEach items="${foodCategory.menuItems}" var="menuItem">
+															<c:if test="${foodCategory.tag == addons}">
+																<form:option value="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
+															</c:if>
+														</c:forEach>
 													</c:forEach>
-												</c:forEach>
-											</form:select>
-											<input type="hidden" name="diningTableId"
-												value="${diningTable.id}" />
-											<button type="submit"
-												class="btn btn-success btn-float-left-margin-right"
-												value="${labelAddButton}">
-												<span
-													class="glyphicon glyphicon-plus-sign glyphicon-padding-right"><jsp:text /></span>
-												${labelAddButton}
-											</button>
-										</form:form>
+												</form:select>
+												<input type="hidden" name="diningTableId" value="${diningTable.id}" />
+												<button type="submit" class="btn btn-success btn-float-left-margin-right" value="${labelAddButton}">
+													<span class="glyphicon glyphicon-plus-sign glyphicon-padding-right"><jsp:text /></span>
+														${labelAddButton}
+												</button>
+											</form:form>
+										</c:if>
 									</td>
+									<!-- finish the extra options -->
 									<td>
-										<!-- Start form for adding extras to items --> <spring:url
+										<!-- Start form for adding extras to items --> 
+										<c:if test="${ !orderItem.menuItem.includedFoodcategory(drinks) || !orderItem.menuItem.includedFoodcategory(drinks) }" >
+										<spring:url
 											var="removeOrderOptionURL"
 											value="/orderItems/${orderItem.id}/orderOptions" />
 										<form:form name="removeOrderOption" commandName="restaurant"
@@ -152,6 +151,7 @@
 												${labelRemoveButton}
 											</button>
 										</form:form>
+										</c:if>
 									</td>
 								</tr>
 							</c:forEach>

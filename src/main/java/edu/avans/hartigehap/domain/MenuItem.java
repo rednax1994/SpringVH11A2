@@ -69,5 +69,15 @@ public abstract class MenuItem extends DomainObjectNaturalId {
         }
     }
     
+    public Boolean includedFoodcategory(String foodCategory) {
+        System.out.println(foodCategories);
+        for (FoodCategory category : foodCategories) {
+            if (category.getTag().equals(foodCategory)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
     /* business logic */
 }

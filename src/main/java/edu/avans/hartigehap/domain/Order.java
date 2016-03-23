@@ -128,7 +128,6 @@ public class Order extends DomainObject {
         }
     }
     
-    @SuppressWarnings("null")
     public void removeOrderOption(MenuItem menuItem, OrderItem orderItem) {
         log.info(
                 "started addOrderOption with menuItem: " + menuItem.getId() + " - and orderItem: " + orderItem.getId());

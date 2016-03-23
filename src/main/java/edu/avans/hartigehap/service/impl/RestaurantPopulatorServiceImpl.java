@@ -67,6 +67,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private List<Drink> drinks = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
     
+    public static final int ZERO = 0;
     public static final int ONE = 1;
     public static final int TWO = 2;
     public static final int THREE = 3;
@@ -95,6 +96,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createFoodCategory("Alcoholic drinks");
         createFoodCategory("Energizing drinks");
         createFoodCategory("Extra options");
+        createFoodCategory("Drinks");
         
         // create Meals
         createMeal("Spaghetti", "spaghetti.jpg", EIGHT, "easy",
@@ -106,7 +108,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createMeal("Pizza", "pizza.jpg", NINE, "easy",
                 Arrays.<FoodCategory> asList(foodCats.get(THREE), foodCats.get(ONE)));
         createMeal("Carpaccio", "carpaccio.jpg", SEVEN, "easy",
-                Arrays.<FoodCategory> asList(foodCats.get(THREE), foodCats.get(0)));
+                Arrays.<FoodCategory> asList(foodCats.get(THREE), foodCats.get(ZERO)));
         createMeal("Ravioli", "ravioli.jpg", EIGHT, "easy",
                 Arrays.<FoodCategory> asList(foodCats.get(THREE), foodCats.get(ONE), foodCats.get(TWO)));
         
@@ -114,18 +116,20 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createMealOption("mushrooms", "pizza.jpg", THREE, "easy", Arrays.<FoodCategory> asList(foodCats.get(SEVEN)));
         
         // create Drinks
-        createDrink("Large beer", "beer.jpg", ONE, Drink.Size.LARGE, Arrays.<FoodCategory> asList(foodCats.get(FIVE)));
+        createDrink("Large beer", "beer.jpg", ONE, Drink.Size.LARGE,
+                Arrays.<FoodCategory> asList(foodCats.get(FIVE), foodCats.get(EIGHT)));
         createDrink("Medium beer", "beer.jpg", ONE, Drink.Size.MEDIUM,
-                Arrays.<FoodCategory> asList(foodCats.get(FIVE)));
-        createDrink("Small beer", "beer.jpg", ONE, Drink.Size.SMALL, Arrays.<FoodCategory> asList(foodCats.get(FIVE)));
+                Arrays.<FoodCategory> asList(foodCats.get(FIVE), foodCats.get(EIGHT)));
+        createDrink("Small beer", "beer.jpg", ONE, Drink.Size.SMALL,
+                Arrays.<FoodCategory> asList(foodCats.get(FIVE), foodCats.get(EIGHT)));
         createDrink("Large Red Bull", "redbull.jpg", ONE, Drink.Size.LARGE,
-                Arrays.<FoodCategory> asList(foodCats.get(SIX)));
+                Arrays.<FoodCategory> asList(foodCats.get(SIX), foodCats.get(EIGHT)));
         createDrink("Small Red Bull", "redbull.jpg", ONE, Drink.Size.SMALL,
-                Arrays.<FoodCategory> asList(foodCats.get(SIX)));
+                Arrays.<FoodCategory> asList(foodCats.get(SIX), foodCats.get(EIGHT)));
         createDrink("Large coffee", "coffee.jpg", ONE, Drink.Size.LARGE,
-                Arrays.<FoodCategory> asList(foodCats.get(SIX)));
+                Arrays.<FoodCategory> asList(foodCats.get(SIX), foodCats.get(EIGHT)));
         createDrink("Medium coffee", "coffee.jpg", ONE, Drink.Size.MEDIUM,
-                Arrays.<FoodCategory> asList(foodCats.get(SIX)));
+                Arrays.<FoodCategory> asList(foodCats.get(SIX), foodCats.get(EIGHT)));
         
         // create Customers
         byte[] photo = new byte[] { HUNDEREDTWENTYSEVEN, NEGATIVEHUNDEREDTWENTYEIGHT, 0 };
@@ -192,10 +196,13 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         restaurant.getRooms().add(room);
     }
     
-    private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status, int amountOfPeople, Room room, Customer customer, Date endTime, TimeOfDayEnum endTimeOfDay, Date startTime, TimeOfDayEnum startTimeOfDay,
-            Restaurant restaurant) {
+    private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status,
+            int amountOfPeople, Room room, Customer customer, Date endTime, TimeOfDayEnum endTimeOfDay, Date startTime,
+            TimeOfDayEnum startTimeOfDay, Restaurant restaurant) {
         Quotation quotation = new Quotation.QuotationBuilder(1).status(status).eventDate(eventDate)
-                .expirationDate(expirationDate).amountofPeople(amountOfPeople).room(room).customer(customer).endTime(endTime).endTimeOfDay(endTimeOfDay).startTime(startTime).startTimeOfDay(startTimeOfDay).build();
+                .expirationDate(expirationDate).amountofPeople(amountOfPeople).room(room).customer(customer)
+                .endTime(endTime).endTimeOfDay(endTimeOfDay).startTime(startTime).startTimeOfDay(startTimeOfDay)
+                .build();
         quotation.setRestaurant(restaurant);
         restaurant.getQuotations().add(quotation);
     }
@@ -217,14 +224,16 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         
         ArrayList<Room> rooms = new ArrayList<Room>();
         
-        for(Room room : restaurant2.getRooms()){
+        for (Room room : restaurant2.getRooms()) {
             rooms.add(room);
         }
         
-        createQuotation(15000, new DateTime(2016, 6, 23, 0, 0), new DateTime(2016, 8, 23, 0, 0), Status.CONCEPT, 50, rooms.get(0), customers.get(0), new Date(2016, 6, 23, 19, 20), TimeOfDayEnum.EVENING, new Date(2016, 6, 23, 8, 5), TimeOfDayEnum.MORNING, 
-                restaurant2);
-        createQuotation(15001, new DateTime(2016, 8, 26, 0, 0), new DateTime(2016, 10, 26, 0, 0), Status.CONCEPT, 80, rooms.get(1), customers.get(1), new Date(2016, 8, 26, 20, 18), TimeOfDayEnum.EVENING, new Date(2016, 8, 26, 12, 0), TimeOfDayEnum.NOON, 
-                restaurant2);
+        createQuotation(15000, new DateTime(2016, 6, 23, 0, 0), new DateTime(2016, 8, 23, 0, 0), Status.CONCEPT, 50,
+                rooms.get(0), customers.get(0), new Date(2016, 6, 23, 19, 20), TimeOfDayEnum.EVENING,
+                new Date(2016, 6, 23, 8, 5), TimeOfDayEnum.MORNING, restaurant2);
+        createQuotation(15001, new DateTime(2016, 8, 26, 0, 0), new DateTime(2016, 10, 26, 0, 0), Status.CONCEPT, 80,
+                rooms.get(1), customers.get(1), new Date(2016, 8, 26, 20, 18), TimeOfDayEnum.EVENING,
+                new Date(2016, 8, 26, 12, 0), TimeOfDayEnum.NOON, restaurant2);
         
         // for the moment every restaurant has all available food categories
         for (FoodCategory foodCat : foodCats) {
@@ -299,8 +308,9 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
          */
         DiningTable diningTable = t;
         try {
-            Reservation res = ReservationFactory.createReservation(21, customers.get(0), Reservation.TimeOfDayEnum.MORNING,
-                    new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), null, diningTable);
+            Reservation res = ReservationFactory.createReservation(21, customers.get(0),
+                    Reservation.TimeOfDayEnum.MORNING, new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), null,
+                    diningTable);
             res = reservationRepository.save(res);
             res.getCurrentState().acceptReservation();
         } catch (MyException e) {
