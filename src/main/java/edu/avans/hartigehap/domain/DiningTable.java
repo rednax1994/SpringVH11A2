@@ -14,6 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+import edu.avans.hartigehap.domain.exception.EmptyBillException;
 import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.domain.reservationFactory.TableReservation;
 import lombok.Getter;

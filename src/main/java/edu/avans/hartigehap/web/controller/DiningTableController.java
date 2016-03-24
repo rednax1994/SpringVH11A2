@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.avans.hartigehap.domain.DiningTable;
-import edu.avans.hartigehap.domain.EmptyBillException;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.exception.EmptyBillException;
 import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.service.DiningTableService;
 import edu.avans.hartigehap.service.RestaurantService;
