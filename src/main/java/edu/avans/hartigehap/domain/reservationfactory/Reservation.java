@@ -1,4 +1,4 @@
-package edu.avans.hartigehap.domain.reservationFactory;
+package edu.avans.hartigehap.domain.reservationfactory;
 
 import java.util.Date;
 

@@ -28,9 +28,9 @@ import edu.avans.hartigehap.domain.decorator.ConcreteOrderItem;
 import edu.avans.hartigehap.domain.decorator.OrderOption;
 import edu.avans.hartigehap.domain.exception.MyException;
 import edu.avans.hartigehap.domain.exception.StateException;
-import edu.avans.hartigehap.domain.reservationFactory.Reservation;
-import edu.avans.hartigehap.domain.reservationFactory.Reservation.TimeOfDayEnum;
-import edu.avans.hartigehap.domain.reservationFactory.ReservationFactory;
+import edu.avans.hartigehap.domain.reservationfactory.Reservation;
+import edu.avans.hartigehap.domain.reservationfactory.ReservationFactory;
+import edu.avans.hartigehap.domain.reservationfactory.Reservation.TimeOfDayEnum;
 import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
@@ -309,16 +309,14 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
          */
         try {
             RestaurantLocationObject rlo = t;
-            Reservation res = ReservationFactory.createReservation(21, customers.get(0), Reservation.TimeOfDayEnum.MORNING,
-                    new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), rlo);
+            Reservation res = ReservationFactory.createReservation(21, customers.get(0),
+                    Reservation.TimeOfDayEnum.MORNING, new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), rlo);
             res = reservationRepository.save(res);
             res.getCurrentState().acceptReservation();
         } catch (MyException e) {
-            // TODO Auto-generated catch block
             log.debug("" + e.getMessage());
         } catch (StateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.debug("" + e.getMessage());
         }
     }
     

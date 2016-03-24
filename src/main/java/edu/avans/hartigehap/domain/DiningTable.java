@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import edu.avans.hartigehap.domain.exception.EmptyBillException;
 import edu.avans.hartigehap.domain.exception.StateException;
-import edu.avans.hartigehap.domain.reservationFactory.TableReservation;
+import edu.avans.hartigehap.domain.reservationfactory.TableReservation;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

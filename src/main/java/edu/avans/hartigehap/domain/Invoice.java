@@ -20,11 +20,12 @@ import lombok.ToString;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@Getter @Setter
-@ToString(callSuper=true, includeFieldNames=true)
+@Getter
+@Setter
+@ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
-public class Invoice extends DomainObject{
-
+public class Invoice extends DomainObject {
+    
     private static final long serialVersionUID = 1L;
     
     private int number;
@@ -35,8 +36,8 @@ public class Invoice extends DomainObject{
     @DateTimeFormat(iso = ISO.DATE)
     private DateTime expirationDate;
     
-//    @ManyToOne
-//    private Room room;
+    @ManyToOne
+    private Room room;
     
     @ManyToOne
     private Customer customer;
@@ -44,12 +45,10 @@ public class Invoice extends DomainObject{
     @ManyToOne
     private Restaurant restaurant;
     
-//    private TemplateMailer templatemailer;
-    
     @Enumerated(EnumType.ORDINAL)
     // represented in database as integer
     private Status status;
-
+    
     public void createFromQuotation(Restaurant restaurant, Quotation quotation) {
         this.number = quotation.getNumber();
         this.date = quotation.getEventDate();

@@ -1,4 +1,4 @@
-package edu.avans.hartigehap.domain.reservationFactory;
+package edu.avans.hartigehap.domain.reservationfactory;
 
 import java.util.Date;
 
@@ -7,7 +7,7 @@ import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.RestaurantLocationObject;
 import edu.avans.hartigehap.domain.Room;
 import edu.avans.hartigehap.domain.exception.MyException;
-import edu.avans.hartigehap.domain.reservationFactory.Reservation.TimeOfDayEnum;
+import edu.avans.hartigehap.domain.reservationfactory.Reservation.TimeOfDayEnum;
 
 public class ReservationFactory {
 

@@ -10,25 +10,26 @@ import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.RestaurantLocationObject;
 import edu.avans.hartigehap.domain.exception.MyException;
+import edu.avans.hartigehap.domain.reservationfactory.Reservation;
+import edu.avans.hartigehap.domain.reservationfactory.ReservationFactory;
+import edu.avans.hartigehap.repository.ReservationRepository;
 import edu.avans.hartigehap.service.BanquetingFacadeService;
 import edu.avans.hartigehap.service.InvoiceService;
-import edu.avans.hartigehap.domain.reservationFactory.Reservation;
-import edu.avans.hartigehap.domain.reservationFactory.ReservationFactory;
-import edu.avans.hartigehap.repository.ReservationRepository;
 import lombok.extern.slf4j.Slf4j;
+
 @Slf4j
 @Service("banquetingFacade")
 @Repository
 @Transactional
-public class BanquetingFacadeImpl implements BanquetingFacadeService{
+public class BanquetingFacadeImpl implements BanquetingFacadeService {
     
-   @Autowired
-   private InvoiceService invoiceService;
-   
-   @Autowired
-   private ReservationRepository reservationRepository;
+    @Autowired
+    private InvoiceService invoiceService;
     
-    public void acceptQuotation(Restaurant restaurant, Quotation quotation){
+    @Autowired
+    private ReservationRepository reservationRepository;
+    
+    public void acceptQuotation(Restaurant restaurant, Quotation quotation) {
         log.info("test?");
         Invoice invoice = new Invoice();
         invoice.createFromQuotation(restaurant, quotation);
@@ -37,11 +38,12 @@ public class BanquetingFacadeImpl implements BanquetingFacadeService{
         
         try {
             RestaurantLocationObject rlo = quotation.getRoom();
-            Reservation reservation = ReservationFactory.createReservation(quotation.getAmountOfPeople(), quotation.getCustomer(), quotation.getStartTimeOfDay(), quotation.getStartTime(), quotation.getEndTimeOfDay(), quotation.getEndTime(),rlo);
+            Reservation reservation = ReservationFactory.createReservation(quotation.getAmountOfPeople(),
+                    quotation.getCustomer(), quotation.getStartTimeOfDay(), quotation.getStartTime(),
+                    quotation.getEndTimeOfDay(), quotation.getEndTime(), rlo);
             reservationRepository.save(reservation);
         } catch (MyException e) {
-            e.printStackTrace();
+            log.debug("" + e.getMessage());
         }
-        //notifyCustomer(quotation);
     }
 }

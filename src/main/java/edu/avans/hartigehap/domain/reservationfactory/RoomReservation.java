@@ -1,4 +1,4 @@
-package edu.avans.hartigehap.domain.reservationFactory;
+package edu.avans.hartigehap.domain.reservationfactory;
 
 import java.util.Date;
 
@@ -9,27 +9,25 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import edu.avans.hartigehap.domain.Customer;
-import edu.avans.hartigehap.domain.DiningTable;
+import edu.avans.hartigehap.domain.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @Getter
 @Setter
-@ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
-public class TableReservation extends Reservation {
+public class RoomReservation extends Reservation {
     private static final long serialVersionUID = 1L;
     
     @ManyToOne
-    private DiningTable diningTable;
+    private Room room;
     
-    public TableReservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, Date startTime,
-            TimeOfDayEnum endTimeOfDay, Date endTime, DiningTable rlo) {
+    public RoomReservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, Date startTime,
+            TimeOfDayEnum endTimeOfDay, Date endTime, Room room) {
         super(amountOfPeople, customer, startTimeOfDay, startTime, endTimeOfDay, endTime);
-        this.diningTable = rlo;
-    };
+        this.room = room;
+    }
 }
