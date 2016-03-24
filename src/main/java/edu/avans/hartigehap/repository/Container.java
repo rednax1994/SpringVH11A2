@@ -6,5 +6,6 @@ import edu.avans.hartigehap.domain.Order;
 import iterator.Iterator;
 
 public interface Container {
+    @SuppressWarnings("rawtypes")
     public Iterator getIterator(List<Order> list);
 }

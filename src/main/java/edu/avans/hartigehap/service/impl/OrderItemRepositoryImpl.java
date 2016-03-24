@@ -8,11 +8,13 @@ import iterator.Iterator;
 
 public class OrderItemRepositoryImpl implements Container {
     
+    @SuppressWarnings("rawtypes")
     @Override
     public Iterator getIterator(List<Order> list) {
         return new NameIterator(list);
     }
     
+    @SuppressWarnings("rawtypes")
     private class NameIterator implements Iterator {
         
         int index;

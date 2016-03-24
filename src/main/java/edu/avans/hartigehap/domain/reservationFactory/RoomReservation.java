@@ -4,16 +4,15 @@ import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import edu.avans.hartigehap.domain.Customer;
-import edu.avans.hartigehap.domain.RestaurantLocationObject;
 import edu.avans.hartigehap.domain.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
@@ -27,7 +26,7 @@ public class RoomReservation extends Reservation {
     private Room room;
     
     public RoomReservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, Date startTime,
-            TimeOfDayEnum endTimeOfDay, Date endTime, Room room){
+            TimeOfDayEnum endTimeOfDay, Date endTime, Room room) {
         super(amountOfPeople, customer, startTimeOfDay, startTime, endTimeOfDay, endTime);
         this.room = room;
     };
