@@ -35,6 +35,9 @@
 	<definition extends="default" name="hartigehap/showquotation">
 		<put-attribute name="body" value="/WEB-INF/views/hartigehap/showquotation.jspx" />
 	</definition>
+	<definition extends="default" name="hartigehap/previewquotation">
+		<put-attribute name="body" value="/WEB-INF/views/hartigehap/previewquotation.jspx" />
+	</definition>
 	<definition extends="default" name="hartigehap/banquetinglist">
 		<put-attribute name="body" value="/WEB-INF/views/hartigehap/banquetinglist.jspx" />
 	</definition>

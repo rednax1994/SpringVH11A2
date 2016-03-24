@@ -3,21 +3,20 @@ package edu.avans.hartigehap.domain;
 public class DisplayInvoice extends DisplayTemplate{
 
     @Override
-    void displayHeader() {
-        // TODO Auto-generated method stub
-        
+    String displayHeader(Document document) {
+        return "halllo";
     }
 
     @Override
-    void displayLines() {
-        // TODO Auto-generated method stub
-        
+    String displayLines(Document document) {
+     return "test";
     }
 
     @Override
-    void displayFooter() {
-        // TODO Auto-generated method stub
-        
+    String displayFooter(Document document) {
+     return "boeh";
     }
+
+    
 
 }

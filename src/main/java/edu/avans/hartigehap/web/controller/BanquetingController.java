@@ -79,6 +79,18 @@ public class BanquetingController {
         banguetingFacadeService.acceptQuotation(restaurant, quotation);
         return "redirect:/restaurants/" + restaurantName + "/banqueting/";
     }
+    
+    @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations/{id}", params = "preview", method = RequestMethod.GET)
+    public String previewQuotation(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
+            Model uiModel) {
+        warmupRestaurant(restaurantName, uiModel);
+        
+        Quotation quotation = quotationService.findById(id);
+        String message = quotation.displayDocument(quotation);
+        uiModel.addAttribute("quotation", quotation);
+        uiModel.addAttribute("message", message);
+        return "hartigehap/previewquotation";
+    }
 
     private Restaurant warmupRestaurant(String restaurantName, Model uiModel) {
         Collection<Restaurant> restaurants = restaurantService.findAll();

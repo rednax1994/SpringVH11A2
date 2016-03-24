@@ -2,13 +2,11 @@ package edu.avans.hartigehap.domain;
 
 public abstract class DisplayTemplate{
     
-    public void displayDocument(){
-        displayHeader();
-        displayLines();
-        displayFooter();
+    public String displayDocument(Document document){
+        return displayHeader(document) + displayLines(document) + displayFooter(document);
     }
     
-    abstract void displayHeader();
-    abstract void displayLines();
-    abstract void displayFooter();
+    abstract String displayHeader(Document document);
+    abstract String displayLines(Document document);
+    abstract String displayFooter(Document document);
 }

@@ -66,8 +66,6 @@ public abstract class Document extends DomainObject{
 
     protected int amountOfPeople;
 
-    
-
     @Enumerated(EnumType.ORDINAL)
     // represented in database as integer
     protected Status status;

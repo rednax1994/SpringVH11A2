@@ -39,7 +39,6 @@ public class Quotation extends Document {
         this.customer = builder.customer;
         this.room = builder.room;
         this.amountOfPeople = builder.amountOfPeople;
-        displayTemplate = new DisplayQuotation();
     }
 
     private static final long serialVersionUID = 1L;
@@ -50,7 +49,12 @@ public class Quotation extends Document {
     private BanquetingFacadeImpl banquetingfacade = new BanquetingFacadeImpl();
 
     @Transient
-    private DisplayTemplate displayTemplate;
+    private DisplayTemplate displayTemplate = new DisplayQuotation();;
+    
+    public String displayDocument(Quotation quotation){
+        String message = displayTemplate.displayDocument(quotation);
+        return message;
+    }
 
     public static class QuotationBuilder {
 
