@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import edu.avans.hartigehap.domain.Invoice;
 import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.RestaurantLocationObject;
 import edu.avans.hartigehap.domain.exception.MyException;
 import edu.avans.hartigehap.service.BanquetingFacadeService;
 import edu.avans.hartigehap.service.InvoiceService;
@@ -35,7 +36,8 @@ public class BanquetingFacadeImpl implements BanquetingFacadeService{
         invoiceService.save(invoice);
         
         try {
-            Reservation reservation = ReservationFactory.createReservation(quotation.getAmountOfPeople(), quotation.getCustomer(), quotation.getStartTimeOfDay(), quotation.getStartTime(), quotation.getEndTimeOfDay(), quotation.getEndTime(), quotation.getRoom(), null);
+            RestaurantLocationObject rlo = quotation.getRoom();
+            Reservation reservation = ReservationFactory.createReservation(quotation.getAmountOfPeople(), quotation.getCustomer(), quotation.getStartTimeOfDay(), quotation.getStartTime(), quotation.getEndTimeOfDay(), quotation.getEndTime(),rlo);
             reservationRepository.save(reservation);
         } catch (MyException e) {
             e.printStackTrace();

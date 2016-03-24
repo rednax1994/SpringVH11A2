@@ -29,6 +29,7 @@
     <spring:message code="label_waiter_subsystem" var="labelWaiterSubsystem"/>
     <spring:message code="label_customer_subsystem" var="labelCustomerSubsystem"/>
     <spring:message code="label_banqueting_subsystem" var="labelBanquetingSubsystem"/>
+   	<spring:message code="label_reservation_subsystem" var="labelReservationSubsystem"/>
     <spring:message code="label_dining_tables" var="labelDiningTables"/>
     <spring:message code="label_dining_table" var="labelDiningTable"/>
     <spring:message code="label_language" var="labelLanguage"/>
@@ -85,6 +86,10 @@
 
                                     <spring:url var="customerSubsystem" value="/restaurants/${restaurant.id}/customers" />
                                     <li><a href="${customerSubsystem}">${restaurant.id} ${labelCustomerSubsystem}</a></li>
+                                    
+                                   	<spring:url var="reservationSubsystem" value="TO FILL!" />
+                                    <li><a href="${reservationSubystem}">${restaurant.id} ${labelReservationSubsystem}</a></li>
+                                    
                                     <sec:authorize access="hasRole('ROLE_MANAGER')">
                                     <spring:url var="banquetingSubsystem" value="/restaurants/${restaurant.id}/banqueting" />
                                     <li><a href="${banquetingSubsystem}">${restaurant.id} ${labelBanquetingSubsystem}</a></li>

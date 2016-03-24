@@ -24,7 +24,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
-public class Room extends DomainObject {
+public class Room extends RestaurantLocationObject {
     private static final long serialVersionUID = 1L;
     
     @ManyToMany(mappedBy = "rooms")
@@ -46,5 +46,10 @@ public class Room extends DomainObject {
         this.roomNr = roomNr;
         this.occupied = occupied;
         this.capacity = capacity;
+    }
+    
+    @Override
+    public Room getRoom(){
+        return this;
     }
 }

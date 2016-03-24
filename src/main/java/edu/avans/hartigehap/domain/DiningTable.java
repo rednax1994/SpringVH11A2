@@ -31,7 +31,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true, includeFieldNames = true, of = { "bills", "currentBill" })
-public class DiningTable extends DomainObject {
+public class DiningTable extends RestaurantLocationObject {
     private static final long serialVersionUID = 1L;
     
     private int tableNr;
@@ -74,7 +74,10 @@ public class DiningTable extends DomainObject {
     }
     
     /* business logic */
-    
+    @Override
+    public DiningTable getDiningTable(){
+        return this;
+    }
     public void warmup() {
         Iterator<OrderItem> orderItemIterator = currentBill.getCurrentOrder().getOrderItems().iterator();
         while (orderItemIterator.hasNext()) {
