@@ -20,6 +20,7 @@ import edu.avans.hartigehap.domain.FoodCategory;
 import edu.avans.hartigehap.domain.Meal;
 import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
+import edu.avans.hartigehap.domain.RestaurantLocationObject;
 import edu.avans.hartigehap.domain.Room;
 import edu.avans.hartigehap.domain.RoomOption;
 import edu.avans.hartigehap.domain.Status;
@@ -297,10 +298,10 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         /*
          * Reservation test
          */
-        DiningTable diningTable = t;
         try {
+            RestaurantLocationObject rlo = t;
             Reservation res = ReservationFactory.createReservation(21, customers.get(0), Reservation.TimeOfDayEnum.MORNING,
-                    new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), null, diningTable);
+                    new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), rlo);
             res = reservationRepository.save(res);
             res.getCurrentState().acceptReservation();
         } catch (MyException e) {

@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import edu.avans.hartigehap.domain.Customer;
+import edu.avans.hartigehap.domain.RestaurantLocationObject;
 import edu.avans.hartigehap.domain.Room;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

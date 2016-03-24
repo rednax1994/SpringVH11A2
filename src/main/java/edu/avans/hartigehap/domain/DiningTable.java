@@ -74,7 +74,10 @@ public class DiningTable extends RestaurantLocationObject {
     }
     
     /* business logic */
-    
+    @Override
+    public DiningTable getDiningTable(){
+        return this;
+    }
     public void warmup() {
         Iterator<OrderItem> orderItemIterator = currentBill.getCurrentOrder().getOrderItems().iterator();
         while (orderItemIterator.hasNext()) {

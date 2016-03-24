@@ -12,5 +12,11 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 public abstract class RestaurantLocationObject extends DomainObject{
     private static final long serialVersionUID = 1L;
-
+    
+    public DiningTable getDiningTable(){
+        return null;
+    }
+    public Room getRoom(){
+        return null;
+    }
 }
