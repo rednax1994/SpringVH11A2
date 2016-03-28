@@ -49,7 +49,7 @@ public class Room extends RestaurantLocationObject {
     }
     
     @Override
-    public Room getRoom(){
+    public Room getRoom() {
         return this;
     }
 }

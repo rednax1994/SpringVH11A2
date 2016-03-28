@@ -37,20 +37,6 @@ import lombok.ToString;
 @NoArgsConstructor
 public class Quotation extends DomainObject {
     
-    private Quotation(QuotationBuilder builder) {
-        this.number = builder.number;
-        this.eventDate = builder.eventDate;
-        this.expirationDate = builder.expirationDate;
-        this.status = builder.status;
-        this.startTimeOfDay = builder.startTimeOfDay;
-        this.startTime = builder.startTime;
-        this.endTimeOfDay = builder.endTimeOfDay;
-        this.endTime = builder.endTime;
-        this.customer = builder.customer;
-        this.room = builder.room;
-        this.amountOfPeople = builder.amountOfPeople;
-    }
-    
     private static final long serialVersionUID = 1L;
     
     private int number;
@@ -99,6 +85,20 @@ public class Quotation extends DomainObject {
     
     @OneToMany(mappedBy = "invoice")
     private Collection<Line> invoiceLines = new ArrayList<Line>();
+    
+    private Quotation(QuotationBuilder builder) {
+        this.number = builder.number;
+        this.eventDate = builder.eventDate;
+        this.expirationDate = builder.expirationDate;
+        this.status = builder.status;
+        this.startTimeOfDay = builder.startTimeOfDay;
+        this.startTime = builder.startTime;
+        this.endTimeOfDay = builder.endTimeOfDay;
+        this.endTime = builder.endTime;
+        this.customer = builder.customer;
+        this.room = builder.room;
+        this.amountOfPeople = builder.amountOfPeople;
+    }
     
     public static class QuotationBuilder {
         

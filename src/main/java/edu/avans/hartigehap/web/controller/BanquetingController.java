@@ -24,43 +24,43 @@ import lombok.extern.slf4j.Slf4j;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 @Slf4j
 public class BanquetingController {
-
+    
     @Autowired
     private RestaurantService restaurantService;
-
+    
     @Autowired
     private QuotationService quotationService;
-
+    
     @Autowired
     private InvoiceService invoiceService;
     
     @Autowired
     private BanquetingFacadeService banguetingFacadeService;
-
+    
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting", method = RequestMethod.GET)
     public String listQuotationsAndInvoices(@PathVariable("restaurantName") String restaurantName, Model uiModel) {
         Restaurant restaurant = warmupRestaurant(restaurantName, uiModel);
-
+        
         log.info("Listing quotations and invoices");
         List<Quotation> quotations = quotationService.findQuotationsForRestaurant(restaurant);
         uiModel.addAttribute("quotations", quotations);
         log.info("No. of quotations: " + quotations.size());
-
+        
         List<Invoice> invoices = invoiceService.findInvoicesForRestaurant(restaurant);
         uiModel.addAttribute("invoices", invoices);
         log.info("No. of invoices: " + invoices.size());
-
+        
         return "hartigehap/banquetinglist";
     }
-
+    
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations/{id}", method = RequestMethod.GET)
     public String showQuotation(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
             Model uiModel) {
-
+        
         warmupRestaurant(restaurantName, uiModel);
-
+        
         log.info("Show quotation: " + id);
-
+        
         Quotation quotation = quotationService.findById(id);
         uiModel.addAttribute("quotation", quotation);
         return "hartigehap/showquotation";
@@ -79,7 +79,7 @@ public class BanquetingController {
         banguetingFacadeService.acceptQuotation(restaurant, quotation);
         return "redirect:/restaurants/" + restaurantName + "/banqueting/";
     }
-
+    
     private Restaurant warmupRestaurant(String restaurantName, Model uiModel) {
         Collection<Restaurant> restaurants = restaurantService.findAll();
         uiModel.addAttribute("restaurants", restaurants);

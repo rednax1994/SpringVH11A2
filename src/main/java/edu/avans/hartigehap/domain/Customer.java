@@ -78,13 +78,13 @@ public class Customer extends DomainObject {
     @OneToMany(mappedBy = "customer")
     private Collection<Bill> bills = new ArrayList<Bill>();
     
-    @OneToMany(mappedBy="customer")
+    @OneToMany(mappedBy = "customer")
     private Collection<Quotation> quotations = new ArrayList<Quotation>();
     
-    @OneToMany(mappedBy="customer")
+    @OneToMany(mappedBy = "customer")
     private Collection<Invoice> invoices = new ArrayList<Invoice>();
     
-    @OneToMany(mappedBy="customer")
+    @OneToMany(mappedBy = "customer")
     private Collection<Reservation> reservations = new ArrayList<Reservation>();
     
     public Customer(String firstName, String lastName, DateTime birthDate, int partySize, String description,

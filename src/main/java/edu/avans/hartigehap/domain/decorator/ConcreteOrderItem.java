@@ -21,8 +21,7 @@ import lombok.ToString;
 
 public class ConcreteOrderItem extends OrderItem {
     private static final long serialVersionUID = 1L;
-
-
+    
     public ConcreteOrderItem(MenuItem menuItem, int quantity) {
         super(menuItem, quantity);
     }

@@ -26,8 +26,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-//@Inheritance(strategy=InheritanceType.JOINED)
-//@DiscriminatorColumn(name = "DTYPE")
+// @Inheritance(strategy=InheritanceType.JOINED)
+// @DiscriminatorColumn(name = "DTYPE")
 public abstract class Reservation extends DomainObject {
     private static final long serialVersionUID = 1L;
     
