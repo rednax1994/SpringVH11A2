@@ -331,9 +331,9 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             res = reservationRepository.save(res);
             res.getCurrentState().acceptReservation();
         } catch (MyException e) {
-            log.debug("" + e.getMessage());
+            new MyException("error in RestaurantPopulatorImpl: ", e);
         } catch (StateException e) {
-            log.debug("" + e.getMessage());
+            new StateException("StateException in RestaurantPopulatorImpl: " + e);
         }
     }
     
