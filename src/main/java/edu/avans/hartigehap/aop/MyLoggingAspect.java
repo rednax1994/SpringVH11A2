@@ -29,7 +29,7 @@ public class MyLoggingAspect {
     }
     
     @Around("anyHartigeHapMethod()")
-    public Object loggingAroundAdvice(ProceedingJoinPoint pjp) throws Throwable {
+    public Object loggingAroundAdvice(ProceedingJoinPoint pjp) throws MyThrowableException {
         LOGGER.info("(AOP-myLogger) Before execution: " + pjp.getSignature().getDeclaringTypeName() + "."
                 + pjp.getSignature().getName());
         Object retVal = null;
@@ -37,8 +37,8 @@ public class MyLoggingAspect {
             retVal = pjp.proceed();
             LOGGER.info("(AOP-myLogger) After execution: " + pjp.getSignature().getDeclaringTypeName() + "."
                     + pjp.getSignature().getName());
-        } catch (MyThrowableException e) {
-            LOGGER.info("error" + e);
+        } catch (Throwable e) {
+            throw new MyThrowableException("error: ", e);
         }
         
         return retVal;
