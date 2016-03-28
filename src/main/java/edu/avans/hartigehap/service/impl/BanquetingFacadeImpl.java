@@ -43,7 +43,7 @@ public class BanquetingFacadeImpl implements BanquetingFacadeService {
                     quotation.getEndTimeOfDay(), quotation.getEndTime(), rlo);
             reservationRepository.save(reservation);
         } catch (MyException e) {
-            log.debug("" + e.getMessage());
+            new MyException("error in Banqueting: ", e);
         }
     }
 }
