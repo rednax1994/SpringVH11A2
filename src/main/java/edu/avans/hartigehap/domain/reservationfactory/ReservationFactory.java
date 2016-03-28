@@ -11,6 +11,10 @@ import edu.avans.hartigehap.domain.reservationfactory.Reservation.TimeOfDayEnum;
 
 public class ReservationFactory {
     
+    private ReservationFactory() {
+        
+    }
+    
     public static Reservation createReservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay,
             Date startTime, TimeOfDayEnum endTimeOfDay, Date endTime, RestaurantLocationObject rlo) throws MyException {
         Reservation reservation = null;
