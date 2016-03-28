@@ -1,24 +1,24 @@
 package edu.avans.hartigehap.domain.exception;
 
-public class MyRuntimeException extends RuntimeException {
+public class MyThrowableException extends Throwable {
     /**
      * 
      */
     private static final long serialVersionUID = 1L;
     
-    public MyRuntimeException() {
+    public MyThrowableException() {
         super();
     }
     
-    public MyRuntimeException(String s) {
+    public MyThrowableException(String s) {
         super(s);
     }
     
-    public MyRuntimeException(String s, Throwable throwable) {
+    public MyThrowableException(String s, Throwable throwable) {
         super(s, throwable);
     }
     
-    public MyRuntimeException(Throwable throwable) {
+    public MyThrowableException(Throwable throwable) {
         super(throwable);
     }
 }
