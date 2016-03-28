@@ -36,6 +36,8 @@ public class DiningTableController {
     @Autowired
     private DiningTableService diningTableService;
     
+    private static String nullString = "NONE";
+    
     @RequestMapping(value = "/diningTables/{diningTableId}", method = RequestMethod.GET)
     public String showTable(@PathVariable("diningTableId") String diningTableId, Model uiModel) {
         log.info("diningTable = " + diningTableId);
@@ -56,7 +58,7 @@ public class DiningTableController {
         DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
         
         log.info("diningTable fetched, start addOrderOption");
-        if (!menuItemName.equals("NONE")) {
+        if (!menuItemName.equals(nullString)) {
             diningTableService.addOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
         } else {
             redirectAttributes.addFlashAttribute("message",
@@ -76,7 +78,7 @@ public class DiningTableController {
         DiningTable diningTable = diningTableService.fetchWarmedUp(Long.valueOf(diningTableId));
         
         log.info("diningTable fetched, start removeOrderOption");
-        if (!menuItemName.equals("NONE")) {
+        if (!menuItemName.equals(nullString)) {
             diningTableService.removeOrderOption(diningTable, menuItemName, Long.valueOf(orderItemId));
         } else {
             redirectAttributes.addFlashAttribute("message",
