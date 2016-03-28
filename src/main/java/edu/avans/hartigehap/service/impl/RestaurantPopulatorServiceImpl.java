@@ -29,8 +29,8 @@ import edu.avans.hartigehap.domain.decorator.OrderOption;
 import edu.avans.hartigehap.domain.exception.MyException;
 import edu.avans.hartigehap.domain.exception.StateException;
 import edu.avans.hartigehap.domain.reservationfactory.Reservation;
-import edu.avans.hartigehap.domain.reservationfactory.ReservationFactory;
 import edu.avans.hartigehap.domain.reservationfactory.Reservation.TimeOfDayEnum;
+import edu.avans.hartigehap.domain.reservationfactory.ReservationFactory;
 import edu.avans.hartigehap.repository.CustomerRepository;
 import edu.avans.hartigehap.repository.FoodCategoryRepository;
 import edu.avans.hartigehap.repository.MenuItemRepository;
@@ -68,18 +68,32 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private List<Drink> drinks = new ArrayList<>();
     private List<Customer> customers = new ArrayList<>();
     
-    public static final int ZERO = 0;
-    public static final int ONE = 1;
-    public static final int TWO = 2;
-    public static final int THREE = 3;
-    public static final int FOUR = 4;
-    public static final int FIVE = 5;
-    public static final int SIX = 6;
-    public static final int SEVEN = 7;
-    public static final int EIGHT = 8;
-    public static final int NINE = 9;
-    public static final int HUNDEREDTWENTYSEVEN = 127;
-    public static final int NEGATIVEHUNDEREDTWENTYEIGHT = -128;
+    private static final int ZERO = 0;
+    private static final int ONE = 1;
+    private static final int TWO = 2;
+    private static final int THREE = 3;
+    private static final int FIVE = 5;
+    private static final int SIX = 6;
+    private static final int SEVEN = 7;
+    private static final int EIGHT = 8;
+    private static final int NINE = 9;
+    private static final int HUNDEREDTWENTYSEVEN = 127;
+    private static final int NEGATIVEHUNDEREDTWENTYEIGHT = -128;
+    private static final int TEN = 10;
+    private static final int EIGHTY = 80;
+    private static final int HUNDERD = 100;
+    private static final int TWOHUNDERDFIFTY = 250;
+    private static final int FIFTEENTHOUSEND = 15000;
+    private static final int TWENTYSIXTEEN = 2016;
+    private static final int TWENTYTHREE = 23;
+    private static final int TWENTY = 20;
+    private static final int NINETEEN = 19;
+    private static final int FIFTY = 50;
+    private static final int EIGHTTEEN = 18;
+    private static final int TWENTYSIX = 26;
+    private static final int TWELVE = 12;
+    private static final int TWENTYONE = 21;
+    private static final int FIFTEENTHOUSENDONE = 15001;
     
     /**
      * menu items, food categories and customers are common to all restaurants
@@ -133,7 +147,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
                 Arrays.<FoodCategory> asList(foodCats.get(SIX), foodCats.get(EIGHT)));
         
         // create Customers
-        byte[] photo = new byte[] { HUNDEREDTWENTYSEVEN, NEGATIVEHUNDEREDTWENTYEIGHT, 0 };
+        byte[] photo = new byte[] { HUNDEREDTWENTYSEVEN, NEGATIVEHUNDEREDTWENTYEIGHT, ZERO };
         createCustomer("Peter", "Limonade", new DateTime(), ONE, "description", photo);
         createCustomer("Barry", "Batsbak", new DateTime(), ONE, "description", photo);
         createCustomer("Piet", "Bakker", new DateTime(), ONE, "description", photo);
@@ -208,6 +222,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         restaurant.getQuotations().add(quotation);
     }
     
+    @SuppressWarnings("deprecation")
     private Restaurant populateRestaurant(Restaurant restaurant) {
         
         // will save everything that is reachable by cascading
@@ -219,22 +234,24 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         createDiningTables(FIVE, restaurant2);
         
         // create Rooms
-        createRoom(1, false, 80, restaurant2);
-        createRoom(2, true, 100, restaurant2);
-        createRoom(3, false, 250, restaurant2);
+        createRoom(ONE, false, EIGHTY, restaurant2);
+        createRoom(TWO, true, HUNDERD, restaurant2);
+        createRoom(THREE, false, TWOHUNDERDFIFTY, restaurant2);
         
-        ArrayList<Room> rooms = new ArrayList<Room>();
+        List<Room> rooms = new ArrayList<Room>();
         
         for (Room room : restaurant2.getRooms()) {
             rooms.add(room);
         }
         
-        createQuotation(15000, new DateTime(2016, 6, 23, 0, 0), new DateTime(2016, 8, 23, 0, 0), Status.CONCEPT, 50,
-                rooms.get(0), customers.get(0), new Date(2016, 6, 23, 19, 20), TimeOfDayEnum.EVENING,
-                new Date(2016, 6, 23, 8, 5), TimeOfDayEnum.MORNING, restaurant2);
-        createQuotation(15001, new DateTime(2016, 8, 26, 0, 0), new DateTime(2016, 10, 26, 0, 0), Status.CONCEPT, 80,
-                rooms.get(1), customers.get(1), new Date(2016, 8, 26, 20, 18), TimeOfDayEnum.EVENING,
-                new Date(2016, 8, 26, 12, 0), TimeOfDayEnum.NOON, restaurant2);
+        createQuotation(FIFTEENTHOUSEND, new DateTime(TWENTYSIXTEEN, SIX, TWENTYTHREE, ZERO, ZERO),
+                new DateTime(TWENTYSIXTEEN, EIGHT, TWENTYTHREE, ZERO, ZERO), Status.CONCEPT, FIFTY, rooms.get(ZERO),
+                customers.get(ZERO), new Date(TWENTYSIXTEEN, SIX, TWENTYTHREE, NINETEEN, TWENTY), TimeOfDayEnum.EVENING,
+                new Date(TWENTYSIXTEEN, SIX, TWENTYTHREE, EIGHT, FIVE), TimeOfDayEnum.MORNING, restaurant2);
+        createQuotation(FIFTEENTHOUSENDONE, new DateTime(TWENTYSIXTEEN, EIGHT, TWENTYSIX, ZERO, ZERO),
+                new DateTime(TWENTYSIXTEEN, TEN, TWENTYSIX, 0, 0), Status.CONCEPT, EIGHTY, rooms.get(ONE),
+                customers.get(ONE), new Date(TWENTYSIXTEEN, EIGHT, TWENTYSIX, TWENTY, EIGHTTEEN), TimeOfDayEnum.EVENING,
+                new Date(TWENTYSIXTEEN, EIGHT, TWENTYSIX, TWELVE, ZERO), TimeOfDayEnum.NOON, restaurant2);
         
         // for the moment every restaurant has all available food categories
         for (FoodCategory foodCat : foodCats) {
@@ -301,7 +318,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         /*
          * room options added
          */
-        RoomOption roomOption = new RoomOption("Buffet", "Western Buffet", (long) 50, false);
+        RoomOption roomOption = new RoomOption("Buffet", "Western Buffet", (long) FIFTY, false);
         roomOptionRepository.save(roomOption);
         
         /*
@@ -309,7 +326,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
          */
         try {
             RestaurantLocationObject rlo = t;
-            Reservation res = ReservationFactory.createReservation(21, customers.get(0),
+            Reservation res = ReservationFactory.createReservation(TWENTYONE, customers.get(ZERO),
                     Reservation.TimeOfDayEnum.MORNING, new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), rlo);
             res = reservationRepository.save(res);
             res.getCurrentState().acceptReservation();
