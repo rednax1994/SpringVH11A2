@@ -66,6 +66,19 @@ public class BanquetingController {
         return "hartigehap/showquotation";
     }
     
+    @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/invoices/{id}", method = RequestMethod.GET)
+    public String showInvoice(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
+            Model uiModel) {
+
+        warmupRestaurant(restaurantName, uiModel);
+
+        log.info("Show invoice: " + id);
+
+        Invoice invoice = invoiceService.findById(id);
+        uiModel.addAttribute("invoice", invoice);
+        return "hartigehap/showinvoice";
+    }
+    
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations/{id}", params = "submit", method = RequestMethod.GET)
     public String acceptQuotation(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
             Model uiModel) {
@@ -87,9 +100,19 @@ public class BanquetingController {
         
         Quotation quotation = quotationService.findById(id);
         String message = quotation.displayDocument(quotation);
-        uiModel.addAttribute("quotation", quotation);
         uiModel.addAttribute("message", message);
-        return "hartigehap/previewquotation";
+        return "hartigehap/previewdocument";
+    }
+    
+    @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/invoices/{id}", params = "preview", method = RequestMethod.GET)
+    public String previewInvoice(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
+            Model uiModel) {
+        warmupRestaurant(restaurantName, uiModel);
+        
+        Invoice invoice = invoiceService.findById(id);
+        String message = invoice.displayDocument(invoice);
+        uiModel.addAttribute("message", message);
+        return "hartigehap/previewdocument";
     }
 
     private Restaurant warmupRestaurant(String restaurantName, Model uiModel) {

@@ -23,7 +23,7 @@ import lombok.ToString;
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @Getter
 @Setter
-@ToString(callSuper = true, includeFieldNames = true)
+@ToString(callSuper = false, includeFieldNames = true)
 @NoArgsConstructor
 public class Quotation extends Document {
 
@@ -49,7 +49,7 @@ public class Quotation extends Document {
     private BanquetingFacadeImpl banquetingfacade = new BanquetingFacadeImpl();
 
     @Transient
-    private DisplayTemplate displayTemplate = new DisplayQuotation();;
+    private DisplayTemplate displayTemplate = new DisplayQuotation();
     
     public String displayDocument(Quotation quotation){
         String message = displayTemplate.displayDocument(quotation);
