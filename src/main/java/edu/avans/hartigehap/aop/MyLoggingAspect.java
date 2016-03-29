@@ -26,9 +26,8 @@ public class MyLoggingAspect {
                 + joinPoint.getSignature().getName());
     }
     
-    @SuppressWarnings("squid:S00112")
     @Around("anyHartigeHapMethod()")
-    public Object loggingAroundAdvice(ProceedingJoinPoint pjp) throws Throwable {
+    public Object loggingAroundAdvice(ProceedingJoinPoint pjp) throws Throwable { // NOSONAR
         LOGGER.info("(AOP-myLogger) Before execution: " + pjp.getSignature().getDeclaringTypeName() + "."
                 + pjp.getSignature().getName());
         Object retVal;

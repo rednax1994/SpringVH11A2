@@ -20,9 +20,8 @@ public class MyExecutionTimeAspect {
         // the pointcut signature
     }
     
-    @SuppressWarnings("squid:S00112")
     @Around("myExecutionTimeAnnotation()")
-    public Object myExecutionTimeAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+    public Object myExecutionTimeAdvice(ProceedingJoinPoint joinPoint) throws Throwable { // NOSONAR
         long startMillis = System.currentTimeMillis();
         LOGGER.info("(AOP-myExecTime) Starting timing method " + joinPoint.getSignature());
         Object retVal = joinPoint.proceed();
