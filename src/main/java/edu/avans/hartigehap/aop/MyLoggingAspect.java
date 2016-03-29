@@ -10,7 +10,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@SuppressWarnings("squid:S00112")
 @Component
 @Aspect
 public class MyLoggingAspect {
@@ -27,6 +26,7 @@ public class MyLoggingAspect {
                 + joinPoint.getSignature().getName());
     }
     
+    @SuppressWarnings("squid:S00112")
     @Around("anyHartigeHapMethod()")
     public Object loggingAroundAdvice(ProceedingJoinPoint pjp) throws Throwable {
         LOGGER.info("(AOP-myLogger) Before execution: " + pjp.getSignature().getDeclaringTypeName() + "."

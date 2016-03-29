@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-@SuppressWarnings("squid:S00112")
 @Component
 @Aspect
 public class MyExecutionTimeAspect {
@@ -21,6 +20,7 @@ public class MyExecutionTimeAspect {
         // the pointcut signature
     }
     
+    @SuppressWarnings("squid:S00112")
     @Around("myExecutionTimeAnnotation()")
     public Object myExecutionTimeAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
         long startMillis = System.currentTimeMillis();
