@@ -214,7 +214,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status,
             int amountOfPeople, Room room, Customer customer, Date endTime, TimeOfDayEnum endTimeOfDay, Date startTime,
             TimeOfDayEnum startTimeOfDay, Restaurant restaurant) {
-        Quotation quotation = new Quotation.QuotationBuilder(1).status(status).eventDate(eventDate)
+        Quotation quotation = new Quotation.QuotationBuilder(number).status(status).eventDate(eventDate)
                 .expirationDate(expirationDate).amountofPeople(amountOfPeople).room(room).customer(customer)
                 .endTime(endTime).endTimeOfDay(endTimeOfDay).startTime(startTime).startTimeOfDay(startTimeOfDay)
                 .build();
