@@ -117,7 +117,7 @@ public class CustomerController {
             Restaurant restaurant = warmupRestaurant(restaurantName, uiModel);
             customer.setRestaurants(Arrays.asList(new Restaurant[] { restaurant }));
             // to get the auto generated id
-            customer = customerService.save(customer);
+            customer = customerService.save(customer); // NOSONAR
         } else { // update
             Customer existingCustomer = customerService.findById(customer.getId());
             assert existingCustomer != null : "customer should exist";

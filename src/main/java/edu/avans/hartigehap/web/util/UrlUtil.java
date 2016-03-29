@@ -22,7 +22,7 @@ public class UrlUtil {
             enc = WebUtils.DEFAULT_CHARACTER_ENCODING;
         }
         try {
-            pathSegment = UriUtils.encodePathSegment(pathSegment, enc);
+            pathSegment = UriUtils.encodePathSegment(pathSegment, enc); // NOSONAR
         } catch (UnsupportedEncodingException uee) {
             log.error("UnsupportedEncodingException", uee);
         }
