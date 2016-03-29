@@ -108,7 +108,6 @@ public class Order extends DomainObject {
         }
     }
     
-    // Only works on the last added item
     public void addOrderOption(MenuItem menuItem, OrderItem orderItem) {
         log.info(
                 "started addOrderOption with menuItem: " + menuItem.getId() + " - and orderItem: " + orderItem.getId());
