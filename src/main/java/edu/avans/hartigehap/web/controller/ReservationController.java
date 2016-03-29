@@ -1,7 +1,6 @@
 package edu.avans.hartigehap.web.controller;
 
 import java.util.Collection;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,65 +22,66 @@ import lombok.extern.slf4j.Slf4j;
 @PreAuthorize("hasRole('ROLE_MANAGER')")
 @Slf4j
 public class ReservationController {
-	
+
 	@Autowired
 	private RoomService roomService;
-	
+
 	@Autowired
 	private DiningTableService diningTableService;
-	
+
 	@Autowired
 	private RestaurantService restaurantService;
-	
+
 	@RequestMapping(value = "/restaurants/{restaurantName}/reservation", method = RequestMethod.GET)
-    public String listRoomsAndDiningTables(@PathVariable("restaurantName") String restaurantName, Model uiModel) {
-        @SuppressWarnings("unused")
+	public String listRoomsAndTables(@PathVariable("restaurantName") String restaurantName, Model uiModel) {
 		Restaurant restaurant = warmupRestaurant(restaurantName, uiModel);
 
-        log.info("Listing quotations and invoices");
-        List<Room> rooms = roomService.findAll();
-        uiModel.addAttribute("rooms", rooms);
-        log.info("No. of rooms: " + rooms.size());
+		log.info("Listing quotations and invoices");
+		Collection<Room> rooms = restaurant.getRooms();
+		uiModel.addAttribute("rooms", rooms);
+		log.info("No. of rooms: " + rooms.size());
 
-        List<DiningTable> diningTables = diningTableService.findAll();
-        uiModel.addAttribute("diningTables", diningTables);
-        log.info("No. of dining tables: " + diningTables.size());
+		Collection<DiningTable> tables = restaurant.getDiningTables();
+		uiModel.addAttribute("tables", tables);
+		log.info("No. of dining tables: " + tables.size());
+		
+		uiModel.addAttribute("restaurant", restaurant);
 
-        return "hartigehap/listRoomsAndTables";
-    }
-	
-    @RequestMapping(value = "/restaurants/{restaurantName}/reservation/room/{id}", method = RequestMethod.GET)
-    public String showRoom(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
-            Model uiModel) {
+		return "hartigehap/listRoomsAndTables";
+	}
 
-        warmupRestaurant(restaurantName, uiModel);
+	@RequestMapping(value = "/restaurants/{restaurantName}/reservation/room/{id}", method = RequestMethod.GET)
+	public String showRoom(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
+			Model uiModel) {
 
-        log.info("Show room: " + id);
+		warmupRestaurant(restaurantName, uiModel);
 
-        Room room = roomService.findById(id);
-        uiModel.addAttribute("room", room);
-        return "hartigehap/showRoom";
-    }
-    
-    @RequestMapping(value = "/restaurants/{restaurantName}/reservation/diningTable/{id}", method = RequestMethod.GET)
-    public String showTable(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
-            Model uiModel) {
+		log.info("Show room: " + id);
 
-        warmupRestaurant(restaurantName, uiModel);
+		Room room = roomService.findById(id);
+		uiModel.addAttribute("room", room);
+		return "hartigehap/showRoom";
+	}
 
-        log.info("Show diningTable: " + id);
+	@RequestMapping(value = "/restaurants/{restaurantName}/reservation/diningTable/{id}", method = RequestMethod.GET)
+	public String showTable(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
+			Model uiModel) {
 
-        DiningTable diningTable = diningTableService.findById(id);
-        uiModel.addAttribute("diningTable", diningTable);
-        return "hartigehap/showTable";
-    }
-	
-    private Restaurant warmupRestaurant(String restaurantName, Model uiModel) {
-        Collection<Restaurant> restaurants = restaurantService.findAll();
-        uiModel.addAttribute("restaurants", restaurants);
-        Restaurant restaurant = restaurantService.fetchWarmedUp(restaurantName);
-        uiModel.addAttribute("restaurant", restaurant);
-        return restaurant;
-    }
-	
+		warmupRestaurant(restaurantName, uiModel);
+
+		log.info("Show diningTable: " + id);
+
+		DiningTable diningTable = diningTableService.findById(id);
+		uiModel.addAttribute("diningTable", diningTable);
+		return "hartigehap/showTable";
+	}
+
+	private Restaurant warmupRestaurant(String restaurantName, Model uiModel) {
+		Collection<Restaurant> restaurants = restaurantService.findAll();
+		uiModel.addAttribute("restaurants", restaurants);
+		Restaurant restaurant = restaurantService.fetchWarmedUp(restaurantName);
+		uiModel.addAttribute("restaurant", restaurant);
+		return restaurant;
+	}
+
 }

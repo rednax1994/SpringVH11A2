@@ -126,7 +126,7 @@
 				<ul class="list-group">
 					<spring:url var="reservationSubSystem" value="/restaurants/${restaurant.id}/reservation" />
 						
-					<a href="TOFILL" class="list-group-item">${labelReservationSubSystem}</a>	
+					<a href="${reservationSubSystem}" class="list-group-item">${labelReservationSubSystem}</a>	
 				</ul>
 			</div>
 		</div>

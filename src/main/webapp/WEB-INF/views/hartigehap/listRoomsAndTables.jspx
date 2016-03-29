@@ -8,61 +8,57 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 
-	<spring:message code="label_room_list" var="labelRoomList" />
-	<spring:message code="label_diningtable_list" var="labelDiningTableList" />
-	<spring:message code="label_reservation_subsystem" var="labelReservationSubsystem" />
-	<spring:message code="label_room" var="labelRoom" />
-	<spring:message code="label_diningtable" var="labelDiningTable" />
-	<spring:message code="text_there_are_no_rooms"
-		var="textThereAreNoRooms" />
-	<spring:message code="text_there_are_no_diningtables"
-		var="textThereAreNoDiningTables" />
-
+	<spring:message code="label_room_overview"
+		var="labelRoomOverview" />
+	<spring:message code="label_table_overview"
+		var="labelTableOverview" />
+	<spring:message code="label_rooms" var="labelRooms" />
+	<spring:message code="label_tables" var="labelTables" />
+	
 
 	<div class="row">
-		<h1>${labelReservationSubsystem}</h1>
+		<h1>${labelRoomOverview}</h1>
+
+		<c:if test="${not empty message}">
+			<div id="message" class="alert alert-info ${message.type}">${message.message}</div>
+		</c:if>
 	</div>
+
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">${labelRoomList}</h3>
+				<h3 class="panel-title">${labelRooms}</h3>
 			</div>
-			<c:if test="${empty restaurant.rooms}">
-				<div class="panel-body">
-					<span>${textThereAreNoRooms}</span>
-				</div>
-			</c:if>
-			<c:if test="${not empty restaurant.rooms}">
-				<ul class="list-group">
-					<c:forEach items="${restaurant.rooms}" var=room>
-						<spring:url var="showRoom" value="/restaurants/${restaurant.id}/reservation/room/${room.id}" />
-						<a href="${showRoom}" class="list-group-item">${labelRoom}
-							${room.id}</a>
-					</c:forEach>
-				</ul>
-			</c:if>
+			<ul class="list-group">
+				<c:forEach items="${rooms}" var="room">
+					<spring:url var="showRoom"
+						value="/restaurants/${restaurant.id}/rooms/${room.roomNr}" />
+					<a href="${showRoom}" class="list-group-item">${room.roomNr}</a>
+				</c:forEach>
+			</ul>
 		</div>
 	</div>
 	
+		<div class="row">
+		<h1>${labelTableOverview}</h1>
+
+		<c:if test="${not empty message}">
+			<div id="message" class="alert alert-info ${message.type}">${message.message}</div>
+		</c:if>
+	</div>
+
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">${labelDiningTableList}</h3>
+				<h3 class="panel-title">${labelTables}</h3>
 			</div>
-			<c:if test="${empty restaurant.diningTables}">
-				<div class="panel-body">
-					<span>${textThereAreNoDiningTables}</span>
-				</div>
-			</c:if>
-			<c:if test="${not empty restaurant.diningTables}">
-				<ul class="list-group">
-					<c:forEach items="${restaurant.diningTables}" var="diningTable">
-						<spring:url var="showTable" value="/restaurants/${restaurant.id}/reservation/diningTables/${diningTable.id}" />
-						<a href="${showTable}" class="list-group-item">${labelDiningTable}
-							${diningTable.id}</a>
-					</c:forEach>
-				</ul>
-			</c:if>
+			<ul class="list-group">
+				<c:forEach items="${tables}" var="table">
+					<spring:url var="showTable"
+						value="/restaurants/${restaurant.id}/tables/${table.tableNr}" />
+					<a href="${showTable}" class="list-group-item">${table.tableNr}</a>
+				</c:forEach>
+			</ul>
 		</div>
 	</div>
 </div>

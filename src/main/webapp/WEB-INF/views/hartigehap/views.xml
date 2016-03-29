@@ -41,4 +41,7 @@
 	<definition extends="default" name="hartigehap/editcustomer">
 		<put-attribute name="body" value="/WEB-INF/views/hartigehap/editcustomer.jspx" />
 	</definition>
+	<definition extends="default" name="hartigehap/listRoomsAndTables">
+		<put-attribute name="body" value="/WEB-INF/views/hartigehap/listRoomsAndTables.jspx" />
+	</definition>
 </tiles-definitions>
