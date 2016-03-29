@@ -12,12 +12,12 @@ import lombok.ToString;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@Getter @Setter
+@Getter
+@Setter
 @ToString(callSuper = true, includeFieldNames = true)
 public class Line extends DomainObject {
-
     private static final long serialVersionUID = 1L;
-
+    
     private String description;
     private double price;
     private int quantity;

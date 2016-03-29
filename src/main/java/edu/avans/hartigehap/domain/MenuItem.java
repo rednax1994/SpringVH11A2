@@ -20,6 +20,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * 
@@ -34,6 +35,7 @@ import lombok.ToString;
 @Setter
 @ToString(callSuper = true, includeFieldNames = true, of = {})
 @NoArgsConstructor
+@Slf4j
 public abstract class MenuItem extends DomainObjectNaturalId {
     private static final long serialVersionUID = 1L;
     
@@ -70,7 +72,7 @@ public abstract class MenuItem extends DomainObjectNaturalId {
     }
     
     public Boolean includedFoodcategory(String foodCategory) {
-        System.out.println(foodCategories);
+        log.info("foodcategories list" + foodCategories);
         for (FoodCategory category : foodCategories) {
             if (category.getTag().equals(foodCategory)) {
                 return true;

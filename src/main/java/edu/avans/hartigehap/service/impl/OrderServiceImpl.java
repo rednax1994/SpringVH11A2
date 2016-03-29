@@ -97,10 +97,8 @@ public class OrderServiceImpl implements OrderService, Container {
         order.served();
     }
     
-    
     public Iterator<Order> getIterator(List<Order> submittedOrdersList) {
         return new MyIterator<Order>(submittedOrdersList);
     }
-    
     
 }

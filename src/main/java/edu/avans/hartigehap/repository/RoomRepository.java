@@ -9,7 +9,7 @@ import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.Room;
 
 public interface RoomRepository extends PagingAndSortingRepository<Room, Long> {
-	Room findById(Long roomNr);
-
-	List<Room> findByRestaurant(Restaurant restaurant, Sort sort);
+    Room findById(Long roomNr);
+    
+    List<Room> findByRestaurant(Restaurant restaurant, Sort sort);
 }

@@ -40,7 +40,7 @@ public class Quotation extends Document {
         this.room = builder.room;
         this.amountOfPeople = builder.amountOfPeople;
     }
-    
+
     private static final long serialVersionUID = 1L;
 
     @OneToMany(mappedBy = "quotation")

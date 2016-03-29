@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Transactional
 @Slf4j
-public class QuotationServiceImpl implements QuotationService{
-
-private static final Logger LOGGER = LoggerFactory.getLogger(QuotationServiceImpl.class);
+public class QuotationServiceImpl implements QuotationService {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(QuotationServiceImpl.class);
     
     @Autowired
     private QuotationRepository quotationRepository;
@@ -48,20 +48,20 @@ private static final Logger LOGGER = LoggerFactory.getLogger(QuotationServiceImp
     public List<Quotation> findByNumber(int number) {
         return quotationRepository.findByNumber(number);
     }
-
+    
     @Override
     public Quotation save(Quotation quotation) {
         return quotationRepository.save(quotation);
     }
-
+    
     @Override
     public void delete(Quotation quotation) {
-       quotationRepository.delete(quotation);
+        quotationRepository.delete(quotation);
     }
     
     @Transactional(readOnly = true)
     public List<Quotation> findQuotationsForRestaurant(Restaurant restaurant) {
-
+        
         List<Quotation> quotationsForRestaurants = quotationRepository.findByRestaurant(restaurant);
         ListIterator<Quotation> it = quotationsForRestaurants.listIterator();
         while (it.hasNext()) {
@@ -71,5 +71,5 @@ private static final Logger LOGGER = LoggerFactory.getLogger(QuotationServiceImp
         
         return quotationsForRestaurants;
     }
-
+    
 }

@@ -22,9 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 @Repository
 @Transactional
 @Slf4j
-public class InvoiceServiceImpl implements InvoiceService{
-
-private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceServiceImpl.class);
+public class InvoiceServiceImpl implements InvoiceService {
+    
+    private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceServiceImpl.class);
     
     @Autowired
     private InvoiceRepository invoiceRepository;
@@ -48,21 +48,21 @@ private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceServiceImpl.
     public List<Invoice> findByNumber(int number) {
         return invoiceRepository.findByNumber(number);
     }
-
+    
     @Override
     public Invoice save(Invoice invoice) {
         return invoiceRepository.save(invoice);
     }
-
+    
     @Override
     public void delete(Invoice invoice) {
         invoiceRepository.delete(invoice);
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public List<Invoice> findInvoicesForRestaurant(Restaurant restaurant) {
-
+        
         List<Invoice> invoicesForRestaurants = invoiceRepository.findByRestaurant(restaurant);
         ListIterator<Invoice> it = invoicesForRestaurants.listIterator();
         while (it.hasNext()) {
@@ -72,5 +72,5 @@ private static final Logger LOGGER = LoggerFactory.getLogger(InvoiceServiceImpl.
         
         return invoicesForRestaurants;
     }
-
+    
 }

@@ -8,7 +8,8 @@ import edu.avans.hartigehap.domain.Invoice;
 import edu.avans.hartigehap.domain.Line;
 import edu.avans.hartigehap.domain.Quotation;
 
-public interface LineRepository extends PagingAndSortingRepository<Line, Long>{
+public interface LineRepository extends PagingAndSortingRepository<Line, Long> {
     List<Line> findByQuotation(Quotation quotation);
+    
     List<Line> findByInvoice(Invoice invoice);
 }

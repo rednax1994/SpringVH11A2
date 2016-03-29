@@ -20,8 +20,8 @@ import edu.avans.hartigehap.service.LineService;
 @Service("lineService")
 @Repository
 @Transactional
-public class LineServiceImpl implements LineService{
-
+public class LineServiceImpl implements LineService {
+    
     @Autowired
     private LineRepository lineRepository;
     
@@ -34,33 +34,33 @@ public class LineServiceImpl implements LineService{
         LOGGER.info("" + retval);
         return retval;
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public Line findById(Long id) {
         return lineRepository.findOne(id);
     }
-
+    
     @Override
     public Line save(Line line) {
         return lineRepository.save(line);
     }
-
+    
     @Override
     public void delete(Line line) {
         lineRepository.delete(line);
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public List<Line> findByQuotation(Quotation quotation) {
         return lineRepository.findByQuotation(quotation);
     }
-
+    
     @Override
     @Transactional(readOnly = true)
     public List<Line> findByInvoice(Invoice invoice) {
         return lineRepository.findByInvoice(invoice);
     }
-
+    
 }

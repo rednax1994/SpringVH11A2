@@ -3,7 +3,19 @@ package edu.avans.hartigehap.domain.exception;
 public class MyException extends Exception {
     private static final long serialVersionUID = 1L;
     
-    public MyException(String s) {
-        super(s);
+    public MyException() {
+        super();
+    }
+    
+    public MyException(String message) {
+        super(message);
+    }
+    
+    public MyException(String message, Throwable cause) {
+        super(message, cause);
+    }
+    
+    public MyException(Throwable cause) {
+        super(cause);
     }
 }

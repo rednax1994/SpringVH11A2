@@ -30,7 +30,8 @@ public class MyLoggingAspect {
     public Object loggingAroundAdvice(ProceedingJoinPoint pjp) throws Throwable {
         LOGGER.info("(AOP-myLogger) Before execution: " + pjp.getSignature().getDeclaringTypeName() + "."
                 + pjp.getSignature().getName());
-        Object retVal = pjp.proceed();
+        Object retVal;
+        retVal = pjp.proceed();
         LOGGER.info("(AOP-myLogger) After execution: " + pjp.getSignature().getDeclaringTypeName() + "."
                 + pjp.getSignature().getName());
         return retVal;
