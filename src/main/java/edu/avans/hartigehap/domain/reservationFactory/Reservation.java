@@ -2,6 +2,7 @@ package edu.avans.hartigehap.domain.reservationFactory;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -54,7 +55,7 @@ public abstract class Reservation extends DomainObject {
     @Temporal(TemporalType.TIMESTAMP)
     private Date endTime;
     
-    @ManyToOne
+    @ManyToOne(cascade=CascadeType.PERSIST)
     private Customer customer;
     
     public Reservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, Date startTime,
