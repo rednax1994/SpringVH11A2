@@ -134,5 +134,11 @@ public class Quotation extends Document {
         }
         
     }
+
+    public void updateEditableFields(Quotation quotation) {
+        this.amountOfPeople = quotation.amountOfPeople;
+        this.number = quotation.number;
+        
+    }
     
 }

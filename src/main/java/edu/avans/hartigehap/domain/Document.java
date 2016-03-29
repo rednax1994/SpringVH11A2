@@ -55,7 +55,7 @@ public abstract class Document extends DomainObject{
     @Temporal(TemporalType.TIMESTAMP)
     protected Date endTime;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.PERSIST)
     protected Room room;
 
     @ManyToOne

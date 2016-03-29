@@ -10,6 +10,7 @@
 
 	<spring:message code="label_quotation_list" var="labelQuotationList" />
 	<spring:message code="label_invoice_list" var="labelInvoiceList" />
+	<spring:message code="label_create_quotation" var="labelCreateQuotation"/>
 	<spring:message code="label_banqueting_subsystem"
 		var="labelBanquetingSubsystem" />
 	<spring:message code="label_quotation" var="labelQuotation" />
@@ -18,6 +19,7 @@
 		var="textThereAreNoQuotations" />
 	<spring:message code="text_there_are_no_invoices"
 		var="textThereAreNoInvoices" />
+			<spring:url value="/restaurants/${restaurant.id}/banqueting/quotations?form" var="createQuotationUrl"/>
 
 
 	<div class="row">
@@ -27,6 +29,17 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<h3 class="panel-title">${labelQuotationList}</h3>
+				<span class="pull-right">
+						<!-- Tabs -->
+						<ul class="nav panel-tabs">
+							<li>
+								<form action="${createQuotationUrl}" method="get">
+									<input type="hidden" name="form" />
+									<button type="submit" class="btn btn-success">${labelCreateQuotation}</button>
+								</form>
+							</li>
+						</ul>
+					</span>
 			</div>
 			<c:if test="${empty restaurant.quotations}">
 				<div class="panel-body">
