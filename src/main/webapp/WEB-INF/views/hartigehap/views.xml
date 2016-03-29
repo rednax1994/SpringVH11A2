@@ -44,4 +44,10 @@
 	<definition extends="default" name="hartigehap/listRoomsAndTables">
 		<put-attribute name="body" value="/WEB-INF/views/hartigehap/listRoomsAndTables.jspx" />
 	</definition>
+	<definition extends="default" name="hartigehap/showTableReservations">
+		<put-attribute name="body" value="/WEB-INF/views/hartigehap/showTableReservations.jspx" />
+	</definition>
+	<definition extends="default" name="hartigehap/showRoomReservations">
+		<put-attribute name="body" value="/WEB-INF/views/hartigehap/showRoomReservations.jspx" />
+	</definition>
 </tiles-definitions>

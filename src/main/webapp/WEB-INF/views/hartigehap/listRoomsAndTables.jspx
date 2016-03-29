@@ -31,9 +31,9 @@
 			</div>
 			<ul class="list-group">
 				<c:forEach items="${rooms}" var="room">
-					<spring:url var="showRoom"
-						value="/restaurants/${restaurant.id}/rooms/${room.roomNr}" />
-					<a href="${showRoom}" class="list-group-item">${room.roomNr}</a>
+					<spring:url var="showRoomReservations"
+						value="/restaurants/${restaurant.id}/reservation/room/${room.roomNr}" />
+					<a href="${showRoomReservations}" class="list-group-item">${room.roomNr}</a>
 				</c:forEach>
 			</ul>
 		</div>

@@ -1,6 +1,7 @@
 package edu.avans.hartigehap.web.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.Room;
+import edu.avans.hartigehap.domain.reservationFactory.RoomReservation;
 import edu.avans.hartigehap.service.DiningTableService;
+import edu.avans.hartigehap.service.ReservationService;
 import edu.avans.hartigehap.service.RestaurantService;
 import edu.avans.hartigehap.service.RoomService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +35,9 @@ public class ReservationController {
 	@Autowired
 	private RestaurantService restaurantService;
 
+	@Autowired
+	private ReservationService reservationService;
+
 	@RequestMapping(value = "/restaurants/{restaurantName}/reservation", method = RequestMethod.GET)
 	public String listRoomsAndTables(@PathVariable("restaurantName") String restaurantName, Model uiModel) {
 		Restaurant restaurant = warmupRestaurant(restaurantName, uiModel);
@@ -44,15 +50,15 @@ public class ReservationController {
 		Collection<DiningTable> tables = restaurant.getDiningTables();
 		uiModel.addAttribute("tables", tables);
 		log.info("No. of dining tables: " + tables.size());
-		
+
 		uiModel.addAttribute("restaurant", restaurant);
 
 		return "hartigehap/listRoomsAndTables";
 	}
 
 	@RequestMapping(value = "/restaurants/{restaurantName}/reservation/room/{id}", method = RequestMethod.GET)
-	public String showRoom(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
-			Model uiModel) {
+	public String showRoomReservations(@PathVariable("restaurantName") String restaurantName,
+			@PathVariable("id") Long id, Model uiModel) {
 
 		warmupRestaurant(restaurantName, uiModel);
 
@@ -60,7 +66,11 @@ public class ReservationController {
 
 		Room room = roomService.findById(id);
 		uiModel.addAttribute("room", room);
-		return "hartigehap/showRoom";
+
+		List<RoomReservation> roomreservations = reservationService.findReservationsForRoom(room);
+		uiModel.addAttribute("roomReservations", roomreservations);
+
+		return "hartigehap/showRoomReservations";
 	}
 
 	@RequestMapping(value = "/restaurants/{restaurantName}/reservation/diningTable/{id}", method = RequestMethod.GET)
@@ -73,7 +83,7 @@ public class ReservationController {
 
 		DiningTable diningTable = diningTableService.findById(id);
 		uiModel.addAttribute("diningTable", diningTable);
-		return "hartigehap/showTable";
+		return "hartigehap/showTableReservations";
 	}
 
 	private Restaurant warmupRestaurant(String restaurantName, Model uiModel) {
