@@ -1,14 +1,11 @@
 package edu.avans.hartigehap.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import java.util.ArrayList;
+import java.util.Collection;
 
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -20,40 +17,41 @@ import lombok.ToString;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@Getter
-@Setter
-@ToString(callSuper = true, includeFieldNames = true)
+@Getter @Setter
+@ToString(callSuper=false, includeFieldNames=true)
 @NoArgsConstructor
-public class Invoice extends DomainObject {
-    
+public class Invoice extends Document{
+
     private static final long serialVersionUID = 1L;
     
-    private int number;
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @DateTimeFormat(iso = ISO.DATE)
-    private DateTime date;
-    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
-    @DateTimeFormat(iso = ISO.DATE)
-    private DateTime expirationDate;
+    @OneToMany(mappedBy = "invoice")
+    private Collection<Line> invoiceLines = new ArrayList<Line>();
     
-    @ManyToOne
-    private Room room;
-    
-    @ManyToOne
-    private Customer customer;
-    
-    @ManyToOne
-    private Restaurant restaurant;
-    
-    @Enumerated(EnumType.ORDINAL)
-    // represented in database as integer
-    private Status status;
-    
+    @Transient
+    private DisplayTemplate displayTemplate = new DisplayInvoice();
+   
     public void createFromQuotation(Restaurant restaurant, Quotation quotation) {
         this.number = quotation.getNumber();
-        this.date = quotation.getEventDate();
+        this.eventDate = quotation.getEventDate();
         this.expirationDate = quotation.getExpirationDate();
         this.restaurant = restaurant;
         this.status = quotation.getStatus();
+        this.room = quotation.getRoom();
+        this.customer = quotation.getCustomer();
+        this.amountOfPeople = quotation.getAmountOfPeople();
+        this.endTime = quotation.getEndTime();
+        this.endTimeOfDay = quotation.getEndTimeOfDay();
+        this.startTime = quotation.getStartTime();
+        this.startTimeOfDay = quotation.getStartTimeOfDay();
     }
+
+    public String displayDocument(Invoice invoice) {
+        String message = displayTemplate.displayDocument(invoice);
+        return message;
+    }
+    @Override
+    public Invoice getInvoice(){
+        return this;
+    }
+
 }

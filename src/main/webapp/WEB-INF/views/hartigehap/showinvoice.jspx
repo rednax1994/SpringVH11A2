@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:spring="http://www.springframework.org/tags"
+	xmlns:joda="http://www.joda.org/joda/time/tags"
+	xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
+
+	<!-- Add elvariables to help our IDE for code completion -->
+	<!--@elvariable id="message" type="edu.avans.hartigehap.web.form.Message"-->
+	<!--@elvariable id="customer" type="edu.avans.hartigehap.domain.Customer"-->
+	<!--@elvariable id="restaurant" type="edu.avans.hartigehap.domain.Restaurant"-->
+
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+	<spring:message code="label_restaurant" var="labelRestaurant" />
+	<spring:message code="label_banqueting_subsystem"
+		var="labelBanquetingSubsystem" />
+	<spring:message code="label_invoice_info" var="labelInvoiceInfo" />
+	<spring:message code="label_invoice_number"
+		var="labelInvoiceNumber" />
+	<spring:message code="label_invoice_event_date"
+		var="labelInvoiceEventDate" />
+	<spring:message code="label_invoice_expiration_date"
+		var="labelInvoiceExpirationDate" />
+	<spring:message code="label_invoice_status"
+		var="labelInvoiceStatus" />
+	<spring:message code="label_invoice_update"
+		var="labelInvoiceUpdate" />
+	<spring:message code="label_invoice_delete"
+		var="labelInvoiceDelete" />
+	<spring:message code="label_invoice_accept_and_export"
+		var="labelInvoiceAcceptAndExport" />
+	<spring:message code="label_invoice_preview" var="labelInvoicePreview" />
+	<spring:message code="date_format_pattern" var="dateFormatPattern" />
+
+	<spring:url value="/restaurants/${restaurant.id}/banqueting/invoices"
+		var="editInvoiceUrl" />
+	<spring:url value="/restaurants/${restaurant.id}/banqueting/invoices"
+		var="deleteInvoiceUrl" />
+	<spring:url value="/restaurants/${restaurant.id}/banqueting/invoices"
+		var="previewInvoiceUrl" />
+	<spring:url value="/restaurants/${restaurant.id}" var="showRestaurant" />
+
+
+	<joda:format var="expirationDate" value="${invoice.expirationDate}"
+		pattern="${dateFormatPattern}" />
+	<joda:format var="eventDate" value="${invoice.eventDate}"
+		pattern="${dateFormatPattern}" />
+
+	<div class="row">
+		<h1>${labelBanquetingSubsystem}</h1>
+		<h2 class="restaurant muted">${labelRestaurant}
+			<a href="${showRestaurant}">${restaurant.id}</a>
+		</h2>
+
+		<c:if test="${not empty message}">
+			<div id="message" class="alert alert-info ${message.type}">${message.message}</div>
+		</c:if>
+	</div>
+
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">${labelInvoiceInfo}</h3>
+				<sec:authorize access="hasRole('ROLE_MANAGER')">
+					<span class="pull-right" style="height: 10px;">
+						<ul class="nav panel-tabs">
+							<li>
+								<form action="${editInvoiceUrl}/${invoice.id}" method="get">
+									<input type="hidden" name="form" />
+									<button type="submit" class="btn btn-warning">${labelInvoiceUpdate}</button>
+								</form>
+							</li>
+							<li>
+								<form action="${deleteInvoiceUrl}/${invoice.id}"
+									method="get">
+									<input type="hidden" name="delete" />
+									<button type="submit" class="btn btn-danger">${labelInvoiceDelete}</button>
+								</form>
+							</li>
+							<li>
+								<form action="${previewInvoiceUrl}/${invoice.id}" method="get">
+									<input type="hidden" name="preview" />
+									<button type="submit" class="btn btn-info">${labelInvoicePreview}</button>
+								</form>
+							</li>
+						</ul>
+					</span>
+				</sec:authorize>
+			</div>
+			<div class="panel-body">
+
+				<div class="input-group">
+					<span class="input-group-addon" id="description" path="description">${labelInvoiceNumber}</span>
+					<input type="text" class="form-control capitalise"
+						id="customerDescription" value="${invoice.number}"
+						readonly="true" />
+				</div>
+				<!-- <joda:format value="${invoice.eventDate}" pattern="${dateFormatPattern}" />-->
+				<div class="input-group">
+					<span class="input-group-addon" id="description" path="description">${labelInvoiceEventDate}</span>
+					<input type="text" class="form-control capitalise"
+						id="customerDescription" value="${eventDate}" readonly="true" />
+				</div>
+				<!-- <joda:format value="${invoice.expirationDate}" pattern="${dateFormatPattern}" />-->
+				<div class="input-group">
+					<span class="input-group-addon" id="description" path="description">${labelInvoiceExpirationDate}</span>
+					<input type="text" class="form-control capitalise"
+						id="customerDescription" value="${expirationDate}" readonly="true" />
+				</div>
+				<div class="input-group">
+					<span class="input-group-addon" id="description" path="description">${labelInvoiceStatus}</span>
+					<input type="text" class="form-control capitalise"
+						id="customerDescription" value="${invoice.status}"
+						readonly="true" />
+				</div>
+
+
+				<p />
+			</div>
+		</div>
+	</div>
+</div>
