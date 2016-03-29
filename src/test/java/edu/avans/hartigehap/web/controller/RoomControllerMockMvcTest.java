@@ -122,7 +122,7 @@ public class RoomControllerMockMvcTest {
      * @throws Exception
      */
     @Test
-    public void showTable() throws Exception {
+    public void showRoom() throws Exception {
         
         // prepare
         LinkedList<Restaurant> restaurants = new LinkedList<Restaurant>();

@@ -1,6 +1,5 @@
 package edu.avans.hartigehap.web.controller;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
@@ -116,8 +115,8 @@ public class BanquetingController {
     }
     
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations/{id}", params = "form", method = RequestMethod.GET)
-    public String updateQuotationForm(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
-            Model uiModel) {
+    public String updateQuotationForm(@PathVariable("restaurantName") String restaurantName,
+            @PathVariable("id") Long id, Model uiModel) {
         
         warmupRestaurant(restaurantName, uiModel);
         
@@ -172,13 +171,12 @@ public class BanquetingController {
     }
     
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations/{id}", params = "form", method = RequestMethod.PUT)
-    public String updateQuotation(
-            @PathVariable("restaurantName") String restaurantName, @Valid Quotation quotation,
+    public String updateQuotation(@PathVariable("restaurantName") String restaurantName, @Valid Quotation quotation,
             BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest,
             RedirectAttributes redirectAttributes, Locale locale, @RequestParam(required = false) Part file) {
         
-        return handleCreateOrUpdateQuotation(false, restaurantName, quotation, bindingResult, uiModel, httpServletRequest,
-                redirectAttributes, locale, file);
+        return handleCreateOrUpdateQuotation(false, restaurantName, quotation, bindingResult, uiModel,
+                httpServletRequest, redirectAttributes, locale, file);
     }
     
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations", params = "form", method = RequestMethod.POST)
@@ -191,18 +189,18 @@ public class BanquetingController {
         log.info("Binding Result target: " + (Quotation) bindingResult.getTarget());
         log.info("Binding Result: " + bindingResult);
         
-        return handleCreateOrUpdateQuotation(true, restaurantName, quotation, bindingResult, uiModel, httpServletRequest,
-                redirectAttributes, locale, file);
+        return handleCreateOrUpdateQuotation(true, restaurantName, quotation, bindingResult, uiModel,
+                httpServletRequest, redirectAttributes, locale, file);
     }
     
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/invoices/{id}", method = RequestMethod.GET)
     public String showInvoice(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
             Model uiModel) {
-
+        
         warmupRestaurant(restaurantName, uiModel);
-
+        
         log.info("Show invoice: " + id);
-
+        
         Invoice invoice = invoiceService.findById(id);
         uiModel.addAttribute("invoice", invoice);
         return "hartigehap/showinvoice";
@@ -217,7 +215,7 @@ public class BanquetingController {
         String message = invoice.displayDocument(invoice);
         uiModel.addAttribute("message", message);
         return "hartigehap/previewdocument";
-    }    
+    }
     
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/invoices/{id}", params = "delete", method = RequestMethod.GET)
     public String deleteInvoice(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id) {
@@ -227,7 +225,7 @@ public class BanquetingController {
         invoiceService.delete(invoice);
         return "redirect:/restaurants/" + restaurantName + "/banqueting/";
     }
-
+    
     private Restaurant warmupRestaurant(String restaurantName, Model uiModel) {
         Collection<Restaurant> restaurants = restaurantService.findAll();
         uiModel.addAttribute("restaurants", restaurants);

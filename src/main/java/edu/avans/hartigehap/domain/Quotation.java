@@ -9,11 +9,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import org.joda.time.DateTime;
+
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import edu.avans.hartigehap.domain.reservationfactory.Reservation.TimeOfDayEnum;
-import edu.avans.hartigehap.service.impl.BanquetingFacadeImpl;
+import edu.avans.hartigehap.service.impl.BanquetingFacadeServiceImpl;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,7 +27,17 @@ import lombok.ToString;
 @ToString(callSuper = false, includeFieldNames = true)
 @NoArgsConstructor
 public class Quotation extends Document {
-
+    
+    private static final long serialVersionUID = 1L;
+    
+    @OneToMany(mappedBy = "quotation")
+    private Collection<Line> quotationLines = new ArrayList<Line>();
+    @Transient
+    private BanquetingFacadeServiceImpl banquetingfacade = new BanquetingFacadeServiceImpl();
+    
+    @Transient
+    private DisplayTemplate displayTemplate = new DisplayQuotation();
+    
     private Quotation(QuotationBuilder builder) {
         this.number = builder.number;
         this.eventDate = builder.eventDate;
@@ -40,24 +51,14 @@ public class Quotation extends Document {
         this.room = builder.room;
         this.amountOfPeople = builder.amountOfPeople;
     }
-
-    private static final long serialVersionUID = 1L;
-
-    @OneToMany(mappedBy = "quotation")
-    private Collection<Line> quotationLines = new ArrayList<Line>();
-    @Transient
-    private BanquetingFacadeImpl banquetingfacade = new BanquetingFacadeImpl();
-
-    @Transient
-    private DisplayTemplate displayTemplate = new DisplayQuotation();
     
-    public String displayDocument(Quotation quotation){
+    public String displayDocument(Quotation quotation) {
         String message = displayTemplate.displayDocument(quotation);
         return message;
     }
     
     @Override
-    public Quotation getQuotation(){
+    public Quotation getQuotation() {
         return this;
     }
     
@@ -83,7 +84,7 @@ public class Quotation extends Document {
             this.startTime = startTime;
             return this;
         }
-
+        
         public QuotationBuilder startTimeOfDay(TimeOfDayEnum startTimeOfDay) {
             this.startTimeOfDay = startTimeOfDay;
             return this;
@@ -134,7 +135,7 @@ public class Quotation extends Document {
         }
         
     }
-
+    
     public void updateEditableFields(Quotation quotation) {
         this.amountOfPeople = quotation.amountOfPeople;
         this.number = quotation.number;

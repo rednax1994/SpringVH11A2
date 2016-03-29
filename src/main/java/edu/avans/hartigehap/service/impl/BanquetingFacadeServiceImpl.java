@@ -20,27 +20,27 @@ import edu.avans.hartigehap.service.QuotationService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service("banquetingFacade")
+@Service("banguetingFacadeService")
 @Repository
 @Transactional
-public class BanquetingFacadeImpl implements BanquetingFacadeService {
-
+public class BanquetingFacadeServiceImpl implements BanquetingFacadeService {
+    
     @Autowired
     private InvoiceService invoiceService;
-
+    
     @Autowired
     private QuotationService quotationService;
-
+    
     @Autowired
     private ReservationRepository reservationRepository;
-
+    
     public void acceptQuotation(Restaurant restaurant, Quotation quotation) {
         log.info("test?");
         Invoice invoice = new Invoice();
         invoice.createFromQuotation(restaurant, quotation);
         log.info(invoice.getEventDate().toString());
         invoiceService.save(invoice);
-
+        
         try {
             RestaurantLocationObject rlo = quotation.getRoom();
             Reservation reservation = ReservationFactory.createReservation(quotation.getAmountOfPeople(),
@@ -50,7 +50,7 @@ public class BanquetingFacadeImpl implements BanquetingFacadeService {
         } catch (MyException e) {
             new MyException("error in Banqueting: ", e);
         }
-
+        
         if (quotation.getStatus() != Status.ACCEPTED) {
             quotation.setStatus(Status.ACCEPTED);
             quotationService.save(quotation);
