@@ -21,11 +21,11 @@ public class DisplayInvoice extends DisplayTemplate{
     @Override
     String displayLines(Document document) {
         String message = "Factuurregels<br>";
-        if (document instanceof Invoice) {
-            for (Line line : ((Invoice) document).getInvoiceLines()) {
+        
+            for (Line line : document.getInvoice().getInvoiceLines()) {
                 message += line.toString() + "<br>";
             }
-        }
+        
         return message;
     }
 

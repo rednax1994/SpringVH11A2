@@ -16,9 +16,6 @@ import lombok.ToString;
 @ToString(callSuper = true, includeFieldNames = true)
 public class Line extends DomainObject {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 1L;
 
     private String description;

@@ -25,11 +25,11 @@ public class DisplayQuotation extends DisplayTemplate {
     @Override
     String displayLines(Document document) {
         String message = "Offerteregels<br>";
-        if (document instanceof Quotation) {
-            for (Line line : ((Quotation) document).getQuotationLines()) {
-                message += line.toString() + "<br>";
-            }
+
+        for (Line line : document.getQuotation().getQuotationLines()) {
+            message += line.toString() + "<br>";
         }
+
         return message;
     }
 

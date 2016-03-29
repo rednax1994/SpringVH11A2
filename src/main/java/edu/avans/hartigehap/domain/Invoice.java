@@ -49,5 +49,9 @@ public class Invoice extends Document{
         String message = displayTemplate.displayDocument(invoice);
         return message;
     }
+    @Override
+    public Invoice getInvoice(){
+        return this;
+    }
 
 }

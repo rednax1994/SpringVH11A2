@@ -55,6 +55,11 @@ public class Quotation extends Document {
         String message = displayTemplate.displayDocument(quotation);
         return message;
     }
+    
+    @Override
+    public Quotation getQuotation(){
+        return this;
+    }
 
     public static class QuotationBuilder {
 

@@ -69,4 +69,12 @@ public abstract class Document extends DomainObject{
     @Enumerated(EnumType.ORDINAL)
     // represented in database as integer
     protected Status status;
+    
+    public Invoice getInvoice(){
+        return null;
+    }
+    
+    public Quotation getQuotation(){
+        return null;
+    }
 }
