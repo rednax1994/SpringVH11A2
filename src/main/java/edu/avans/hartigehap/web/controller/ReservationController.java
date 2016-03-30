@@ -15,6 +15,7 @@ import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.Restaurant;
 import edu.avans.hartigehap.domain.Room;
 import edu.avans.hartigehap.domain.reservationFactory.RoomReservation;
+import edu.avans.hartigehap.domain.reservationFactory.TableReservation;
 import edu.avans.hartigehap.service.DiningTableService;
 import edu.avans.hartigehap.service.ReservationService;
 import edu.avans.hartigehap.service.RestaurantService;
@@ -74,14 +75,15 @@ public class ReservationController {
 	}
 
 	@RequestMapping(value = "/restaurants/{restaurantName}/reservation/diningTable/{id}", method = RequestMethod.GET)
-	public String showTable(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
+	public String showTableReservations(@PathVariable("restaurantName") String restaurantName, @PathVariable("id") Long id,
 			Model uiModel) {
 
 		warmupRestaurant(restaurantName, uiModel);
 
 		log.info("Show diningTable: " + id);
-
 		DiningTable diningTable = diningTableService.findById(id);
+		List<TableReservation> tablereservations = reservationService.findReservationsForDiningTable(diningTable);
+		uiModel.addAttribute("diningTableReservations", tablereservations);
 		uiModel.addAttribute("diningTable", diningTable);
 		return "hartigehap/showTableReservations";
 	}
