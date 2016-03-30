@@ -31,18 +31,18 @@ public class Invoice extends Document{
     private DisplayTemplate displayTemplate = new DisplayInvoice();
    
     public void createFromQuotation(Restaurant restaurant, Quotation quotation) {
-        this.number = quotation.getNumber();
-        this.eventDate = quotation.getEventDate();
-        this.expirationDate = quotation.getExpirationDate();
-        this.restaurant = restaurant;
-        this.status = quotation.getStatus();
-        this.room = quotation.getRoom();
-        this.customer = quotation.getCustomer();
-        this.amountOfPeople = quotation.getAmountOfPeople();
-        this.endTime = quotation.getEndTime();
-        this.endTimeOfDay = quotation.getEndTimeOfDay();
-        this.startTime = quotation.getStartTime();
-        this.startTimeOfDay = quotation.getStartTimeOfDay();
+        this.setNumber(quotation.getNumber());
+        this.setEventDate(quotation.getEventDate());
+        this.setExpirationDate(quotation.getExpirationDate());
+        this.setRestaurant(restaurant);
+        this.setStatus(quotation.getStatus());
+        this.setRoom(quotation.getRoom());
+        this.setCustomer(quotation.getCustomer());
+        this.setAmountOfPeople(quotation.getAmountOfPeople());
+        this.setEndTime(quotation.getEndTime());
+        this.setEndTimeOfDay(quotation.getEndTimeOfDay());
+        this.setStartTime(quotation.getStartTime());
+        this.setStartTimeOfDay(quotation.getStartTimeOfDay());
     }
 
     public String displayDocument(Invoice invoice) {

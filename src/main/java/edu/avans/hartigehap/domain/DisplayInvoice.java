@@ -20,18 +20,30 @@ public class DisplayInvoice extends DisplayTemplate{
 
     @Override
     String displayLines(Document document) {
-        String message = "Factuurregels<br>";
+        String message = "<br>Factuurregels<br>"
+                + "<table><tr>"
+                + "<td></td>"
+                + "<th>Description</th>"
+                + "<th>Quantity</th>"
+                + "<th>Price</th>"
+                + "<th>Total</th>"
+                + "<th>Discount</th>"
+                + "<th>BTW</th>"
+                + "<th>Total</th>"
+                + "</tr>";
         
             for (Line line : document.getInvoice().getInvoiceLines()) {
-                message += line.toString() + "<br>";
+                message += "<tr>"
+                        + "</tr>";
             }
-        
+        message += "</table>";
         return message;
     }
 
     @Override
     String displayFooter(Document document) {
-        String message = "Graag reageren binnen 7 dagen";
+        String message = "Wij verwachten de betaling binnen 2 weken op bankrekeningnummer NL01ABNA01234567889<br>"
+                + "Tot snel bij" + document.getRestaurant().getId();
         return message;
     }
 

@@ -32,43 +32,43 @@ public abstract class Document extends DomainObject{
     
     private static final long serialVersionUID = 1L;
 
-    protected int number;
+    private int number;
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @DateTimeFormat(iso = ISO.DATE)
-    protected DateTime eventDate;
+    private DateTime eventDate;
 
     @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
     @DateTimeFormat(iso = ISO.DATE)
-    protected DateTime expirationDate;
+    private DateTime expirationDate;
 
     @Enumerated(EnumType.STRING)
-    protected TimeOfDayEnum startTimeOfDay;
+    private TimeOfDayEnum startTimeOfDay;
 
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date startTime;
+    private Date startTime;
 
     @Enumerated(EnumType.STRING)
     // represented in database as integer
-    protected TimeOfDayEnum endTimeOfDay;
+    private TimeOfDayEnum endTimeOfDay;
 
     @Temporal(TemporalType.TIMESTAMP)
-    protected Date endTime;
+    private Date endTime;
 
     @ManyToOne(cascade = CascadeType.PERSIST)
-    protected Room room;
+    private Room room;
 
     @ManyToOne
-    protected Customer customer;
+    private Customer customer;
 
     @ManyToOne
-    protected Restaurant restaurant;
+    private Restaurant restaurant;
 
-    protected int amountOfPeople;
+    private int amountOfPeople;
 
     @Enumerated(EnumType.ORDINAL)
     // represented in database as integer
-    protected Status status;
+    private Status status;
     
     public Invoice getInvoice(){
         return null;

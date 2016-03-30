@@ -39,17 +39,17 @@ public class Quotation extends Document {
     private DisplayTemplate displayTemplate = new DisplayQuotation();
     
     private Quotation(QuotationBuilder builder) {
-        this.number = builder.number;
-        this.eventDate = builder.eventDate;
-        this.expirationDate = builder.expirationDate;
-        this.status = builder.status;
-        this.startTimeOfDay = builder.startTimeOfDay;
-        this.startTime = builder.startTime;
-        this.endTimeOfDay = builder.endTimeOfDay;
-        this.endTime = builder.endTime;
-        this.customer = builder.customer;
-        this.room = builder.room;
-        this.amountOfPeople = builder.amountOfPeople;
+        this.setNumber(builder.number);
+        this.setEventDate(builder.eventDate);
+        this.setExpirationDate(builder.expirationDate);
+        this.setStatus(builder.status);
+        this.setStartTimeOfDay(builder.startTimeOfDay);
+        this.setStartTime(builder.startTime);
+        this.setEndTimeOfDay(builder.endTimeOfDay);
+        this.setEndTime(builder.endTime);
+        this.setCustomer(builder.customer);
+        this.setRoom(builder.room);
+        this.setAmountOfPeople(builder.amountOfPeople);
     }
     
     public String displayDocument(Quotation quotation) {
@@ -137,8 +137,8 @@ public class Quotation extends Document {
     }
     
     public void updateEditableFields(Quotation quotation) {
-        this.amountOfPeople = quotation.amountOfPeople;
-        this.number = quotation.number;
+        this.setAmountOfPeople(quotation.getAmountOfPeople());
+        this.setNumber(quotation.getNumber());
         
     }
     
