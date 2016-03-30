@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<div id="body" xmlns:jsp="http://java.sun.com/JSP/Page"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:joda="http://www.joda.org/joda/time/tags"
+	xmlns:spring="http://www.springframework.org/tags" version="2.0"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<jsp:directive.page contentType="text/html;charset=UTF-8" />
+	<jsp:output omit-xml-declaration="yes" />
+
+
+	<spring:message code="label_room_overview"
+		var="labelRoomOverview" />
+	<spring:message code="label_table_overview"
+		var="labelTableOverview" />
+	<spring:message code="label_rooms" var="labelRooms" />
+	<spring:message code="label_tables" var="labelTables" />
+	
+
+	<div class="row">
+		<h1>${labelRoomOverview}</h1>
+
+		<c:if test="${not empty message}">
+			<div id="message" class="alert alert-info ${message.type}">${message.message}</div>
+		</c:if>
+	</div>
+
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">${labelRooms}</h3>
+			</div>
+			<ul class="list-group">
+				<c:forEach items="${rooms}" var="room">
+					<spring:url var="showRoomReservations"
+						value="/restaurants/${restaurant.id}/reservation/room/${room.id}" />
+					<a href="${showRoomReservations}" class="list-group-item">${room.roomNr}</a>
+				</c:forEach>
+			</ul>
+		</div>
+	</div>
+	
+		<div class="row">
+		<h1>${labelTableOverview}</h1>
+
+		<c:if test="${not empty message}">
+			<div id="message" class="alert alert-info ${message.type}">${message.message}</div>
+		</c:if>
+	</div>
+
+	<div class="row">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title">${labelTables}</h3>
+			</div>
+			<ul class="list-group">
+				<c:forEach items="${tables}" var="table">
+					<spring:url var="showTable"
+						value="/restaurants/${restaurant.id}/reservation/diningTable/${table.tableNr}" />
+					<a href="${showTable}" class="list-group-item">${table.tableNr}</a>
+				</c:forEach>
+			</ul>
+		</div>
+	</div>
+</div>

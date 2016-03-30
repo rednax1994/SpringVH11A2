@@ -124,9 +124,9 @@
 					<h3 class="panel-title">${labelReservationSubSystem}</h3>
 				</div>
 				<ul class="list-group">
-					<spring:url var="reservationSubSystem"
-						value="TOFILL" />
-					<a href="TOFILL" class="list-group-item">${labelReservationSubSystem}</a>	
+					<spring:url var="reservationSubSystem" value="/restaurants/${restaurant.id}/reservation" />
+						
+					<a href="${reservationSubSystem}" class="list-group-item">${labelReservationSubSystem}</a>	
 				</ul>
 			</div>
 		</div>

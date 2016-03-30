@@ -7,16 +7,18 @@
 	xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
+	<spring:message code="label_room" var="labelRoom" />
+	
+	
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h3 class="panel-title">${labelOptions}</h3>
+				<h3 class="panel-title">${labelRoom} ${room.roomNr}</h3>
 			</div>
 			<ul class="list-group">
-				<c:forEach items="${room.options}" var="roomOption">
-					<spring:url var="showTable" value="/rooms/${room.id }" />
-					<a href="${showTable}" class="list-group-item">${labelRoom}
-						${room.roomNr}</a>
+				<c:forEach items="${roomReservations}" var="roomReservation">
+					<li class="list-group-item">${roomReservation.startTime} - ${roomReservation.startTimeOfDay} - ${roomReservation.endTime} - ${roomReservation.endTimeOfDay} </li>
+					
 				</c:forEach>
 			</ul>
 		</div>
