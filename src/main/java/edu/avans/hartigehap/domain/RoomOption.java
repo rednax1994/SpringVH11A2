@@ -1,10 +1,7 @@
 package edu.avans.hartigehap.domain;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -21,21 +18,23 @@ import lombok.ToString;
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
 public class RoomOption extends DomainObject {
-    private static final long serialVersionUID = 1L;
-    
-    @ManyToMany
-    private Collection<Room> rooms = new ArrayList<Room>();
-    
-    private long optionNr;
-    private String name;
-    private String description;
-    private long price;
-    private boolean isUsed;
-    
-    public RoomOption(String name, String description, long price, boolean isUsed) {
-        this.name = name;
-        this.description = description;
-        this.price = price;
-        this.isUsed = isUsed;
-    }
+	private static final long serialVersionUID = 1L;
+
+	@ManyToOne
+	private Room room;
+
+	private long optionNr;
+	private String name;
+	private String description;
+	private long price;
+	private boolean isUsed;
+
+	public RoomOption(String name, String description, long price, boolean isUsed, Room room) {
+		this.name = name;
+		this.description = description;
+		this.price = price;
+		this.isUsed = isUsed;
+		this.room = room;
+	}
+
 }
