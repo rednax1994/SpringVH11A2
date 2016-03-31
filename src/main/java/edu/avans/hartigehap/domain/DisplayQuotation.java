@@ -7,7 +7,7 @@ public class DisplayQuotation extends DisplayTemplate {
     
     @Override
     String displayHeader(Document document) {
-        String message = "<h1>Test plusje</h1>";
+        String message = "<h1>Offerte</h1>";
         message += "<br>Evenement datum:" + document.getEventDate();
         message += "<br>Verval datum:" + document.getExpirationDate();
         message += "<br>Start moment:" + document.getStartTimeOfDay();
