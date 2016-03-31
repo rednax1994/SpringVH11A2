@@ -102,7 +102,7 @@
 										<c:if test="${ !orderItem.menuItem.includedFoodcategory(drinks) }" > 
 											<spring:url var="addOrderOptionURL" value="/orderItems/${orderItem.id}/orderOptions" /> 
 											<form:form name="addOrderOption" commandName="restaurant" action="${addOrderOptionURL}" method="post">
-												<form:select path="menu.foodCategories" multiple="false" name="orderOptionName">
+												<form:select path="menu.foodCategories" multiple="false" name="orderOptionName" id="addOrderOptionSelect">
 													<form:option value="NONE" label="---Selecteer---"></form:option>
 													<c:forEach items="${restaurant.menu.foodCategories}" var="foodCategory">
 														<c:forEach items="${foodCategory.menuItems}" var="menuItem">
@@ -129,14 +129,14 @@
 											value="/orderItems/${orderItem.id}/orderOptions" />
 										<form:form name="removeOrderOption" commandName="restaurant"
 											action="${removeOrderOptionURL}" method="delete">
-											<form:select path="menu.foodCategories" multiple="false"
+											<form:select path="menu.foodCategories" multiple="false" id="deleteOrderOptionSelect"
 												name="orderOptionName">
 												<form:option value="NONE" label="--Verwijder Alles--"></form:option>
 												<c:forEach items="${restaurant.menu.foodCategories}"
 													var="foodCategory">
 													<c:forEach items="${foodCategory.menuItems}" var="menuItem">
 														<c:if test="${foodCategory.tag == addons}">
-															<form:option value="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
+															<form:option value="${menuItem.id }" id="${menuItem.id }" class="capitalise">${menuItem.id }</form:option>
 														</c:if>
 													</c:forEach>
 												</c:forEach>
@@ -144,6 +144,7 @@
 											<input type="hidden" name="diningTableId"
 												value="${diningTable.id}" />
 											<button type="submit"
+												id="removeOrderItemButton"
 												class="btn btn-danger btn-float-left-margin-right"
 												value="${labelRemoveButton}">
 												<span
