@@ -6,7 +6,7 @@
   <artifactId>hha2</artifactId>
   <name>hha2</name>
   <packaging>war</packaging>
-  <version>2.0.0.RELEASE</version>
+  <version>1.5.0.RELEASE</version>
   
   <!-- information about upgrade from spring 3.x to 4.x  -->
   <!-- https://github.com/spring-projects/spring-framework/wiki/Migrating-from-earlier-versions-of-the-spring-framework#migrating-to-spring-framework-41 -->
