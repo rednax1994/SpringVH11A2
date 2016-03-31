@@ -5,7 +5,6 @@ import java.util.Collection;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -27,7 +26,7 @@ import lombok.ToString;
 public class Room extends RestaurantLocationObject {
     private static final long serialVersionUID = 1L;
     
-    @ManyToMany(mappedBy = "rooms")
+    @OneToMany(mappedBy = "room" ,cascade = CascadeType.ALL)
     private Collection<RoomOption> options = new ArrayList<RoomOption>();
     
     private long roomNr;
@@ -46,6 +45,13 @@ public class Room extends RestaurantLocationObject {
         this.roomNr = roomNr;
         this.occupied = occupied;
         this.capacity = capacity;
+    }
+    
+    public Room(long roomNr, Boolean occupied, int capacity, ArrayList<RoomOption> options) {
+        this.roomNr = roomNr;
+        this.occupied = occupied;
+        this.capacity = capacity;
+        this.options = options;
     }
     
     @Override

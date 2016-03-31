@@ -8,13 +8,11 @@
 	<jsp:output omit-xml-declaration="yes" />
 
 
-	<spring:message code="label_room_overview"
-		var="labelRoomOverview" />
-	<spring:message code="label_table_overview"
-		var="labelTableOverview" />
+	<spring:message code="label_room_overview" var="labelRoomOverview" />
+	<spring:message code="label_table_overview" var="labelTableOverview" />
 	<spring:message code="label_rooms" var="labelRooms" />
 	<spring:message code="label_tables" var="labelTables" />
-	
+
 
 	<div class="row">
 		<h1>${labelRoomOverview}</h1>
@@ -38,8 +36,8 @@
 			</ul>
 		</div>
 	</div>
-	
-		<div class="row">
+
+	<div class="row">
 		<h1>${labelTableOverview}</h1>
 
 		<c:if test="${not empty message}">
