@@ -30,7 +30,6 @@ public class ReservationServiceImpl implements ReservationService {
     @Transactional(readOnly = true)
     public List<RoomReservation> findReservationsForRoom(Room room) {
         return roomReservationRepository.findByRoom(room);
-        
     }
     
     @Override
