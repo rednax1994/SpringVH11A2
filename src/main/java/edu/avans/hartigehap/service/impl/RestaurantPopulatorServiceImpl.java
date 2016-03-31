@@ -97,6 +97,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private static final int TWELVE = 12;
     private static final int TWENTYONE = 21;
     private static final int FIFTEENTHOUSENDONE = 15001;
+    private static final long HUNDERDTWENTY = 120;
     
     /**
      * menu items, food categories and customers are common to all restaurants
@@ -213,11 +214,12 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         room.setRestaurant(restaurant);
         restaurant.getRooms().add(room);
         
-        RoomOption roomOption = new RoomOption("Buffet", "Western Buffet", (long) 50, false, room);
-        RoomOption roomOption1 = new RoomOption("Coffee", "Coffee and Tea", (long) 80, false, room);
-        RoomOption roomOption2 = new RoomOption("Beamer", "Beamer and screen", (long) 120, false, room);
-        RoomOption roomOption3 = new RoomOption("Microphone", "Set of 3 wireless microphones", (long) 50, false, room);
-        RoomOption roomOption4 = new RoomOption("Champagne", "Martini proseco", (long) 50, false, room);
+        RoomOption roomOption = new RoomOption("Buffet", "Western Buffet", (long) FIFTY, false, room);
+        RoomOption roomOption1 = new RoomOption("Coffee", "Coffee and Tea", (long) EIGHTY, false, room);
+        RoomOption roomOption2 = new RoomOption("Beamer", "Beamer and screen", (long) HUNDERDTWENTY, false, room);
+        RoomOption roomOption3 = new RoomOption("Microphone", "Set of 3 wireless microphones", (long) FIFTY, false,
+                room);
+        RoomOption roomOption4 = new RoomOption("Champagne", "Martini proseco", (long) FIFTY, false, room);
         
         roomRepository.save(room);
         roomOptionRepository.save(roomOption);
