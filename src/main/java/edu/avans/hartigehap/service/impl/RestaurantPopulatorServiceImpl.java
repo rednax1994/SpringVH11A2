@@ -38,6 +38,7 @@ import edu.avans.hartigehap.repository.OrderItemRepository;
 import edu.avans.hartigehap.repository.ReservationRepository;
 import edu.avans.hartigehap.repository.RestaurantRepository;
 import edu.avans.hartigehap.repository.RoomOptionRepository;
+import edu.avans.hartigehap.repository.RoomRepository;
 import edu.avans.hartigehap.service.RestaurantPopulatorService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -61,6 +62,8 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private ReservationRepository reservationRepository;
     @Autowired
     private RoomOptionRepository roomOptionRepository;
+    @Autowired
+    private RoomRepository roomRepository;
     
     private List<Meal> meals = new ArrayList<>();
     private List<Meal> mealOptions = new ArrayList<>();
@@ -94,6 +97,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private static final int TWELVE = 12;
     private static final int TWENTYONE = 21;
     private static final int FIFTEENTHOUSENDONE = 15001;
+    private static final long HUNDERDTWENTY = 120;
     
     /**
      * menu items, food categories and customers are common to all restaurants
@@ -209,6 +213,21 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         Room room = new Room(roomNr, occupied, capacity);
         room.setRestaurant(restaurant);
         restaurant.getRooms().add(room);
+        
+        RoomOption roomOption = new RoomOption("Buffet", "Western Buffet", (long) FIFTY, false, room);
+        RoomOption roomOption1 = new RoomOption("Coffee", "Coffee and Tea", (long) EIGHTY, false, room);
+        RoomOption roomOption2 = new RoomOption("Beamer", "Beamer and screen", (long) HUNDERDTWENTY, false, room);
+        RoomOption roomOption3 = new RoomOption("Microphone", "Set of 3 wireless microphones", (long) FIFTY, false,
+                room);
+        RoomOption roomOption4 = new RoomOption("Champagne", "Martini proseco", (long) FIFTY, false, room);
+        
+        roomRepository.save(room);
+        roomOptionRepository.save(roomOption);
+        roomOptionRepository.save(roomOption1);
+        roomOptionRepository.save(roomOption2);
+        roomOptionRepository.save(roomOption3);
+        roomOptionRepository.save(roomOption4);
+        
     }
     
     private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status,
@@ -316,12 +335,6 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         t.getCurrentBill().getCurrentOrder().getOrderItems().add(orderOption);
         
         /*
-         * room options added
-         */
-        RoomOption roomOption = new RoomOption("Buffet", "Western Buffet", (long) FIFTY, false);
-        roomOptionRepository.save(roomOption);
-        
-        /*
          * Reservation test
          */
         try {
@@ -336,5 +349,4 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
             new StateException("StateException in RestaurantPopulatorImpl: " + e);
         }
     }
-    
 }

@@ -49,7 +49,7 @@ public class BanquetingController {
     private InvoiceService invoiceService;
     
     @Autowired
-    private BanquetingFacadeService banguetingFacadeService;
+    private BanquetingFacadeService banquetingFacadeService;
     
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting", method = RequestMethod.GET)
     public String listQuotationsAndInvoices(@PathVariable("restaurantName") String restaurantName, Model uiModel) {
@@ -90,7 +90,7 @@ public class BanquetingController {
         
         Quotation quotation = quotationService.findById(id);
         Restaurant restaurant = restaurantService.fetchWarmedUp(restaurantName);
-        banguetingFacadeService.acceptQuotation(restaurant, quotation);
+        banquetingFacadeService.acceptQuotation(restaurant, quotation);
         return "redirect:/restaurants/" + restaurantName + "/banqueting/";
     }
     

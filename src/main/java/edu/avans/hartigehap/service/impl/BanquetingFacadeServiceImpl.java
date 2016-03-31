@@ -20,7 +20,7 @@ import edu.avans.hartigehap.service.QuotationService;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Service("banguetingFacadeService")
+@Service("banquetingFacadeService")
 @Repository
 @Transactional
 public class BanquetingFacadeServiceImpl implements BanquetingFacadeService {
