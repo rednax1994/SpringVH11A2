@@ -177,4 +177,25 @@ public class BanquetingControllerMockMvcTest {
                 .andExpect(model().attribute("quotation", quotation));
     }
     
+    @Test
+    public void showInvoiceTest() throws Exception {
+        // prepare
+        LinkedList<Restaurant> restaurants = new LinkedList<Restaurant>();
+        Restaurant restaurant = new Restaurant();
+        restaurant.setId(RESTAURANT_ID);
+        restaurants.add(restaurant);
+        
+        Invoice invoice = new Invoice();
+        invoice.setId(1L);
+        
+        // execute
+        Mockito.when(restaurantServiceMock.findAll()).thenReturn(restaurants);
+        Mockito.when(invoiceServiceMock.findById(1L)).thenReturn(invoice);
+        
+        mockMvc.perform(get("/restaurants/" + RESTAURANT_ID + "/banqueting/invoices/1")).andExpect(status().isOk())
+                .andExpect(view().name("hartigehap/showinvoice"))
+                .andExpect(model().attribute("restaurants", hasItems(restaurants.toArray(new Restaurant[] {}))))
+                .andExpect(model().attribute("invoice", invoice));
+    }
+    
 }
