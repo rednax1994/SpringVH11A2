@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.Part;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.avans.hartigehap.domain.Invoice;
@@ -173,7 +171,7 @@ public class BanquetingController {
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations/{id}", params = "form", method = RequestMethod.PUT)
     public String updateQuotation(@PathVariable("restaurantName") String restaurantName, @Valid Quotation quotation,
             BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest,
-            RedirectAttributes redirectAttributes, Locale locale, @RequestParam(required = false) Part file) {
+            RedirectAttributes redirectAttributes, Locale locale) {
         
         return handleCreateOrUpdateQuotation(false, restaurantName, quotation, bindingResult, uiModel,
                 httpServletRequest, redirectAttributes, locale);
@@ -182,8 +180,7 @@ public class BanquetingController {
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations", params = "form", method = RequestMethod.POST)
     public String createQuotation(@PathVariable("restaurantName") String restaurantName, @Valid Quotation quotation,
             BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest,
-            RedirectAttributes redirectAttributes, Locale locale,
-            @RequestParam(value = "file", required = false) Part file) {
+            RedirectAttributes redirectAttributes, Locale locale) {
         
         log.info("Creating quotation: " + quotation.getAmountOfPeople() + " " + quotation.getStatus());
         log.info("Binding Result target: " + (Quotation) bindingResult.getTarget());
