@@ -21,7 +21,7 @@ public class DisplayInvoice extends DisplayTemplate{
     @Override
     String displayLines(Document document) {
         String message = "<br>Factuurregels<br>"
-                + "<table><tr>"
+                + "<table border='1'><tr>"
                 + "<td></td>"
                 + "<th>Description</th>"
                 + "<th>Quantity</th>"
@@ -29,12 +29,19 @@ public class DisplayInvoice extends DisplayTemplate{
                 + "<th>Total</th>"
                 + "<th>Discount</th>"
                 + "<th>BTW</th>"
-                + "<th>Total</th>"
+                + "<th>Subtotal</th>"
                 + "</tr>";
         
             for (Line line : document.getInvoice().getInvoiceLines()) {
                 message += "<tr>"
-                        + "</tr>";
+                        + "<td></td>"
+                        + "<td>" + line.getDescription() + "</td>"
+                        + "<td>" + line.getQuantity() + "</td>"
+                        + "<td>" + line.getPrice() + "</td>"
+                        + "<td>" + line.getTotal() + "</td>"
+                        + "<td>" + line.getDiscount() +"</td>"
+                        + "<td>21%</td>"
+                        + "<td>" + (line.getTotal() - ((line.getTotal() / 100) * line.getDiscount()) * 121 / 100) + "</td></tr>";
             }
         message += "</table>";
         return message;
