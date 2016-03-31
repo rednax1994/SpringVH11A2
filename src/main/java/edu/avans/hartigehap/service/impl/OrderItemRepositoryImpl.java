@@ -3,8 +3,8 @@ package edu.avans.hartigehap.service.impl;
 import java.util.List;
 
 import edu.avans.hartigehap.domain.Order;
+import edu.avans.hartigehap.iterator.Iterator;
 import edu.avans.hartigehap.repository.Container;
-import iterator.Iterator;
 
 public class OrderItemRepositoryImpl implements Container {
     
