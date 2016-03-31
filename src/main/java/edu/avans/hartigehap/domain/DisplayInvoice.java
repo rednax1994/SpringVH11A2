@@ -41,9 +41,8 @@ public class DisplayInvoice extends DisplayTemplate {
     
     @Override
     String displayFooter(Document document) {
-        String message = "Wij verwachten de betaling binnen 2 weken op bankrekeningnummer NL01ABNA01234567889<br>"
+        return "Wij verwachten de betaling binnen 2 weken op bankrekeningnummer NL01ABNA01234567889<br>"
                 + "Tot snel bij" + document.getRestaurant().getId();
-        return message;
     }
     
 }
