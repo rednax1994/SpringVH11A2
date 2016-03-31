@@ -6,7 +6,10 @@ public class DisplayInvoice extends DisplayTemplate {
     
     @Override
     String displayHeader(Document document) {
-        String message = "<h1>Test plusje</h1>";
+        String message = "<h1>Factuur</h1>";
+        message += "<br>Status:" + document.getStatus();
+        message += "<br>Contactgegevens klant:" + document.getCustomer().toString();
+        message += "<br>Restaurant:" + document.getRestaurant().getId();
         message += "<br>Evenement datum:" + document.getEventDate();
         message += "<br>Verval datum:" + document.getExpirationDate();
         message += "<br>Start moment:" + document.getStartTimeOfDay();
@@ -14,10 +17,7 @@ public class DisplayInvoice extends DisplayTemplate {
         message += "<br>Eind moment:" + document.getEndTimeOfDay();
         message += "<br>Eindttijd:" + document.getEndTime();
         message += "<br>Zaal:" + document.getRoom().getRoomNr();
-        message += "<br>Contactgegevens klant:" + document.getCustomer().toString();
-        message += "<br>Restaurant:" + document.getRestaurant().getId();
         message += "<br>Aantal personen:" + document.getAmountOfPeople();
-        message += "<br>Status:" + document.getStatus();
         return message;
     }
     
