@@ -1,6 +1,9 @@
 package edu.avans.hartigehap.domain;
 
-public class DisplayInvoice extends DisplayTemplate{
+public class DisplayInvoice extends DisplayTemplate {
+    private static final double HUNDERD = 100;
+    private static final double HUNDERDTWENTYONE = 121;
+    
     @Override
     String displayHeader(Document document) {
         String message = "<h1>Test plusje</h1>";
@@ -17,43 +20,30 @@ public class DisplayInvoice extends DisplayTemplate{
         message += "<br>Status:" + document.getStatus();
         return message;
     }
-
+    
     @Override
     String displayLines(Document document) {
-        String message = "<br>Factuurregels<br>"
-                + "<table border='1'><tr>"
-                + "<td></td>"
-                + "<th>Description</th>"
-                + "<th>Quantity</th>"
-                + "<th>Price</th>"
-                + "<th>Total</th>"
-                + "<th>Discount</th>"
-                + "<th>BTW</th>"
-                + "<th>Subtotal</th>"
-                + "</tr>";
+        String message = "<br>Factuurregels<br>" + "<table border='1'><tr>" + "<td></td>" + "<th>Description</th>"
+                + "<th>Quantity</th>" + "<th>Price</th>" + "<th>Total</th>" + "<th>Discount</th>" + "<th>BTW</th>"
+                + "<th>Subtotal</th>" + "</tr>";
         
-            for (Line line : document.getInvoice().getInvoiceLines()) {
-                message += "<tr>"
-                        + "<td></td>"
-                        + "<td>" + line.getDescription() + "</td>"
-                        + "<td>" + line.getQuantity() + "</td>"
-                        + "<td>" + line.getPrice() + "</td>"
-                        + "<td>" + line.getTotal() + "</td>"
-                        + "<td>" + line.getDiscount() +"</td>"
-                        + "<td>21%</td>"
-                        + "<td>" + (line.getTotal() - ((line.getTotal() / 100) * line.getDiscount()) * 121 / 100) + "</td></tr>";
-            }
+        for (Line line : document.getInvoice().getInvoiceLines()) {
+            message += "<tr>" + "<td></td>" + "<td>" + line.getDescription() + "</td>" + "<td>" + line.getQuantity()
+                    + "</td>" + "<td>" + line.getPrice() + "</td>" + "<td>" + line.getTotal() + "</td>" + "<td>"
+                    + line.getDiscount() + "</td>" + "<td>21%</td>" + "<td>"
+                    + (line.getTotal()
+                            - ((line.getTotal() / HUNDERD) * line.getDiscount()) * HUNDERDTWENTYONE / HUNDERD)
+                    + "</td></tr>";
+        }
         message += "</table>";
         return message;
     }
-
+    
     @Override
     String displayFooter(Document document) {
         String message = "Wij verwachten de betaling binnen 2 weken op bankrekeningnummer NL01ABNA01234567889<br>"
                 + "Tot snel bij" + document.getRestaurant().getId();
         return message;
     }
-
     
-
 }
