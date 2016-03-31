@@ -56,7 +56,7 @@ public class Restaurant extends DomainObjectNaturalId {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
     private Collection<Quotation> quotations = new ArrayList<Quotation>();
     
-    @OneToMany(mappedBy = "restaurant")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "restaurant")
     private Collection<Invoice> invoices = new ArrayList<Invoice>();
     
     public Restaurant(String name, String imageFileName) {

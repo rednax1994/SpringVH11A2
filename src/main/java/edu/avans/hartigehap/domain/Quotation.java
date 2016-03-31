@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -30,7 +31,7 @@ public class Quotation extends Document {
     
     private static final long serialVersionUID = 1L;
     
-    @OneToMany(mappedBy = "quotation")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotation")
     private Collection<Line> quotationLines = new ArrayList<Line>();
     @Transient
     private BanquetingFacadeServiceImpl banquetingfacade = new BanquetingFacadeServiceImpl();

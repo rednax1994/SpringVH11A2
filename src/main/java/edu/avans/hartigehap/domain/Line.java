@@ -7,14 +7,14 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.ToString;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
 @Getter
 @Setter
-@ToString(callSuper = true, includeFieldNames = true)
+@NoArgsConstructor
 public class Line extends DomainObject {
     private static final long serialVersionUID = 1L;
     
@@ -29,4 +29,22 @@ public class Line extends DomainObject {
     
     @ManyToOne
     private Invoice invoice;
+    
+    public Line(String description, double price, int quantity, int discount, Quotation quotation){
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.total = this.price * this.quantity;
+        this.quotation = quotation;
+    }
+    
+    public Line(String description, double price, int quantity, int discount, Invoice invoice){
+        this.description = description;
+        this.price = price;
+        this.quantity = quantity;
+        this.discount = discount;
+        this.total = this.price * this.quantity;
+        this.invoice = invoice;
+    }
 }

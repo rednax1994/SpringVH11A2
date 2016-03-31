@@ -17,6 +17,7 @@ import edu.avans.hartigehap.domain.Customer;
 import edu.avans.hartigehap.domain.DiningTable;
 import edu.avans.hartigehap.domain.Drink;
 import edu.avans.hartigehap.domain.FoodCategory;
+import edu.avans.hartigehap.domain.Line;
 import edu.avans.hartigehap.domain.Meal;
 import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.domain.Restaurant;
@@ -237,10 +238,17 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
                 .expirationDate(expirationDate).amountofPeople(amountOfPeople).room(room).customer(customer)
                 .endTime(endTime).endTimeOfDay(endTimeOfDay).startTime(startTime).startTimeOfDay(startTimeOfDay)
                 .build();
-        quotation.setRestaurant(restaurant);
+        Line line = createLine(quotation);
+        quotation.getQuotationLines().add(line);
+        quotation.setRestaurant(restaurant);        
         restaurant.getQuotations().add(quotation);
     }
     
+    private Line createLine(Quotation quotation) {
+        Line line = new Line("Beamer", TWENTY, ONE, ZERO, quotation);
+        return line;
+    }
+
     @SuppressWarnings("deprecation")
     private Restaurant populateRestaurant(Restaurant restaurant) {
         
