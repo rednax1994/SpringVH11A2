@@ -240,15 +240,14 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
                 .build();
         Line line = createLine(quotation);
         quotation.getQuotationLines().add(line);
-        quotation.setRestaurant(restaurant);        
+        quotation.setRestaurant(restaurant);
         restaurant.getQuotations().add(quotation);
     }
     
     private Line createLine(Quotation quotation) {
-        Line line = new Line("Beamer", TWENTY, ONE, ZERO, quotation);
-        return line;
+        return new Line("Beamer", TWENTY, ONE, ZERO, quotation);
     }
-
+    
     @SuppressWarnings("deprecation")
     private Restaurant populateRestaurant(Restaurant restaurant) {
         

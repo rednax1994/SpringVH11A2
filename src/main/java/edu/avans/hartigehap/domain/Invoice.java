@@ -46,10 +46,9 @@ public class Invoice extends Document {
         this.setStartTimeOfDay(quotation.getStartTimeOfDay());
         createInvoiceLinesFromQuotation(quotation.getQuotationLines());
     }
-
+    
     private void createInvoiceLinesFromQuotation(Collection<Line> quotationLines) {
-        for(Line line : quotationLines){
-//            line.setQuotation(null);
+        for (Line line : quotationLines) {
             line.setInvoice(this);
             invoiceLines.add(line);
         }
