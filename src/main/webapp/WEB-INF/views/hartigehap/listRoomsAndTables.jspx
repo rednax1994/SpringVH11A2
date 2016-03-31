@@ -30,7 +30,7 @@
 			<ul class="list-group">
 				<c:forEach items="${rooms}" var="room">
 					<spring:url var="showRoomReservations"
-						value="/restaurants/${restaurant.id}/reservation/room/${room.roomNr}" />
+						value="/restaurants/${restaurant.id}/reservation/room/${room.id}" />
 					<a href="${showRoomReservations}" class="list-group-item">${room.roomNr}</a>
 				</c:forEach>
 			</ul>
@@ -53,7 +53,7 @@
 			<ul class="list-group">
 				<c:forEach items="${tables}" var="table">
 					<spring:url var="showTable"
-						value="/restaurants/${restaurant.id}/tables/${table.tableNr}" />
+						value="/restaurants/${restaurant.id}/reservation/diningTable/${table.tableNr}" />
 					<a href="${showTable}" class="list-group-item">${table.tableNr}</a>
 				</c:forEach>
 			</ul>
