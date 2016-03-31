@@ -54,8 +54,7 @@ public class Quotation extends Document {
     }
     
     public String displayDocument(Quotation quotation) {
-        String message = displayTemplate.displayDocument(quotation);
-        return message;
+        return displayTemplate.displayDocument(quotation);
     }
     
     @Override

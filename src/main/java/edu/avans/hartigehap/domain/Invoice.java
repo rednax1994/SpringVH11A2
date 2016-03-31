@@ -17,11 +17,12 @@ import lombok.ToString;
 
 @Entity
 @JsonIdentityInfo(generator = ObjectIdGenerators.IntSequenceGenerator.class, property = "@id")
-@Getter @Setter
-@ToString(callSuper=false, includeFieldNames=true)
+@Getter
+@Setter
+@ToString(callSuper = false, includeFieldNames = true)
 @NoArgsConstructor
-public class Invoice extends Document{
-
+public class Invoice extends Document {
+    
     private static final long serialVersionUID = 1L;
     
     @OneToMany(mappedBy = "invoice")
@@ -29,7 +30,7 @@ public class Invoice extends Document{
     
     @Transient
     private DisplayTemplate displayTemplate = new DisplayInvoice();
-   
+    
     public void createFromQuotation(Restaurant restaurant, Quotation quotation) {
         this.setNumber(quotation.getNumber());
         this.setEventDate(quotation.getEventDate());
@@ -54,14 +55,14 @@ public class Invoice extends Document{
         }
         
     }
-
+    
     public String displayDocument(Invoice invoice) {
-        String message = displayTemplate.displayDocument(invoice);
-        return message;
+        return displayTemplate.displayDocument(invoice);
     }
+    
     @Override
-    public Invoice getInvoice(){
+    public Invoice getInvoice() {
         return this;
     }
-
+    
 }

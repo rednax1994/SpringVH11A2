@@ -4,7 +4,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 public class DisplayQuotation extends DisplayTemplate {
-
+    
     @Override
     String displayHeader(Document document) {
         String message = "<h1>Test plusje</h1>";
@@ -21,22 +21,21 @@ public class DisplayQuotation extends DisplayTemplate {
         message += "<br>Status:" + document.getStatus();
         return message;
     }
-
+    
     @Override
     String displayLines(Document document) {
         String message = "Offerteregels<br>";
-
+        
         for (Line line : document.getQuotation().getQuotationLines()) {
             message += line.toString() + "<br>";
         }
-
+        
         return message;
     }
-
+    
     @Override
     String displayFooter(Document document) {
-        String message = "Graag reageren binnen 7 dagen";
-        return message;
+        return "Graag reageren binnen 7 dagen";
     }
-
+    
 }

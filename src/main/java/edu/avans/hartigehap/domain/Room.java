@@ -2,6 +2,7 @@ package edu.avans.hartigehap.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -26,7 +27,7 @@ import lombok.ToString;
 public class Room extends RestaurantLocationObject {
     private static final long serialVersionUID = 1L;
     
-    @OneToMany(mappedBy = "room" ,cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "room", cascade = CascadeType.ALL)
     private Collection<RoomOption> options = new ArrayList<RoomOption>();
     
     private long roomNr;
@@ -47,7 +48,7 @@ public class Room extends RestaurantLocationObject {
         this.capacity = capacity;
     }
     
-    public Room(long roomNr, Boolean occupied, int capacity, ArrayList<RoomOption> options) {
+    public Room(long roomNr, Boolean occupied, int capacity, List<RoomOption> options) {
         this.roomNr = roomNr;
         this.occupied = occupied;
         this.capacity = capacity;
