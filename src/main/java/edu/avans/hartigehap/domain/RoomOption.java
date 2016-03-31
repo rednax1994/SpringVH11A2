@@ -18,23 +18,23 @@ import lombok.ToString;
 @ToString(callSuper = true, includeFieldNames = true)
 @NoArgsConstructor
 public class RoomOption extends DomainObject {
-	private static final long serialVersionUID = 1L;
-
-	@ManyToOne
-	private Room room;
-
-	private long optionNr;
-	private String name;
-	private String description;
-	private long price;
-	private boolean isUsed;
-
-	public RoomOption(String name, String description, long price, boolean isUsed, Room room) {
-		this.name = name;
-		this.description = description;
-		this.price = price;
-		this.isUsed = isUsed;
-		this.room = room;
-	}
-
+    private static final long serialVersionUID = 1L;
+    
+    @ManyToOne
+    private Room room;
+    
+    private long optionNr;
+    private String name;
+    private String description;
+    private long price;
+    private boolean isUsed;
+    
+    public RoomOption(String name, String description, long price, boolean isUsed, Room room) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.isUsed = isUsed;
+        this.room = room;
+    }
+    
 }
