@@ -29,17 +29,13 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     @Transactional(readOnly = true)
     public List<RoomReservation> findReservationsForRoom(Room room) {
-        @SuppressWarnings("unused")
-        List<RoomReservation> reservationsForRoom;
-        return reservationsForRoom = roomReservationRepository.findByRoom(room);
+        return roomReservationRepository.findByRoom(room);
         
     }
     
     @Override
     @Transactional(readOnly = true)
     public List<TableReservation> findReservationsForDiningTable(DiningTable diningTable) {
-        @SuppressWarnings("unused")
-        List<TableReservation> reservationsForDiningTable;
-        return reservationsForDiningTable = tableReservationRepository.findByDiningTable(diningTable);
+        return tableReservationRepository.findByDiningTable(diningTable);
     }
 }
