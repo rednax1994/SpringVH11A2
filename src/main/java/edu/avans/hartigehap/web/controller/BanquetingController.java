@@ -142,7 +142,7 @@ public class BanquetingController {
     
     private String handleCreateOrUpdateQuotation(boolean isCreate, String restaurantName, Quotation quotation,
             BindingResult bindingResult, Model uiModel, HttpServletRequest httpServletRequest,
-            RedirectAttributes redirectAttributes, Locale locale, Part file) {
+            RedirectAttributes redirectAttributes, Locale locale) {
         
         if (bindingResult.hasErrors()) {
             uiModel.addAttribute("message",
@@ -176,7 +176,7 @@ public class BanquetingController {
             RedirectAttributes redirectAttributes, Locale locale, @RequestParam(required = false) Part file) {
         
         return handleCreateOrUpdateQuotation(false, restaurantName, quotation, bindingResult, uiModel,
-                httpServletRequest, redirectAttributes, locale, file);
+                httpServletRequest, redirectAttributes, locale);
     }
     
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/quotations", params = "form", method = RequestMethod.POST)
@@ -190,7 +190,7 @@ public class BanquetingController {
         log.info("Binding Result: " + bindingResult);
         
         return handleCreateOrUpdateQuotation(true, restaurantName, quotation, bindingResult, uiModel,
-                httpServletRequest, redirectAttributes, locale, file);
+                httpServletRequest, redirectAttributes, locale);
     }
     
     @RequestMapping(value = "/restaurants/{restaurantName}/banqueting/invoices/{id}", method = RequestMethod.GET)
