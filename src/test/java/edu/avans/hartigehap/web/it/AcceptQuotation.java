@@ -1,5 +1,4 @@
 package edu.avans.hartigehap.web.it;
-
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.fail;
 
@@ -11,16 +10,18 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class HomePageLoginIT {
-    
+public class AcceptQuotation {
     public static String URL = "http://localhost:8080/hha2";
-    
+    public static String URL2 = "http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/quotations/2";
+
     @Test
-    public void login() {
+    public void AcceptQuotation(){
         WebDriver driver = BrowserUtils.getWebDriver();
         driver.get(URL);
         log.info("Congratulations, the home page is available ;-) {}", URL);
@@ -69,18 +70,31 @@ public class HomePageLoginIT {
         
         log.info("Submit form");
         js.executeScript("document.getElementsByName('submit')[0].click();");
-        
-        String sourceAfter = driver.getPageSource();
-        log.info("HTML Source of webpage:" + sourceAfter);
-        
-        
+        driver.get("http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/");
         
         try {
-            WebElement errorDiv = driver.findElement(By.className("error"));
-            fail("For a succesful login, an error div is not expected: " + errorDiv);
-        } catch (NoSuchElementException ex) {
-            log.debug("Login succeeded ;-)");
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        
+        driver.get(URL2);
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        js.executeScript("document.getElementsByName('accept')[0].click();");
+        
+        driver.get("http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/");
+        
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
     }
-    
 }

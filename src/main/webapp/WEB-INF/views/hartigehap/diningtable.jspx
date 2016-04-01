@@ -95,7 +95,7 @@
 								items="${diningTable.currentBill.currentOrder.orderItems}"
 								var="orderItem">
 								<tr>
-									<td class="capitalise">${orderItem.description()}</td>
+									<td class="capitalise" id="orderItemDescription">${orderItem.description()}</td>
 									<!-- Start of the extra options -->
 									<td>
 										<!-- Start form for adding extras to items -->

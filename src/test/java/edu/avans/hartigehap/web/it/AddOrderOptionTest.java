@@ -1,11 +1,17 @@
 package edu.avans.hartigehap.web.it;
 
+import static org.junit.Assert.fail;
+
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -14,6 +20,7 @@ public class AddOrderOptionTest {
 
     public static String URL = "http://localhost:8080/hha2/diningTables/11";
 
+    @SuppressWarnings("deprecation")
     @Test
     public void addOrderOption(){
         WebDriver driver = BrowserUtils.getWebDriver();
@@ -40,19 +47,35 @@ public class AddOrderOptionTest {
         
         // Added bootstrap support
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        
-        String source = driver.getPageSource();
-        log.info("HTML Source of webpage:" + source);
+
+        WebElement element = driver.findElement(By.id("orderItemDescription"));
+        log.info(element.getText());
 
         driver.findElement(By.xpath("//*[@id='deleteOrderOptionSelect']")).click();
-     // Added bootstrap support
+        
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//*[@id='mushrooms']")).click();
-     // Added bootstrap support
+        
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.xpath("//*[@id='removeOrderItemButton']")).click();
-     // Added bootstrap support
+        
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        js.executeScript("document.getElementsById('removeOrderItemButton')[0].click();");
+   
+        String sourceAfter = driver.getPageSource();
+        log.info("HTML Source of webpage:" + sourceAfter);
+        
+        
+        
+        try {
+            WebElement errorDiv = driver.findElement(By.className("error"));
+            fail("For a succesful login, an error div is not expected: " + errorDiv);
+        } catch (NoSuchElementException ex) {
+            log.debug("Login succeeded ;-)");
+        }
+        
+        WebElement element2 = driver.findElement(By.id("orderItemDescription"));
+        log.info(element2.getText());
         log.info("done waiting");
     }
 }
