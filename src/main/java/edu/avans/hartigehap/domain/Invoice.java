@@ -3,6 +3,7 @@ package edu.avans.hartigehap.domain;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
@@ -25,7 +26,7 @@ public class Invoice extends Document {
     
     private static final long serialVersionUID = 1L;
     
-    @OneToMany(mappedBy = "invoice")
+    @OneToMany(cascade = CascadeType.PERSIST)
     private Collection<Line> invoiceLines = new ArrayList<Line>();
     
     @Transient
@@ -49,7 +50,6 @@ public class Invoice extends Document {
     
     private void createInvoiceLinesFromQuotation(Collection<Line> quotationLines) {
         for (Line line : quotationLines) {
-            line.setInvoice(this);
             invoiceLines.add(line);
         }
         

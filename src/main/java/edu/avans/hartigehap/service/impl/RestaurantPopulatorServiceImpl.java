@@ -238,14 +238,14 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
                 .expirationDate(expirationDate).amountofPeople(amountOfPeople).room(room).customer(customer)
                 .endTime(endTime).endTimeOfDay(endTimeOfDay).startTime(startTime).startTimeOfDay(startTimeOfDay)
                 .build();
-        Line line = createLine(quotation);
+        Line line = createLine();
         quotation.getQuotationLines().add(line);
         quotation.setRestaurant(restaurant);
         restaurant.getQuotations().add(quotation);
     }
     
-    private Line createLine(Quotation quotation) {
-        return new Line("Beamer", TWENTY, ONE, ZERO, quotation);
+    private Line createLine() {
+        return new Line("Beamer", TWENTY, ONE, ZERO);
     }
     
     @SuppressWarnings("deprecation")

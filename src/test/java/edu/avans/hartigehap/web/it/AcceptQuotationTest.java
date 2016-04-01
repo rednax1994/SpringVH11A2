@@ -1,4 +1,5 @@
 package edu.avans.hartigehap.web.it;
+
 import static org.junit.Assert.assertNotNull;
 
 import java.util.concurrent.TimeUnit;
@@ -12,12 +13,12 @@ import org.openqa.selenium.WebElement;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class AcceptQuotation {
+public class AcceptQuotationTest {
     public static String URL = "http://localhost:8080/hha2";
-    public static String URL2 = "http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/quotations/1";
 
+    public static String URL2 = "http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/quotations/1";
     @Test
-    public void AcceptQuotationTwo(){
+    public void AcceptQuotationTwo() {
         WebDriver driver = BrowserUtils.getWebDriver();
         driver.get(URL);
         log.info("Congratulations, the home page is available ;-) {}", URL);
@@ -41,8 +42,6 @@ public class AcceptQuotation {
         }
         
         log.info("Timeout of 10 seconds");
-        // js.executeScript("document.getElementById('dropdown-toggle-login').removeAttribute('display');");
-        // js.executeScript("document.getElementById('dropdown-toggle-login').setAttribute('display','block');");
         
         // Added bootstrap support
         log.info("Timeout of 10 seconds");

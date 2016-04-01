@@ -23,7 +23,7 @@ import edu.avans.hartigehap.service.RoomService;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
-@PreAuthorize("hasRole('ROLE_MANAGER')")
+@PreAuthorize("hasRole('ROLE_EMPLOYEE')")
 @Slf4j
 public class ReservationController {
     
