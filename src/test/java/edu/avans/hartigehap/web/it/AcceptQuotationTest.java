@@ -12,7 +12,7 @@ import org.openqa.selenium.WebElement;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class AcceptQuotation {
+public class AcceptQuotationTest {
     public static String URL = "http://localhost:8080/hha2";
     public static String URL2 = "http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/quotations/2";
 

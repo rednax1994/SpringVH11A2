@@ -10,23 +10,20 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class AddOrderOptionTest {
-
+    
     public static String URL = "http://localhost:8080/hha2/diningTables/11";
-
-    @SuppressWarnings("deprecation")
+    
     @Test
-    public void addOrderOption(){
+    public void addOrderOption() {
         WebDriver driver = BrowserUtils.getWebDriver();
         driver.get(URL);
         log.info("Congratulations, the home page is available ;-) {}", URL);
-
+        
         // Add javascript support
         JavascriptExecutor js = (JavascriptExecutor) driver;
         
@@ -47,7 +44,7 @@ public class AddOrderOptionTest {
         
         // Added bootstrap support
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
+        
         driver.findElement(By.xpath("//*[@id='deleteOrderOptionSelect']")).click();
         
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -58,11 +55,9 @@ public class AddOrderOptionTest {
         
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         js.executeScript("document.getElementsById('removeOrderItemButton')[0].click();");
-   
+        
         String sourceAfter = driver.getPageSource();
         log.info("HTML Source of webpage:" + sourceAfter);
-        
-        
         
         try {
             WebElement errorDiv = driver.findElement(By.className("error"));
