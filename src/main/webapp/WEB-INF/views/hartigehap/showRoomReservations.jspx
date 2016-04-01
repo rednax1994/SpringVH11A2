@@ -5,12 +5,18 @@
 	xmlns:spring="http://www.springframework.org/tags"
 	xmlns:form="http://www.springframework.org/tags/form"
 	xmlns:sec="http://www.springframework.org/security/tags" version="2.0">
+	
+	<!--@elvariable id="customer" type="edu.avans.hartigehap.domain.reservationfactory.RoomReservation"-->
 	<jsp:directive.page contentType="text/html;charset=UTF-8" />
 	<jsp:output omit-xml-declaration="yes" />
 
 	<spring:message code="label_room" var="labelRoom" />
+	<spring:message code="date_format_pattern" var="dateFormatPattern" />
 
-
+	<joda:format var="startTime" value="${roomReservation.startTime}"
+		pattern="${dateFormatPattern}" />
+	<joda:format var="endTime" value="${roomReservation.endTime}"
+		pattern="${dateFormatPattern}" />
 	<div class="row">
 		<div class="panel panel-default">
 			<div class="panel-heading">
@@ -18,6 +24,8 @@
 			</div>
 			<ul class="list-group">
 				<c:forEach items="${roomReservations}" var="roomReservation">
+					<!-- <joda:format value="${roomReservation.startTime}" pattern="${dateFormatPattern}" />-->
+					<!-- <joda:format value="${roomReservation.endTime}" pattern="${dateFormatPattern}" />-->
 					<li class="list-group-item">${roomReservation.startTime}-
 						${roomReservation.startTimeOfDay} - ${roomReservation.endTime} -
 						${roomReservation.endTimeOfDay}</li>

@@ -1,14 +1,14 @@
 package edu.avans.hartigehap.domain.reservationfactory;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -44,21 +44,23 @@ public abstract class Reservation extends DomainObject {
     // represented in database as integer
     protected TimeOfDayEnum startTimeOfDay;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date startTime;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @DateTimeFormat(iso = ISO.DATE)
+    private DateTime startTime;
     
     @Enumerated(EnumType.STRING)
     // represented in database as integer
     protected TimeOfDayEnum endTimeOfDay;
     
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date endTime;
+    @Type(type = "org.jadira.usertype.dateandtime.joda.PersistentDateTime")
+    @DateTimeFormat(iso = ISO.DATE)
+    private DateTime endTime;
     
     @ManyToOne
     private Customer customer;
     
-    public Reservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, Date startTime,
-            TimeOfDayEnum endTimeOfDay, Date endTime) {
+    public Reservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, DateTime startTime,
+            TimeOfDayEnum endTimeOfDay, DateTime endTime) {
         currentState = new ConceptState(this);
         this.amountOfPeople = amountOfPeople;
         this.customer = customer;

@@ -1,9 +1,9 @@
 package edu.avans.hartigehap.domain.reservationfactory;
 
-import java.util.Date;
-
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+
+import org.joda.time.DateTime;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -25,8 +25,8 @@ public class RoomReservation extends Reservation {
     @ManyToOne
     private Room room;
     
-    public RoomReservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, Date startTime,
-            TimeOfDayEnum endTimeOfDay, Date endTime, Room room) {
+    public RoomReservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay, DateTime startTime,
+            TimeOfDayEnum endTimeOfDay, DateTime endTime, Room room) {
         super(amountOfPeople, customer, startTimeOfDay, startTime, endTimeOfDay, endTime);
         this.room = room;
     }

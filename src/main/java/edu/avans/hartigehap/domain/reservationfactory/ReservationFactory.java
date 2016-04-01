@@ -1,6 +1,6 @@
 package edu.avans.hartigehap.domain.reservationfactory;
 
-import java.util.Date;
+import org.joda.time.DateTime;
 
 import edu.avans.hartigehap.domain.Customer;
 import edu.avans.hartigehap.domain.DiningTable;
@@ -16,7 +16,7 @@ public class ReservationFactory {
     }
     
     public static Reservation createReservation(int amountOfPeople, Customer customer, TimeOfDayEnum startTimeOfDay,
-            Date startTime, TimeOfDayEnum endTimeOfDay, Date endTime, RestaurantLocationObject rlo) throws MyException {
+            DateTime startTime, TimeOfDayEnum endTimeOfDay, DateTime endTime, RestaurantLocationObject rlo) throws MyException {
         Reservation reservation = null;
         if (rlo instanceof DiningTable) {
             reservation = new TableReservation(amountOfPeople, customer, startTimeOfDay, startTime, endTimeOfDay,

@@ -2,8 +2,6 @@ package edu.avans.hartigehap.domain;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -15,7 +13,6 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import edu.avans.hartigehap.domain.reservationfactory.Reservation.TimeOfDayEnum;
-import edu.avans.hartigehap.service.impl.BanquetingFacadeServiceImpl;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -33,8 +30,6 @@ public class Quotation extends Document {
     
     @OneToMany(cascade = CascadeType.PERSIST)
     private Collection<Line> quotationLines = new ArrayList<Line>();
-    @Transient
-    private BanquetingFacadeServiceImpl banquetingfacade = new BanquetingFacadeServiceImpl();
     
     @Transient
     private DisplayTemplate displayTemplate = new DisplayQuotation();
@@ -67,9 +62,9 @@ public class Quotation extends Document {
         private int amountOfPeople;
         private Room room;
         private Customer customer;
-        private Date endTime;
+        private DateTime endTime;
         private TimeOfDayEnum endTimeOfDay;
-        private Date startTime;
+        private DateTime startTime;
         private TimeOfDayEnum startTimeOfDay;
         private Status status;
         private DateTime expirationDate;
@@ -80,7 +75,7 @@ public class Quotation extends Document {
             this.number = number;
         }
         
-        public QuotationBuilder startTime(Date startTime) {
+        public QuotationBuilder startTime(DateTime startTime) {
             this.startTime = startTime;
             return this;
         }
@@ -95,7 +90,7 @@ public class Quotation extends Document {
             return this;
         }
         
-        public QuotationBuilder endTime(Date endTime) {
+        public QuotationBuilder endTime(DateTime endTime) {
             this.endTime = endTime;
             return this;
         }

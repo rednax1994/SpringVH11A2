@@ -3,7 +3,6 @@ package edu.avans.hartigehap.service.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -99,6 +98,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     private static final int TWENTYONE = 21;
     private static final int FIFTEENTHOUSENDONE = 15001;
     private static final long HUNDERDTWENTY = 120;
+    private static final int TWOTHOUSANDSIXTEEN = 2016;
     
     /**
      * menu items, food categories and customers are common to all restaurants
@@ -232,7 +232,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
     }
     
     private void createQuotation(int number, DateTime eventDate, DateTime expirationDate, Status status,
-            int amountOfPeople, Room room, Customer customer, Date endTime, TimeOfDayEnum endTimeOfDay, Date startTime,
+            int amountOfPeople, Room room, Customer customer, DateTime endTime, TimeOfDayEnum endTimeOfDay, DateTime startTime,
             TimeOfDayEnum startTimeOfDay, Restaurant restaurant) {
         Quotation quotation = new Quotation.QuotationBuilder(number).status(status).eventDate(eventDate)
                 .expirationDate(expirationDate).amountofPeople(amountOfPeople).room(room).customer(customer)
@@ -248,7 +248,6 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         return new Line("Beamer", TWENTY, ONE, ZERO);
     }
     
-    @SuppressWarnings("deprecation")
     private Restaurant populateRestaurant(Restaurant restaurant) {
         
         // will save everything that is reachable by cascading
@@ -272,12 +271,12 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         
         createQuotation(FIFTEENTHOUSEND, new DateTime(TWENTYSIXTEEN, SIX, TWENTYTHREE, ZERO, ZERO),
                 new DateTime(TWENTYSIXTEEN, EIGHT, TWENTYTHREE, ZERO, ZERO), Status.CONCEPT, FIFTY, rooms.get(ZERO),
-                customers.get(ZERO), new Date(TWENTYSIXTEEN, SIX, TWENTYTHREE, NINETEEN, TWENTY), TimeOfDayEnum.EVENING,
-                new Date(TWENTYSIXTEEN, SIX, TWENTYTHREE, EIGHT, FIVE), TimeOfDayEnum.MORNING, restaurant2);
+                customers.get(ZERO), new DateTime(TWENTYSIXTEEN, SIX, TWENTYTHREE, NINETEEN, TWENTY), TimeOfDayEnum.EVENING,
+                new DateTime(TWENTYSIXTEEN, SIX, TWENTYTHREE, EIGHT, FIVE), TimeOfDayEnum.MORNING, restaurant2);
         createQuotation(FIFTEENTHOUSENDONE, new DateTime(TWENTYSIXTEEN, EIGHT, TWENTYSIX, ZERO, ZERO),
                 new DateTime(TWENTYSIXTEEN, TEN, TWENTYSIX, 0, 0), Status.CONCEPT, EIGHTY, rooms.get(ONE),
-                customers.get(ONE), new Date(TWENTYSIXTEEN, EIGHT, TWENTYSIX, TWENTY, EIGHTTEEN), TimeOfDayEnum.EVENING,
-                new Date(TWENTYSIXTEEN, EIGHT, TWENTYSIX, TWELVE, ZERO), TimeOfDayEnum.NOON, restaurant2);
+                customers.get(ONE), new DateTime(TWENTYSIXTEEN, EIGHT, TWENTYSIX, TWENTY, EIGHTTEEN), TimeOfDayEnum.EVENING,
+                new DateTime(TWENTYSIXTEEN, EIGHT, TWENTYSIX, TWELVE, ZERO), TimeOfDayEnum.NOON, restaurant2);
         
         // for the moment every restaurant has all available food categories
         for (FoodCategory foodCat : foodCats) {
@@ -347,7 +346,7 @@ public class RestaurantPopulatorServiceImpl implements RestaurantPopulatorServic
         try {
             RestaurantLocationObject rlo = t;
             Reservation res = ReservationFactory.createReservation(TWENTYONE, customers.get(ZERO),
-                    Reservation.TimeOfDayEnum.MORNING, new Date(), Reservation.TimeOfDayEnum.EVENING, new Date(), rlo);
+                    Reservation.TimeOfDayEnum.MORNING, new DateTime(TWOTHOUSANDSIXTEEN, EIGHT, TWENTYTHREE, ZERO, ZERO), Reservation.TimeOfDayEnum.EVENING, new DateTime(TWOTHOUSANDSIXTEEN, EIGHT, TWENTYTHREE, ZERO, ZERO), rlo);
             res = reservationRepository.save(res);
             res.getCurrentState().acceptReservation();
         } catch (MyException e) {
