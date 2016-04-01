@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AcceptQuotation {
     public static String URL = "http://localhost:8080/hha2";
-    public static String URL2 = "http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/quotations/2";
+    public static String URL2 = "http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/quotations/1";
 
     @Test
     public void AcceptQuotationTwo(){
@@ -82,7 +82,7 @@ public class AcceptQuotation {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        js.executeScript("document.getElementsByName('accept')[0].click();");
+        js.executeScript("document.getElementById('accept').click();");
         
         driver.get("http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/");
         

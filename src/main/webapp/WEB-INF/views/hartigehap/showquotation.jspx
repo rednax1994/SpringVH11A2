@@ -85,7 +85,7 @@
 								<form action="${acceptAndAcceptQuotationUrl}/${quotation.id}"
 									method="get">
 									<input type="hidden" name="submit" />
-									<button type="submit" class="btn btn-success" name="accept">${labelQuotationAcceptAndExport}</button>
+									<button type="submit" class="btn btn-success" id="accept">${labelQuotationAcceptAndExport}</button>
 								</form>
 							</li>
 							<li>
