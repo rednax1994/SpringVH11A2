@@ -31,7 +31,7 @@ public class Quotation extends Document {
     
     private static final long serialVersionUID = 1L;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "quotation")
+    @OneToMany(cascade = CascadeType.PERSIST)
     private Collection<Line> quotationLines = new ArrayList<Line>();
     @Transient
     private BanquetingFacadeServiceImpl banquetingfacade = new BanquetingFacadeServiceImpl();

@@ -11,9 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.google.common.collect.Lists;
 
-import edu.avans.hartigehap.domain.Invoice;
 import edu.avans.hartigehap.domain.Line;
-import edu.avans.hartigehap.domain.Quotation;
 import edu.avans.hartigehap.repository.LineRepository;
 import edu.avans.hartigehap.service.LineService;
 
@@ -49,18 +47,6 @@ public class LineServiceImpl implements LineService {
     @Override
     public void delete(Line line) {
         lineRepository.delete(line);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<Line> findByQuotation(Quotation quotation) {
-        return lineRepository.findByQuotation(quotation);
-    }
-    
-    @Override
-    @Transactional(readOnly = true)
-    public List<Line> findByInvoice(Invoice invoice) {
-        return lineRepository.findByInvoice(invoice);
     }
     
 }

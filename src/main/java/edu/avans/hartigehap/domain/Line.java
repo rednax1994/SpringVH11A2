@@ -1,8 +1,6 @@
 package edu.avans.hartigehap.domain;
 
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -24,27 +22,11 @@ public class Line extends DomainObject {
     private int discount;
     private double total;
     
-    @ManyToOne
-    private Quotation quotation;
-    
-    @ManyToOne
-    private Invoice invoice;
-    
-    public Line(String description, double price, int quantity, int discount, Quotation quotation){
+    public Line(String description, double price, int quantity, int discount){
         this.description = description;
         this.price = price;
         this.quantity = quantity;
         this.discount = discount;
         this.total = this.price * this.quantity;
-        this.quotation = quotation;
-    }
-    
-    public Line(String description, double price, int quantity, int discount, Invoice invoice){
-        this.description = description;
-        this.price = price;
-        this.quantity = quantity;
-        this.discount = discount;
-        this.total = this.price * this.quantity;
-        this.invoice = invoice;
     }
 }
