@@ -87,8 +87,8 @@
                                     <spring:url var="customerSubsystem" value="/restaurants/${restaurant.id}/customers" />
                                     <li><a href="${customerSubsystem}">${restaurant.id} ${labelCustomerSubsystem}</a></li>
                                     
-                                   	<spring:url var="reservationSubsystem" value="TO FILL!" />
-                                    <li><a href="${reservationSubystem}">${restaurant.id} ${labelReservationSubsystem}</a></li>
+                                   	<spring:url var="reservationSubSystem" value="/restaurants/${restaurant.id}/reservation" />
+                                    <li><a href="${reservationSubSystem}">${restaurant.id} ${labelReservationSubsystem}</a></li>
                                     
                                     <sec:authorize access="hasRole('ROLE_MANAGER')">
                                     <spring:url var="banquetingSubsystem" value="/restaurants/${restaurant.id}/banqueting" />
