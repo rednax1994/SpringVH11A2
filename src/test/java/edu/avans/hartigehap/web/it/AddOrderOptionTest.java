@@ -48,9 +48,6 @@ public class AddOrderOptionTest {
         // Added bootstrap support
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
-        WebElement element = driver.findElement(By.id("orderItemDescription"));
-        log.info(element.getText());
-
         driver.findElement(By.xpath("//*[@id='deleteOrderOptionSelect']")).click();
         
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
@@ -74,8 +71,6 @@ public class AddOrderOptionTest {
             log.debug("Login succeeded ;-)");
         }
         
-        WebElement element2 = driver.findElement(By.id("orderItemDescription"));
-        log.info(element2.getText());
         log.info("done waiting");
     }
 }

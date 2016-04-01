@@ -1,17 +1,13 @@
 package edu.avans.hartigehap.web.it;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.fail;
 
 import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -21,7 +17,7 @@ public class AcceptQuotation {
     public static String URL2 = "http://localhost:8080/hha2/restaurants/HartigeHap/banqueting/quotations/2";
 
     @Test
-    public void AcceptQuotation(){
+    public void AcceptQuotationTwo(){
         WebDriver driver = BrowserUtils.getWebDriver();
         driver.get(URL);
         log.info("Congratulations, the home page is available ;-) {}", URL);
